@@ -330,6 +330,49 @@ const leetcodeRoadmap = [
   ['Tuần 4', 'Graph, DP cơ bản, Mock Interview', 'Number of Islands, Clone Graph, Climbing Stairs, House Robber, 2 mock interviews'],
 ]
 
+const ieltsRoadmap = [
+  {
+    week: 'Tuần 1',
+    focus: 'Build habit + Listening foundation',
+    target: 'Mỗi ngày nghe 20-30 phút, học 15 từ vựng academic, viết 5 câu đúng grammar.',
+    tasks: [
+      ['Listening', 'Daily Dictation: 1 bài/ngày, nghe-chép-sửa lỗi', 'https://dailydictation.com'],
+      ['Vocabulary', 'IELTS Dictionary: Education topic, ghi 15 từ/cụm', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
+      ['Writing', 'Viết 5 câu dùng từ mới, tự sửa grammar và collocation', 'https://youpass.vn/luyen-thi/ielts/writing'],
+    ],
+  },
+  {
+    week: 'Tuần 2',
+    focus: 'Reading + Writing Task 1',
+    target: 'Đọc nhanh lấy ý chính, luyện paraphrase, viết outline Task 1 trong 10 phút.',
+    tasks: [
+      ['Reading', 'YouPass: 1 passage ngắn, ghi keyword và đáp án sai', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Writing', 'Task 1: học cách mô tả trend, comparison, overview', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Speaking', 'Nói 1 phút về study/work, ghi âm và nghe lại lỗi phát âm', 'https://dailydictation.com'],
+    ],
+  },
+  {
+    week: 'Tuần 3',
+    focus: 'Writing Task 2 + Speaking answers',
+    target: 'Viết essay outline rõ luận điểm, luyện trả lời Part 2/3 có ví dụ cụ thể.',
+    tasks: [
+      ['Writing', 'Task 2: viết introduction + 2 body topic sentences', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Vocabulary', 'Học collocations theo chủ đề education, technology, work', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
+      ['Speaking', 'Chuẩn bị 3 câu chuyện cá nhân: project, challenge, learning English', 'https://dailydictation.com'],
+    ],
+  },
+  {
+    week: 'Tuần 4',
+    focus: 'Mock test + error review',
+    target: 'Làm mini mock test, tổng hợp lỗi hay gặp, tạo checklist trước khi thi.',
+    tasks: [
+      ['Listening', '1 full listening practice hoặc 2 bài dictation liên tiếp', 'https://dailydictation.com'],
+      ['Reading/Writing', 'Làm lại câu sai, viết lại đoạn yếu nhất trong tuần', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Review', 'Tạo error log: vocab sai, grammar sai, listening miss, writing idea weak', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
+    ],
+  },
+]
+
 const dailyRules = [
   ['00:30 - 05:30', 'Ngủ cố định'],
   ['05:30 - 05:50', 'Thức dậy, vệ sinh, nước, chuẩn bị ngày'],
@@ -744,6 +787,33 @@ function App() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="ielts-panel">
+        <div className="panel-title">
+          <div>
+            <span>IELTS roadmap</span>
+            <h2>Lộ trình 4 tuần cải thiện tiếng Anh đi thi IELTS</h2>
+          </div>
+        </div>
+
+        <div className="ielts-grid">
+          {ieltsRoadmap.map((week) => (
+            <article className="ielts-card" key={week.week}>
+              <span>{week.week}</span>
+              <strong>{week.focus}</strong>
+              <p>{week.target}</p>
+              <div className="ielts-task-list">
+                {week.tasks.map(([skill, task, link]) => (
+                  <a href={link} key={`${week.week}-${skill}`} rel="noreferrer" target="_blank">
+                    <b>{skill}</b>
+                    {task}
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

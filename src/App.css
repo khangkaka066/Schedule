@@ -145,6 +145,7 @@ button {
 .weekly-panel,
 .roadmap-panel,
 .interview-panel,
+.ielts-panel,
 .leetcode-panel,
 .portfolio-panel,
 .confidence-panel,
@@ -656,6 +657,7 @@ button {
 .math-panel,
 .roadmap-panel,
 .interview-panel,
+.ielts-panel,
 .leetcode-panel,
 .portfolio-panel,
 .confidence-panel,
@@ -911,6 +913,7 @@ button {
 }
 
 .leetcode-grid,
+.ielts-grid,
 .portfolio-grid,
 .confidence-grid {
   display: grid;
@@ -918,6 +921,7 @@ button {
   margin-top: 20px;
 }
 
+.ielts-grid,
 .leetcode-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -928,6 +932,7 @@ button {
 }
 
 .leetcode-card,
+.ielts-card,
 .portfolio-card,
 .confidence-card {
   display: grid;
@@ -939,6 +944,7 @@ button {
 }
 
 .leetcode-card > span,
+.ielts-card > span,
 .confidence-card span {
   color: #667085;
   font-size: 12px;
@@ -947,6 +953,7 @@ button {
 }
 
 .leetcode-card strong,
+.ielts-card strong,
 .portfolio-card strong,
 .confidence-card strong {
   color: #182230;
@@ -955,11 +962,39 @@ button {
 }
 
 .leetcode-card p,
+.ielts-card p,
 .portfolio-card p {
   margin: 0;
   color: #667085;
   font-size: 14px;
   line-height: 1.45;
+}
+
+.ielts-task-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.ielts-task-list a {
+  display: grid;
+  gap: 3px;
+  padding: 9px;
+  border-radius: 10px;
+  background: #f1f5fb;
+  color: #344054;
+  font-size: 13px;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.ielts-task-list a:hover {
+  background: #eaf2ff;
+}
+
+.ielts-task-list b {
+  color: #2563eb;
+  font-size: 12px;
 }
 
 .confidence-card strong {
@@ -1008,6 +1043,7 @@ button {
   }
 
   .interview-grid,
+  .ielts-grid,
   .leetcode-grid,
   .portfolio-grid,
   .confidence-grid {
@@ -1061,6 +1097,7 @@ button {
   .weekly-panel,
   .roadmap-panel,
   .interview-panel,
+  .ielts-panel,
   .leetcode-panel,
   .portfolio-panel,
   .confidence-panel,
@@ -1079,6 +1116,7 @@ button {
   }
 
   .interview-grid,
+  .ielts-grid,
   .leetcode-grid,
   .portfolio-grid,
   .confidence-grid {

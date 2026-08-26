@@ -255,6 +255,81 @@ const initialMathExercises = [
   },
 ]
 
+const initialEnglishInterview = [
+  {
+    id: 'intro',
+    title: 'Self-introduction 60 giây',
+    prompt: 'I am a final-year student focusing on AI engineering. My strongest area is building practical AI tools with React UI and model/API integration.',
+    link: 'https://dailydictation.com',
+    linkLabel: 'Listening',
+    done: false,
+  },
+  {
+    id: 'project',
+    title: 'Explain personal AI project',
+    prompt: 'Describe problem, users, AI feature, architecture, evaluation, and what you improved after testing.',
+    link: 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education',
+    linkLabel: 'Vocabulary',
+    done: false,
+  },
+  {
+    id: 'behavior',
+    title: 'Answer 1 behavioral question',
+    prompt: 'Tell me about a time you solved a difficult bug. Use STAR: Situation, Task, Action, Result.',
+    link: 'https://youpass.vn/luyen-thi/ielts/writing',
+    linkLabel: 'Writing',
+    done: false,
+  },
+]
+
+const initialAiInterview = [
+  {
+    id: 'rag',
+    title: 'RAG hoạt động như thế nào?',
+    answer: 'Nêu flow: chunking, embedding, vector search, retrieve top-k, build prompt, generate answer, evaluate hallucination.',
+    done: false,
+  },
+  {
+    id: 'embedding',
+    title: 'Embedding dùng để làm gì?',
+    answer: 'Giải thích vector biểu diễn meaning, dùng cho search, clustering, recommendation, duplicate detection.',
+    done: false,
+  },
+  {
+    id: 'eval',
+    title: 'Đánh giá AI feature bằng gì?',
+    answer: 'Nêu task metric như precision/recall/F1, retrieval hit rate, latency, cost, user feedback, human review.',
+    done: false,
+  },
+  {
+    id: 'hallucination',
+    title: 'Làm sao giảm hallucination?',
+    answer: 'Dùng RAG, quote source, guardrail, refusal rule, eval set, prompt constraint, lower temperature khi cần.',
+    done: false,
+  },
+]
+
+const portfolioProjects = [
+  ['AI Daily Planner', 'Checklist, calendar, links, interview roadmap, localStorage progress.'],
+  ['RAG PDF Chatbot', 'Upload PDF, chunking, embeddings, retrieval, source citation, answer eval.'],
+  ['English Interview Coach', 'Question bank, speech practice checklist, vocabulary log, answer template.'],
+  ['AI Resume Assistant', 'Analyze JD, rewrite bullet points, match skill gaps, mock interview questions.'],
+]
+
+const confidenceStats = [
+  ['English interview', '0/3 drills'],
+  ['AI concepts', '0/4 answers'],
+  ['LeetCode roadmap', 'Week 1'],
+  ['Portfolio shipped', '0/4 projects'],
+]
+
+const leetcodeRoadmap = [
+  ['Tuần 1', 'Array, String, HashMap', 'Two Sum, Valid Anagram, Contains Duplicate, Group Anagrams, Product of Array Except Self'],
+  ['Tuần 2', 'Two Pointers, Sliding Window, Stack', 'Valid Palindrome, 3Sum, Best Time to Buy/Sell Stock, Longest Substring, Valid Parentheses'],
+  ['Tuần 3', 'Binary Search, Linked List, Tree', 'Binary Search, Search Insert Position, Reverse Linked List, Merge Two Lists, Maximum Depth'],
+  ['Tuần 4', 'Graph, DP cơ bản, Mock Interview', 'Number of Islands, Clone Graph, Climbing Stairs, House Robber, 2 mock interviews'],
+]
+
 const dailyRules = [
   ['00:30 - 05:30', 'Ngủ cố định'],
   ['05:30 - 05:50', 'Thức dậy, vệ sinh, nước, chuẩn bị ngày'],
@@ -286,6 +361,8 @@ function App() {
   const [weekPlans, setWeekPlans] = useState(initialWeekPlans)
   const [selectedDayId, setSelectedDayId] = useState(initialWeekPlans[0].id)
   const [mathExercises, setMathExercises] = useState(initialMathExercises)
+  const [englishInterview, setEnglishInterview] = useState(initialEnglishInterview)
+  const [aiInterview, setAiInterview] = useState(initialAiInterview)
   const [activeCategory, setActiveCategory] = useState('Tất cả')
 
   const selectedDay = weekPlans.find((day) => day.id === selectedDayId) ?? weekPlans[0]
@@ -326,6 +403,22 @@ function App() {
     setMathExercises((currentExercises) =>
       currentExercises.map((exercise) =>
         exercise.id === id ? { ...exercise, done: !exercise.done } : exercise,
+      ),
+    )
+  }
+
+  function toggleEnglishInterview(id) {
+    setEnglishInterview((currentItems) =>
+      currentItems.map((item) =>
+        item.id === id ? { ...item, done: !item.done } : item,
+      ),
+    )
+  }
+
+  function toggleAiInterview(id) {
+    setAiInterview((currentItems) =>
+      currentItems.map((item) =>
+        item.id === id ? { ...item, done: !item.done } : item,
       ),
     )
   }
@@ -595,6 +688,113 @@ function App() {
                 <strong>{title}</strong>
                 <p>{detail}</p>
               </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="interview-panel">
+        <div className="panel-title">
+          <div>
+            <span>Interview prep</span>
+            <h2>English và AI answer drill</h2>
+          </div>
+        </div>
+
+        <div className="interview-grid">
+          <div>
+            <h3>English interview</h3>
+            <div className="mini-list">
+              {englishInterview.map((item) => (
+                <label className={`mini-item ${item.done ? 'done' : ''}`} key={item.id}>
+                  <input
+                    checked={item.done}
+                    onChange={() => toggleEnglishInterview(item.id)}
+                    type="checkbox"
+                  />
+                  <span className="checkmark" />
+                  <span>
+                    <strong>{item.title}</strong>
+                    <p>{item.prompt}</p>
+                    <a href={item.link} onClick={(event) => event.stopPropagation()} rel="noreferrer" target="_blank">
+                      {item.linkLabel}
+                    </a>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3>AI interview</h3>
+            <div className="mini-list">
+              {aiInterview.map((item) => (
+                <label className={`mini-item ${item.done ? 'done' : ''}`} key={item.id}>
+                  <input
+                    checked={item.done}
+                    onChange={() => toggleAiInterview(item.id)}
+                    type="checkbox"
+                  />
+                  <span className="checkmark" />
+                  <span>
+                    <strong>{item.title}</strong>
+                    <p>{item.answer}</p>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="leetcode-panel">
+        <div className="panel-title">
+          <div>
+            <span>LeetCode roadmap</span>
+            <h2>Lộ trình giải thuật 4 tuần để phỏng vấn</h2>
+          </div>
+        </div>
+        <div className="leetcode-grid">
+          {leetcodeRoadmap.map(([week, pattern, problems]) => (
+            <article className="leetcode-card" key={week}>
+              <span>{week}</span>
+              <strong>{pattern}</strong>
+              <p>{problems}</p>
+              <a href="https://leetcode.com" rel="noreferrer" target="_blank">Open LeetCode</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="portfolio-panel">
+        <div className="panel-title">
+          <div>
+            <span>Portfolio</span>
+            <h2>Project nên có trước khi phỏng vấn</h2>
+          </div>
+        </div>
+        <div className="portfolio-grid">
+          {portfolioProjects.map(([name, detail]) => (
+            <article className="portfolio-card" key={name}>
+              <strong>{name}</strong>
+              <p>{detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="confidence-panel">
+        <div className="panel-title">
+          <div>
+            <span>Confidence dashboard</span>
+            <h2>Điểm tự tin trước phỏng vấn</h2>
+          </div>
+        </div>
+        <div className="confidence-grid">
+          {confidenceStats.map(([label, value]) => (
+            <article className="confidence-card" key={label}>
+              <span>{label}</span>
+              <strong>{value}</strong>
             </article>
           ))}
         </div>

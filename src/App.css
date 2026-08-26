@@ -144,6 +144,10 @@ button {
 .math-panel,
 .weekly-panel,
 .roadmap-panel,
+.interview-panel,
+.leetcode-panel,
+.portfolio-panel,
+.confidence-panel,
 .tools-panel {
   border: 1px solid #e6eaf0;
   border-radius: 18px;
@@ -651,6 +655,10 @@ button {
 .calendar-panel,
 .math-panel,
 .roadmap-panel,
+.interview-panel,
+.leetcode-panel,
+.portfolio-panel,
+.confidence-panel,
 .tools-panel {
   margin-top: 22px;
   padding: 22px;
@@ -820,6 +828,144 @@ button {
   margin-top: 20px;
 }
 
+.interview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.interview-grid h3 {
+  margin: 0 0 12px;
+  color: #101828;
+  font-size: 17px;
+}
+
+.mini-list {
+  display: grid;
+  gap: 10px;
+}
+
+.mini-item {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  background: #fbfcfe;
+  cursor: pointer;
+}
+
+.mini-item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mini-item strong {
+  display: block;
+  color: #182230;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mini-item p {
+  margin: 6px 0 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.mini-item a,
+.leetcode-card a {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.mini-item.done {
+  border-color: #d8f3e2;
+  background: #f6fdf8;
+}
+
+.mini-item.done .checkmark {
+  border-color: #22c55e;
+  background: #22c55e;
+}
+
+.mini-item.done .checkmark::after {
+  opacity: 1;
+}
+
+.mini-item.done strong {
+  color: #667085;
+  text-decoration: line-through;
+}
+
+.leetcode-grid,
+.portfolio-grid,
+.confidence-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.leetcode-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.portfolio-grid,
+.confidence-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.leetcode-card,
+.portfolio-card,
+.confidence-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+.leetcode-card > span,
+.confidence-card span {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.leetcode-card strong,
+.portfolio-card strong,
+.confidence-card strong {
+  color: #182230;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.leetcode-card p,
+.portfolio-card p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.confidence-card strong {
+  font-size: 24px;
+}
+
 .tool-card {
   display: grid;
   gap: 6px;
@@ -858,6 +1004,13 @@ button {
   }
 
   .roadmap-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .interview-grid,
+  .leetcode-grid,
+  .portfolio-grid,
+  .confidence-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -907,6 +1060,10 @@ button {
   .math-panel,
   .weekly-panel,
   .roadmap-panel,
+  .interview-panel,
+  .leetcode-panel,
+  .portfolio-panel,
+  .confidence-panel,
   .tools-panel {
     border-radius: 14px;
     padding: 16px;
@@ -918,6 +1075,13 @@ button {
   }
 
   .roadmap-list {
+    grid-template-columns: 1fr;
+  }
+
+  .interview-grid,
+  .leetcode-grid,
+  .portfolio-grid,
+  .confidence-grid {
     grid-template-columns: 1fr;
   }
 

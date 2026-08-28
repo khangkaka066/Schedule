@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
-const fptPrepStorageKey = 'fpt-ai-test-prep-progress-v1'
+const fptPrepStorageKey = 'fpt-ai-test-prep-progress-v2'
 
 const categories = [
   'Tất cả',
@@ -261,91 +261,91 @@ const initialFptPrepPlan = [
   },
   {
     id: 'english',
-    title: 'English',
-    target: 'Nói được self-intro, project explanation và câu hỏi AI cơ bản.',
+    title: 'IELTS 6.5',
+    target: 'Mục tiêu IELTS 6.5: Listening/Reading 6.5+, Writing/Speaking tối thiểu 6.0-6.5.',
     days: [
       {
         id: 'english-day-1',
         day: 'Ngày 1',
         time: '19:30 - 20:30',
-        focus: 'Self-introduction',
-        learned: 'Giới thiệu bản thân 60-90 giây, nói chậm và rõ.',
+        focus: 'IELTS baseline + pronunciation',
+        learned: 'Biết band hiện tại, lỗi phát âm chính, format 4 kỹ năng IELTS.',
         tasks: [
-          { id: 'intro-script', title: 'Viết self-introduction 8-10 câu' },
-          { id: 'intro-record', title: 'Ghi âm 1 lần và sửa 3 lỗi phát âm' },
-          { id: 'vocab-ml', title: 'Học 10 từ: dataset, feature, label, model, accuracy...' },
+          { id: 'ielts-format', title: 'Ôn format Listening, Reading, Writing, Speaking' },
+          { id: 'pronunciation-record', title: 'Ghi âm Speaking Part 1: hometown/study/work' },
+          { id: 'daily-vocab-1', title: 'Học 15 từ academic + collocation chủ đề Education' },
         ],
       },
       {
         id: 'english-day-2',
         day: 'Ngày 2',
         time: '19:30 - 20:30',
-        focus: 'Data processing explanation',
-        learned: 'Nói được cách dùng Pandas để clean data.',
+        focus: 'Listening accuracy',
+        learned: 'Nghe bắt keyword, số, tên riêng, paraphrase trong câu hỏi.',
         tasks: [
-          { id: 'data-script', title: 'Viết 5 câu về data cleaning bằng Pandas' },
-          { id: 'dictation', title: 'Daily Dictation 1 bài ngắn' },
-          { id: 'vocab-data', title: 'Học từ: missing value, preprocessing, normalize, encode' },
+          { id: 'listening-section-1', title: 'Làm 1 bài Listening Section 1 hoặc dictation 20 phút' },
+          { id: 'listening-error-log', title: 'Ghi error log: spelling, plural, number, missed keyword' },
+          { id: 'daily-vocab-2', title: 'Học 15 từ/cụm chủ đề Work và Daily Life' },
         ],
       },
       {
         id: 'english-day-3',
         day: 'Ngày 3',
         time: '19:30 - 20:30',
-        focus: 'ML model answers',
-        learned: 'Trả lời classification, regression, overfitting.',
+        focus: 'Reading speed',
+        learned: 'Skimming, scanning, keyword matching và tránh bẫy True/False/Not Given.',
         tasks: [
-          { id: 'what-ml', title: 'Trả lời: What is machine learning?' },
-          { id: 'class-reg', title: 'Trả lời: classification vs regression' },
-          { id: 'overfit-en', title: 'Trả lời: What is overfitting?' },
+          { id: 'reading-passage', title: 'Làm 1 passage Reading trong 20 phút' },
+          { id: 'tfng-review', title: 'Review 5 câu True/False/Not Given hoặc matching headings' },
+          { id: 'daily-vocab-3', title: 'Học 15 từ/cụm chủ đề Environment' },
         ],
       },
       {
         id: 'english-day-4',
         day: 'Ngày 4',
         time: '19:30 - 20:30',
-        focus: 'Deep learning answers',
-        learned: 'Trả lời neural network, gradient descent, loss function.',
+        focus: 'Writing Task 1',
+        learned: 'Viết overview rõ, mô tả trend/comparison, tránh liệt kê số liệu lan man.',
         tasks: [
-          { id: 'nn-en', title: 'Trả lời: What is a neural network?' },
-          { id: 'gd-en', title: 'Trả lời: What is gradient descent?' },
-          { id: 'loss-en', title: 'Trả lời: What is a loss function?' },
+          { id: 'task1-structure', title: 'Ôn cấu trúc Task 1: intro, overview, 2 body' },
+          { id: 'task1-write', title: 'Viết 1 bài Task 1 trong 20 phút' },
+          { id: 'task1-check', title: 'Tự check grammar: tense, comparison, article, plural' },
         ],
       },
       {
         id: 'english-day-5',
         day: 'Ngày 5',
         time: '19:30 - 20:30',
-        focus: 'CV/GenAI vocabulary',
-        learned: 'Nói cơ bản về CNN, embedding, RAG.',
+        focus: 'Writing Task 2',
+        learned: 'Lập luận rõ, paragraph có topic sentence, example, explanation.',
         tasks: [
-          { id: 'cnn-en', title: 'Trả lời: What is CNN?' },
-          { id: 'embedding-en', title: 'Trả lời: What is an embedding?' },
-          { id: 'rag-en', title: 'Trả lời: What is RAG?' },
+          { id: 'task2-outline', title: 'Lập outline cho 2 đề Task 2' },
+          { id: 'task2-body', title: 'Viết 2 body paragraphs cho 1 đề trong 25 phút' },
+          { id: 'daily-vocab-5', title: 'Học 15 collocations chủ đề Society/Technology' },
         ],
       },
       {
         id: 'english-day-6',
         day: 'Ngày 6',
         time: '19:30 - 20:30',
-        focus: 'Project explanation',
-        learned: 'Kể project theo Problem, Dataset, Model, Result, Learning.',
+        focus: 'Speaking Part 2/3',
+        learned: 'Nói 2 phút có mở bài, chi tiết, cảm nhận, ví dụ; trả lời Part 3 có quan điểm.',
         tasks: [
-          { id: 'project-script', title: 'Viết project explanation 10-12 câu' },
-          { id: 'project-record', title: 'Ghi âm giải thích project 2 phút' },
-          { id: 'star-answer', title: 'Chuẩn bị 1 câu STAR về bug/khó khăn' },
+          { id: 'cue-card', title: 'Chuẩn bị 1 cue card Speaking Part 2' },
+          { id: 'speaking-record', title: 'Ghi âm câu trả lời 2 phút và nghe lại' },
+          { id: 'part3-practice', title: 'Trả lời 5 câu Speaking Part 3 theo cấu trúc point-reason-example' },
         ],
       },
       {
         id: 'english-day-7',
         day: 'Ngày 7',
         time: '19:30 - 20:30',
-        focus: 'Mock interview',
-        learned: 'Trả lời phỏng vấn không học vẹt, giữ ý rõ và tự tin.',
+        focus: 'IELTS mini mock + error review',
+        learned: 'Biết kỹ năng yếu nhất và kế hoạch tăng lên band 6.5.',
         tasks: [
-          { id: 'mock-intro', title: 'Mock: Tell me about yourself' },
-          { id: 'mock-fpt', title: 'Mock: Why FPT Software and why AI Engineer?' },
-          { id: 'mock-project', title: 'Mock: Tell me about your AI project' },
+          { id: 'mini-listening-reading', title: 'Làm mini mock Listening hoặc Reading 30 phút' },
+          { id: 'writing-rewrite', title: 'Rewrite đoạn Writing yếu nhất trong tuần' },
+          { id: 'speaking-final', title: 'Ghi âm Speaking Part 1 + Part 2, chấm theo fluency/vocab/grammar/pronunciation' },
         ],
       },
     ],
@@ -626,25 +626,25 @@ const initialMathExercises = [
 
 const initialEnglishInterview = [
   {
-    id: 'intro',
-    title: 'Self-introduction 60 giây',
-    prompt: 'I am a final-year student focusing on AI engineering. My strongest area is building practical AI tools with React UI and model/API integration.',
+    id: 'speaking-part-1',
+    title: 'IELTS Speaking Part 1',
+    prompt: 'Practice short natural answers about hometown, study, work, hobbies, daily routine, and future plans.',
     link: 'https://dailydictation.com',
-    linkLabel: 'Listening',
+    linkLabel: 'Pronunciation',
     done: false,
   },
   {
-    id: 'project',
-    title: 'Explain personal AI project',
-    prompt: 'Describe problem, users, AI feature, architecture, evaluation, and what you improved after testing.',
+    id: 'speaking-part-2',
+    title: 'IELTS Speaking Part 2',
+    prompt: 'Prepare one cue card answer with clear structure: opening, details, story, feeling, and closing.',
     link: 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education',
     linkLabel: 'Vocabulary',
     done: false,
   },
   {
-    id: 'behavior',
-    title: 'Answer 1 behavioral question',
-    prompt: 'Tell me about a time you solved a difficult bug. Use STAR: Situation, Task, Action, Result.',
+    id: 'writing-task-2',
+    title: 'IELTS Writing Task 2',
+    prompt: 'Write one clear opinion paragraph with topic sentence, reason, example, and explanation.',
     link: 'https://youpass.vn/luyen-thi/ielts/writing',
     linkLabel: 'Writing',
     done: false,
@@ -686,7 +686,7 @@ const portfolioProjects = [
 ]
 
 const confidenceStats = [
-  ['English interview', '0/3 drills'],
+  ['IELTS target', '6.5 band'],
   ['AI concepts', '0/4 answers'],
   ['LeetCode roadmap', 'Week 1'],
   ['Portfolio shipped', '0/4 projects'],
@@ -702,42 +702,42 @@ const leetcodeRoadmap = [
 const ieltsRoadmap = [
   {
     week: 'Tuần 1',
-    focus: 'Build habit + Listening foundation',
-    target: 'Mỗi ngày nghe 20-30 phút, học 15 từ vựng academic, viết 5 câu đúng grammar.',
+    focus: 'Foundation for IELTS 6.5',
+    target: 'Nắm format đề, test baseline, sửa lỗi phát âm và grammar cơ bản.',
     tasks: [
-      ['Listening', 'Daily Dictation: 1 bài/ngày, nghe-chép-sửa lỗi', 'https://dailydictation.com'],
-      ['Vocabulary', 'IELTS Dictionary: Education topic, ghi 15 từ/cụm', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
-      ['Writing', 'Viết 5 câu dùng từ mới, tự sửa grammar và collocation', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Listening', 'Daily Dictation: 20-30 phút/ngày, tập nghe số, tên riêng, plural', 'https://dailydictation.com'],
+      ['Vocabulary', 'IELTS Dictionary: 15 từ/cụm academic mỗi ngày, ghi ví dụ riêng', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
+      ['Grammar', 'Ôn sentence structure, tense, article, plural, subject-verb agreement', 'https://youpass.vn/luyen-thi/ielts/writing'],
     ],
   },
   {
     week: 'Tuần 2',
-    focus: 'Reading + Writing Task 1',
-    target: 'Đọc nhanh lấy ý chính, luyện paraphrase, viết outline Task 1 trong 10 phút.',
+    focus: 'Listening + Reading 6.5+',
+    target: 'Tăng độ chính xác bằng keyword, paraphrase, skimming, scanning và error log.',
     tasks: [
-      ['Reading', 'YouPass: 1 passage ngắn, ghi keyword và đáp án sai', 'https://youpass.vn/luyen-thi/ielts/writing'],
-      ['Writing', 'Task 1: học cách mô tả trend, comparison, overview', 'https://youpass.vn/luyen-thi/ielts/writing'],
-      ['Speaking', 'Nói 1 phút về study/work, ghi âm và nghe lại lỗi phát âm', 'https://dailydictation.com'],
+      ['Listening', 'Làm 1 section/ngày, ghi lỗi spelling, plural, distractor, missed keyword', 'https://dailydictation.com'],
+      ['Reading', 'Làm 1 passage/ngày, ưu tiên True/False/Not Given và matching headings', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Review', 'Tạo bảng lỗi sai: câu hỏi, keyword, paraphrase, lý do chọn sai', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
     ],
   },
   {
     week: 'Tuần 3',
-    focus: 'Writing Task 2 + Speaking answers',
-    target: 'Viết essay outline rõ luận điểm, luyện trả lời Part 2/3 có ví dụ cụ thể.',
+    focus: 'Writing 6.0-6.5',
+    target: 'Viết Task 1 có overview rõ và Task 2 có lập luận mạch lạc.',
     tasks: [
-      ['Writing', 'Task 2: viết introduction + 2 body topic sentences', 'https://youpass.vn/luyen-thi/ielts/writing'],
-      ['Vocabulary', 'Học collocations theo chủ đề education, technology, work', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
-      ['Speaking', 'Chuẩn bị 3 câu chuyện cá nhân: project, challenge, learning English', 'https://dailydictation.com'],
+      ['Task 1', 'Viết 3 bài chart/map/process, luôn có overview và comparison', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Task 2', 'Luyện outline, topic sentence, example, explanation cho opinion/discussion', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Vocabulary', 'Học collocations theo chủ đề education, environment, health, society', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
     ],
   },
   {
     week: 'Tuần 4',
-    focus: 'Mock test + error review',
-    target: 'Làm mini mock test, tổng hợp lỗi hay gặp, tạo checklist trước khi thi.',
+    focus: 'Speaking 6.5 + Mock test',
+    target: 'Nói tự nhiên, đủ ý, phát âm rõ; làm mini mock và chốt lỗi cần sửa.',
     tasks: [
-      ['Listening', '1 full listening practice hoặc 2 bài dictation liên tiếp', 'https://dailydictation.com'],
-      ['Reading/Writing', 'Làm lại câu sai, viết lại đoạn yếu nhất trong tuần', 'https://youpass.vn/luyen-thi/ielts/writing'],
-      ['Review', 'Tạo error log: vocab sai, grammar sai, listening miss, writing idea weak', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
+      ['Speaking', 'Ghi âm Part 1, Part 2, Part 3; tự chấm fluency, vocab, grammar, pronunciation', 'https://dailydictation.com'],
+      ['Mock', 'Làm mini mock Listening/Reading + 1 bài Writing, đo thời gian nghiêm túc', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['Review', 'Tổng hợp lỗi grammar, vocab, pronunciation, listening miss, reading trap', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
     ],
   },
 ]
@@ -938,7 +938,7 @@ function App() {
         <div className="fpt-prep-header">
           <div>
             <span>FPT AI test prep</span>
-            <h2>Lộ trình gấp 7 ngày: code, AI math, English</h2>
+            <h2>Lộ trình gấp 7 ngày: code, AI math, IELTS 6.5</h2>
           </div>
           <div className="storage-status">
             <b>Local saved</b>
@@ -958,12 +958,12 @@ function App() {
           <article>
             <span>Giờ tự học/ngày</span>
             <strong>8h</strong>
-            <p>08:00-12:00 coding, 13:30-17:00 AI, 19:30-20:30 English.</p>
+            <p>08:00-12:00 coding, 13:30-17:00 AI, 19:30-20:30 IELTS.</p>
           </article>
           <article>
             <span>Kết quả cần đạt</span>
-            <strong>1 project</strong>
-            <p>Mini ML pipeline + English script để kể khi test/phỏng vấn.</p>
+            <strong>IELTS 6.5</strong>
+            <p>Listening/Reading vững, Writing/Speaking đủ cấu trúc và ít lỗi cơ bản.</p>
           </article>
         </div>
 
@@ -1295,14 +1295,14 @@ function App() {
       <section className="interview-panel">
         <div className="panel-title">
           <div>
-            <span>Interview prep</span>
-            <h2>English và AI answer drill</h2>
+            <span>Practice prep</span>
+            <h2>IELTS drills và AI answer drill</h2>
           </div>
         </div>
 
         <div className="interview-grid">
           <div>
-            <h3>English interview</h3>
+            <h3>IELTS 6.5 drills</h3>
             <div className="mini-list">
               {englishInterview.map((item) => (
                 <label className={`mini-item ${item.done ? 'done' : ''}`} key={item.id}>
@@ -1350,7 +1350,7 @@ function App() {
         <div className="panel-title">
           <div>
             <span>IELTS roadmap</span>
-            <h2>Lộ trình 4 tuần cải thiện tiếng Anh đi thi IELTS</h2>
+            <h2>Lộ trình 4 tuần hướng tới IELTS 6.5</h2>
           </div>
         </div>
 

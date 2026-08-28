@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
-const fptPrepStorageKey = 'fpt-ai-test-prep-progress-v2'
+const fptPrepStorageKey = 'fpt-ai-test-prep-progress-v3'
 
 const categories = [
   'Tất cả',
@@ -84,7 +84,7 @@ const initialFptPrepPlan = [
     days: [
       {
         id: 'coding-day-1',
-        day: 'Ngày 1',
+        day: 'Chặng 1',
         time: '08:00 - 12:00',
         focus: 'Python + Array/String',
         learned: 'List, dict, set, Counter, sort key, slicing, edge cases.',
@@ -96,7 +96,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-2',
-        day: 'Ngày 2',
+        day: 'Chặng 2',
         time: '08:00 - 12:00',
         focus: 'Hash Map + Sorting',
         learned: 'Đếm tần suất, group key, sort interval, prefix/suffix product.',
@@ -108,7 +108,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-3',
-        day: 'Ngày 3',
+        day: 'Chặng 3',
         time: '08:00 - 12:00',
         focus: 'Two Pointers + Sliding Window',
         learned: 'Hai con trỏ, window set/map, update answer trong vòng lặp.',
@@ -120,7 +120,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-4',
-        day: 'Ngày 4',
+        day: 'Chặng 4',
         time: '08:00 - 12:00',
         focus: 'Stack/Queue',
         learned: 'Stack validate, monotonic stack, xử lý expression cơ bản.',
@@ -132,7 +132,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-5',
-        day: 'Ngày 5',
+        day: 'Chặng 5',
         time: '08:00 - 12:00',
         focus: 'Binary Search + Tree',
         learned: 'Điều kiện left/right, DFS, BFS level order.',
@@ -144,7 +144,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-6',
-        day: 'Ngày 6',
+        day: 'Chặng 6',
         time: '08:00 - 12:00',
         focus: 'Dynamic Programming cơ bản',
         learned: 'State, base case, transition, memo/tabulation.',
@@ -156,7 +156,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'coding-day-7',
-        day: 'Ngày 7',
+        day: 'Chặng 7',
         time: '08:00 - 10:00',
         focus: 'Mock coding test',
         learned: 'Làm bài có giới hạn thời gian, ghi lỗi sai và edge case.',
@@ -175,7 +175,7 @@ const initialFptPrepPlan = [
     days: [
       {
         id: 'math-day-1',
-        day: 'Ngày 1',
+        day: 'Chặng 1',
         time: '13:30 - 15:30',
         focus: 'ML overview',
         learned: 'Supervised/unsupervised, classification/regression, train/test split.',
@@ -187,7 +187,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-2',
-        day: 'Ngày 2',
+        day: 'Chặng 2',
         time: '13:30 - 15:30',
         focus: 'Linear Algebra',
         learned: 'Vector, matrix, dot product, feature vector trong dataset.',
@@ -199,7 +199,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-3',
-        day: 'Ngày 3',
+        day: 'Chặng 3',
         time: '13:30 - 15:30',
         focus: 'Probability + Statistics',
         learned: 'Mean, variance, standard deviation, distribution, correlation.',
@@ -211,7 +211,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-4',
-        day: 'Ngày 4',
+        day: 'Chặng 4',
         time: '13:30 - 15:30',
         focus: 'Loss + Gradient Descent',
         learned: 'Loss function, derivative, gradient, learning rate.',
@@ -223,7 +223,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-5',
-        day: 'Ngày 5',
+        day: 'Chặng 5',
         time: '13:30 - 15:30',
         focus: 'Metrics',
         learned: 'Confusion matrix, accuracy, precision, recall, F1.',
@@ -235,7 +235,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-6',
-        day: 'Ngày 6',
+        day: 'Chặng 6',
         time: '13:30 - 15:30',
         focus: 'ML/DL models',
         learned: 'Linear/logistic regression, tree, random forest, neural network, CNN.',
@@ -247,7 +247,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'math-day-7',
-        day: 'Ngày 7',
+        day: 'Chặng 7',
         time: '13:30 - 15:30',
         focus: 'AI mock interview',
         learned: 'Trả lời ngắn, đúng ý, có ví dụ project.',
@@ -266,7 +266,7 @@ const initialFptPrepPlan = [
     days: [
       {
         id: 'english-day-1',
-        day: 'Ngày 1',
+        day: 'Chặng 1',
         time: '19:30 - 20:30',
         focus: 'IELTS baseline + pronunciation',
         learned: 'Biết band hiện tại, lỗi phát âm chính, format 4 kỹ năng IELTS.',
@@ -278,7 +278,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-2',
-        day: 'Ngày 2',
+        day: 'Chặng 2',
         time: '19:30 - 20:30',
         focus: 'Listening accuracy',
         learned: 'Nghe bắt keyword, số, tên riêng, paraphrase trong câu hỏi.',
@@ -290,7 +290,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-3',
-        day: 'Ngày 3',
+        day: 'Chặng 3',
         time: '19:30 - 20:30',
         focus: 'Reading speed',
         learned: 'Skimming, scanning, keyword matching và tránh bẫy True/False/Not Given.',
@@ -302,7 +302,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-4',
-        day: 'Ngày 4',
+        day: 'Chặng 4',
         time: '19:30 - 20:30',
         focus: 'Writing Task 1',
         learned: 'Viết overview rõ, mô tả trend/comparison, tránh liệt kê số liệu lan man.',
@@ -314,7 +314,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-5',
-        day: 'Ngày 5',
+        day: 'Chặng 5',
         time: '19:30 - 20:30',
         focus: 'Writing Task 2',
         learned: 'Lập luận rõ, paragraph có topic sentence, example, explanation.',
@@ -326,7 +326,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-6',
-        day: 'Ngày 6',
+        day: 'Chặng 6',
         time: '19:30 - 20:30',
         focus: 'Speaking Part 2/3',
         learned: 'Nói 2 phút có mở bài, chi tiết, cảm nhận, ví dụ; trả lời Part 3 có quan điểm.',
@@ -338,7 +338,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'english-day-7',
-        day: 'Ngày 7',
+        day: 'Chặng 7',
         time: '19:30 - 20:30',
         focus: 'IELTS mini mock + error review',
         learned: 'Biết kỹ năng yếu nhất và kế hoạch tăng lên band 6.5.',
@@ -357,7 +357,7 @@ const initialFptPrepPlan = [
     days: [
       {
         id: 'project-day-1',
-        day: 'Ngày 1',
+        day: 'Chặng 1',
         time: '15:45 - 17:00',
         focus: 'First sklearn model',
         learned: 'Load dataset, split data, train Logistic Regression, in accuracy.',
@@ -369,7 +369,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-2',
-        day: 'Ngày 2',
+        day: 'Chặng 2',
         time: '15:45 - 17:00',
         focus: 'Pandas preprocessing',
         learned: 'read_csv, info, describe, isnull, groupby, fill missing values.',
@@ -381,7 +381,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-3',
-        day: 'Ngày 3',
+        day: 'Chặng 3',
         time: '15:45 - 17:00',
         focus: 'Train classical ML',
         learned: 'So sánh Logistic Regression, KNN, Random Forest.',
@@ -393,7 +393,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-4',
-        day: 'Ngày 4',
+        day: 'Chặng 4',
         time: '15:45 - 17:00',
         focus: 'PyTorch/TensorFlow workflow',
         learned: 'Tensor, forward pass, loss, optimizer step ở mức cơ bản.',
@@ -405,7 +405,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-5',
-        day: 'Ngày 5',
+        day: 'Chặng 5',
         time: '15:45 - 17:00',
         focus: 'Computer Vision/GenAI quick demo',
         learned: 'Image classification/object detection/RAG ở mức concept.',
@@ -417,7 +417,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-6',
-        day: 'Ngày 6',
+        day: 'Chặng 6',
         time: '15:45 - 17:00',
         focus: 'Mini project finish',
         learned: 'Một pipeline hoàn chỉnh đủ để đưa vào CV/phỏng vấn.',
@@ -429,7 +429,7 @@ const initialFptPrepPlan = [
       },
       {
         id: 'project-day-7',
-        day: 'Ngày 7',
+        day: 'Chặng 7',
         time: '15:45 - 17:00',
         focus: 'Review and polish',
         learned: 'Biết trình bày project mạch lạc dưới áp lực test.',
@@ -938,7 +938,7 @@ function App() {
         <div className="fpt-prep-header">
           <div>
             <span>FPT AI test prep</span>
-            <h2>Lộ trình gấp 7 ngày: code, AI math, IELTS 6.5</h2>
+            <h2>Tiến độ học linh hoạt: code, AI math, IELTS 6.5</h2>
           </div>
           <div className="storage-status">
             <b>Local saved</b>
@@ -956,14 +956,14 @@ function App() {
             <p>{prepTotals.done}/{prepTotals.total} đầu việc đã xong</p>
           </article>
           <article>
-            <span>Giờ tự học/ngày</span>
-            <strong>8h</strong>
-            <p>08:00-12:00 coding, 13:30-17:00 AI, 19:30-20:30 IELTS.</p>
+            <span>Giờ tự học gợi ý</span>
+            <strong>8h/ngày</strong>
+            <p>Có thể học ít hơn hoặc nhiều hơn, tiến độ vẫn giữ cho đến khi bạn reset.</p>
           </article>
           <article>
-            <span>Kết quả cần đạt</span>
-            <strong>IELTS 6.5</strong>
-            <p>Listening/Reading vững, Writing/Speaking đủ cấu trúc và ít lỗi cơ bản.</p>
+            <span>Cách theo dõi</span>
+            <strong>Không giới hạn</strong>
+            <p>Hoàn thành từng chặng, lặp lại phần yếu, dừng khi bạn thấy đủ sẵn sàng.</p>
           </article>
         </div>
 
@@ -1039,11 +1039,11 @@ function App() {
         </div>
 
         <div className="prep-actions">
-          <button onClick={resetFptPrepPlan} type="button">Reset tiến độ 7 ngày</button>
+          <button onClick={resetFptPrepPlan} type="button">Reset tiến độ học</button>
           <p>
             Dữ liệu hiện lưu bằng localStorage. Khi thêm backend, gửi payload này lên MongoDB collection
             <code> study_progress </code>
-            theo userId và ngày cập nhật.
+            theo userId, ngày cập nhật và trạng thái từng chặng.
           </p>
         </div>
       </section>

@@ -257,11 +257,12 @@ button {
   line-height: 1.45;
 }
 
-.prep-section-grid {
+.prep-workspace {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) 260px;
   gap: 14px;
   margin-top: 16px;
+  align-items: start;
 }
 
 .prep-section {
@@ -271,6 +272,74 @@ button {
   border: 1px solid #edf0f5;
   border-radius: 14px;
   background: #fbfcfe;
+}
+
+.prep-menu {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+.prep-menu > span {
+  color: #7b8495;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.prep-menu button {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 3px 10px;
+  min-height: 68px;
+  padding: 12px;
+  border: 1px solid #e5eaf2;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #344054;
+  text-align: left;
+}
+
+.prep-menu button:hover {
+  border-color: #cfd7e3;
+  background: #f8fbff;
+}
+
+.prep-menu button.active {
+  border-color: #101828;
+  background: #101828;
+  color: #ffffff;
+}
+
+.prep-menu b {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prep-menu small {
+  grid-column: 1 / -1;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.prep-menu strong {
+  color: #2563eb;
+  font-size: 17px;
+}
+
+.prep-menu button.active small,
+.prep-menu button.active strong {
+  color: #d1d5db;
 }
 
 .prep-section-title {
@@ -1325,8 +1394,17 @@ button {
   }
 
   .prep-overview,
-  .prep-section-grid {
+  .prep-workspace {
     grid-template-columns: 1fr;
+  }
+
+  .prep-menu {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prep-menu > span {
+    grid-column: 1 / -1;
   }
 
   .math-list {
@@ -1443,6 +1521,10 @@ button {
 
   .prep-day summary {
     align-items: flex-start;
+  }
+
+  .prep-menu {
+    grid-template-columns: 1fr;
   }
 
   .calendar-header {

@@ -801,6 +801,7 @@ function App() {
   const [englishInterview, setEnglishInterview] = useState(initialEnglishInterview)
   const [aiInterview, setAiInterview] = useState(initialAiInterview)
   const [activeCategory, setActiveCategory] = useState('Tất cả')
+  const [activePrepSectionId, setActivePrepSectionId] = useState(initialFptPrepPlan[0].id)
 
   useEffect(() => {
     window.localStorage.setItem(fptPrepStorageKey, JSON.stringify(fptPrepPlan))
@@ -830,6 +831,9 @@ function App() {
   const prepProgress = prepTotals.total === 0
     ? 0
     : Math.round((prepTotals.done / prepTotals.total) * 100)
+  const activePrepSection =
+    fptPrepPlan.find((section) => section.id === activePrepSectionId) ?? fptPrepPlan[0]
+  const activePrepProgress = calculatePrepProgress(activePrepSection)
 
   function toggleTask(id) {
     setTasks((currentTasks) =>
@@ -963,61 +967,75 @@ function App() {
           </article>
         </div>
 
-        <div className="prep-section-grid">
-          {fptPrepPlan.map((section) => {
-            const sectionProgress = calculatePrepProgress(section)
+        <div className="prep-workspace">
+          <article className="prep-section">
+            <div className="prep-section-title">
+              <div>
+                <span>{activePrepSection.title}</span>
+                <strong>{activePrepProgress.percent}%</strong>
+              </div>
+              <p>{activePrepSection.target}</p>
+              <div className="progress-track" aria-label={`${activePrepSection.title} ${activePrepProgress.percent}% completed`}>
+                <span style={{ width: `${activePrepProgress.percent}%` }} />
+              </div>
+            </div>
 
-            return (
-              <article className="prep-section" key={section.id}>
-                <div className="prep-section-title">
-                  <div>
-                    <span>{section.title}</span>
-                    <strong>{sectionProgress.percent}%</strong>
-                  </div>
-                  <p>{section.target}</p>
-                  <div className="progress-track" aria-label={`${section.title} ${sectionProgress.percent}% completed`}>
-                    <span style={{ width: `${sectionProgress.percent}%` }} />
-                  </div>
-                </div>
+            <div className="prep-days">
+              {activePrepSection.days.map((day) => {
+                const done = day.tasks.filter((task) => task.done).length
+                const dayProgress = Math.round((done / day.tasks.length) * 100)
 
-                <div className="prep-days">
-                  {section.days.map((day) => {
-                    const done = day.tasks.filter((task) => task.done).length
-                    const dayProgress = Math.round((done / day.tasks.length) * 100)
+                return (
+                  <details className="prep-day" key={day.id}>
+                    <summary>
+                      <span>
+                        <b>{day.day}</b>
+                        <small>{day.time}</small>
+                      </span>
+                      <span>{dayProgress}%</span>
+                    </summary>
+                    <div className="prep-day-body">
+                      <strong>{day.focus}</strong>
+                      <p>Học được: {day.learned}</p>
+                      <div className="prep-task-list">
+                        {day.tasks.map((task) => (
+                          <label className={`prep-task ${task.done ? 'done' : ''}`} key={task.id}>
+                            <input
+                              checked={Boolean(task.done)}
+                              onChange={() => togglePrepTask(activePrepSection.id, day.id, task.id)}
+                              type="checkbox"
+                            />
+                            <span className="checkmark" />
+                            <span>{task.title}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </details>
+                )
+              })}
+            </div>
+          </article>
 
-                    return (
-                      <details className="prep-day" key={day.id}>
-                        <summary>
-                          <span>
-                            <b>{day.day}</b>
-                            <small>{day.time}</small>
-                          </span>
-                          <span>{dayProgress}%</span>
-                        </summary>
-                        <div className="prep-day-body">
-                          <strong>{day.focus}</strong>
-                          <p>Học được: {day.learned}</p>
-                          <div className="prep-task-list">
-                            {day.tasks.map((task) => (
-                              <label className={`prep-task ${task.done ? 'done' : ''}`} key={task.id}>
-                                <input
-                                  checked={Boolean(task.done)}
-                                  onChange={() => togglePrepTask(section.id, day.id, task.id)}
-                                  type="checkbox"
-                                />
-                                <span className="checkmark" />
-                                <span>{task.title}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
-                      </details>
-                    )
-                  })}
-                </div>
-              </article>
-            )
-          })}
+          <aside className="prep-menu" aria-label="FPT prep menu">
+            <span>Mục học</span>
+            {fptPrepPlan.map((section) => {
+              const sectionProgress = calculatePrepProgress(section)
+
+              return (
+                <button
+                  className={activePrepSectionId === section.id ? 'active' : ''}
+                  key={section.id}
+                  onClick={() => setActivePrepSectionId(section.id)}
+                  type="button"
+                >
+                  <b>{section.title}</b>
+                  <small>{sectionProgress.done}/{sectionProgress.total} việc</small>
+                  <strong>{sectionProgress.percent}%</strong>
+                </button>
+              )
+            })}
+          </aside>
         </div>
 
         <div className="prep-actions">

@@ -1,5 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+
+const fptPrepStorageKey = 'fpt-ai-test-prep-progress-v1'
 
 const categories = [
   'Tất cả',
@@ -71,6 +73,373 @@ const initialTasks = [
     link: 'https://dailydictation.com',
     linkLabel: 'Daily Dictation',
     done: false,
+  },
+]
+
+const initialFptPrepPlan = [
+  {
+    id: 'coding',
+    title: 'Coding',
+    target: '25-30 bài LeetCode, Python chắc, giải thích được độ phức tạp.',
+    days: [
+      {
+        id: 'coding-day-1',
+        day: 'Ngày 1',
+        time: '08:00 - 12:00',
+        focus: 'Python + Array/String',
+        learned: 'List, dict, set, Counter, sort key, slicing, edge cases.',
+        tasks: [
+          { id: 'py-core', title: 'Ôn Python list/dict/set + Counter/defaultdict' },
+          { id: 'lc-two-sum', title: 'LeetCode: Two Sum, Contains Duplicate, Valid Anagram' },
+          { id: 'lc-array', title: 'LeetCode: Best Time to Buy/Sell Stock, Maximum Subarray' },
+        ],
+      },
+      {
+        id: 'coding-day-2',
+        day: 'Ngày 2',
+        time: '08:00 - 12:00',
+        focus: 'Hash Map + Sorting',
+        learned: 'Đếm tần suất, group key, sort interval, prefix/suffix product.',
+        tasks: [
+          { id: 'lc-group', title: 'LeetCode: Group Anagrams' },
+          { id: 'lc-topk', title: 'LeetCode: Top K Frequent Elements' },
+          { id: 'lc-product-merge', title: 'LeetCode: Product Except Self, Merge Intervals' },
+        ],
+      },
+      {
+        id: 'coding-day-3',
+        day: 'Ngày 3',
+        time: '08:00 - 12:00',
+        focus: 'Two Pointers + Sliding Window',
+        learned: 'Hai con trỏ, window set/map, update answer trong vòng lặp.',
+        tasks: [
+          { id: 'lc-palindrome', title: 'LeetCode: Valid Palindrome' },
+          { id: 'lc-3sum-water', title: 'LeetCode: 3Sum, Container With Most Water' },
+          { id: 'lc-longest-substring', title: 'LeetCode: Longest Substring Without Repeating Characters' },
+        ],
+      },
+      {
+        id: 'coding-day-4',
+        day: 'Ngày 4',
+        time: '08:00 - 12:00',
+        focus: 'Stack/Queue',
+        learned: 'Stack validate, monotonic stack, xử lý expression cơ bản.',
+        tasks: [
+          { id: 'lc-parentheses', title: 'LeetCode: Valid Parentheses' },
+          { id: 'lc-min-stack', title: 'LeetCode: Min Stack' },
+          { id: 'lc-temperatures-rpn', title: 'LeetCode: Daily Temperatures, Evaluate RPN' },
+        ],
+      },
+      {
+        id: 'coding-day-5',
+        day: 'Ngày 5',
+        time: '08:00 - 12:00',
+        focus: 'Binary Search + Tree',
+        learned: 'Điều kiện left/right, DFS, BFS level order.',
+        tasks: [
+          { id: 'lc-binary-search', title: 'LeetCode: Binary Search, Search Insert Position' },
+          { id: 'lc-rotated', title: 'LeetCode: Search in Rotated Sorted Array' },
+          { id: 'lc-tree', title: 'LeetCode: Max Depth, Invert Tree, Level Order' },
+        ],
+      },
+      {
+        id: 'coding-day-6',
+        day: 'Ngày 6',
+        time: '08:00 - 12:00',
+        focus: 'Dynamic Programming cơ bản',
+        learned: 'State, base case, transition, memo/tabulation.',
+        tasks: [
+          { id: 'lc-climb', title: 'LeetCode: Climbing Stairs' },
+          { id: 'lc-house', title: 'LeetCode: House Robber' },
+          { id: 'lc-coin-lis', title: 'LeetCode: Coin Change, Longest Increasing Subsequence nếu còn thời gian' },
+        ],
+      },
+      {
+        id: 'coding-day-7',
+        day: 'Ngày 7',
+        time: '08:00 - 10:00',
+        focus: 'Mock coding test',
+        learned: 'Làm bài có giới hạn thời gian, ghi lỗi sai và edge case.',
+        tasks: [
+          { id: 'mock-easy', title: 'Mock: 1 Easy Array/String' },
+          { id: 'mock-medium', title: 'Mock: 1 Medium HashMap/Sliding Window' },
+          { id: 'mock-tree-dp', title: 'Mock: 1 Tree hoặc DP dễ' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ai-math',
+    title: 'AI Math',
+    target: 'Hiểu vector, matrix, probability, metrics, loss và gradient descent.',
+    days: [
+      {
+        id: 'math-day-1',
+        day: 'Ngày 1',
+        time: '13:30 - 15:30',
+        focus: 'ML overview',
+        learned: 'Supervised/unsupervised, classification/regression, train/test split.',
+        tasks: [
+          { id: 'ml-types', title: 'Phân biệt supervised, unsupervised, classification, regression' },
+          { id: 'overfit', title: 'Ghi ví dụ overfitting/underfitting' },
+          { id: 'split', title: 'Vẽ pipeline train/validation/test' },
+        ],
+      },
+      {
+        id: 'math-day-2',
+        day: 'Ngày 2',
+        time: '13:30 - 15:30',
+        focus: 'Linear Algebra',
+        learned: 'Vector, matrix, dot product, feature vector trong dataset.',
+        tasks: [
+          { id: 'vector-matrix', title: 'Ôn vector, matrix, shape dữ liệu' },
+          { id: 'dot-product', title: 'Tính dot product và cosine similarity đơn giản' },
+          { id: 'feature-vector', title: 'Giải thích row/sample và column/feature' },
+        ],
+      },
+      {
+        id: 'math-day-3',
+        day: 'Ngày 3',
+        time: '13:30 - 15:30',
+        focus: 'Probability + Statistics',
+        learned: 'Mean, variance, standard deviation, distribution, correlation.',
+        tasks: [
+          { id: 'stats-basic', title: 'Tính mean, median, variance trên ví dụ nhỏ' },
+          { id: 'prob-basic', title: 'Ôn xác suất cơ bản và conditional probability' },
+          { id: 'correlation', title: 'Hiểu correlation không đồng nghĩa causation' },
+        ],
+      },
+      {
+        id: 'math-day-4',
+        day: 'Ngày 4',
+        time: '13:30 - 15:30',
+        focus: 'Loss + Gradient Descent',
+        learned: 'Loss function, derivative, gradient, learning rate.',
+        tasks: [
+          { id: 'loss', title: 'So sánh MSE và Cross Entropy ở mức ý tưởng' },
+          { id: 'gradient', title: 'Giải thích gradient descent bằng tiếng Việt' },
+          { id: 'lr', title: 'Ghi tác động của learning rate quá lớn/quá nhỏ' },
+        ],
+      },
+      {
+        id: 'math-day-5',
+        day: 'Ngày 5',
+        time: '13:30 - 15:30',
+        focus: 'Metrics',
+        learned: 'Confusion matrix, accuracy, precision, recall, F1.',
+        tasks: [
+          { id: 'confusion', title: 'Tính TP/FP/FN/TN từ ví dụ classifier' },
+          { id: 'metrics', title: 'Tính precision, recall, F1' },
+          { id: 'metric-choice', title: 'Biết khi nào ưu tiên precision hoặc recall' },
+        ],
+      },
+      {
+        id: 'math-day-6',
+        day: 'Ngày 6',
+        time: '13:30 - 15:30',
+        focus: 'ML/DL models',
+        learned: 'Linear/logistic regression, tree, random forest, neural network, CNN.',
+        tasks: [
+          { id: 'classical-models', title: 'Ghi công dụng của 5 model ML phổ biến' },
+          { id: 'nn-basic', title: 'Giải thích input/hidden/output layer' },
+          { id: 'cnn-genai', title: 'Ôn CNN, embedding, RAG ở mức phỏng vấn fresher' },
+        ],
+      },
+      {
+        id: 'math-day-7',
+        day: 'Ngày 7',
+        time: '13:30 - 15:30',
+        focus: 'AI mock interview',
+        learned: 'Trả lời ngắn, đúng ý, có ví dụ project.',
+        tasks: [
+          { id: 'mock-ai-pipeline', title: 'Trả lời ML pipeline từ data đến evaluation' },
+          { id: 'mock-overfit-metric', title: 'Trả lời overfitting và metrics' },
+          { id: 'mock-rag', title: 'Trả lời CNN/Embedding/RAG' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'english',
+    title: 'English',
+    target: 'Nói được self-intro, project explanation và câu hỏi AI cơ bản.',
+    days: [
+      {
+        id: 'english-day-1',
+        day: 'Ngày 1',
+        time: '19:30 - 20:30',
+        focus: 'Self-introduction',
+        learned: 'Giới thiệu bản thân 60-90 giây, nói chậm và rõ.',
+        tasks: [
+          { id: 'intro-script', title: 'Viết self-introduction 8-10 câu' },
+          { id: 'intro-record', title: 'Ghi âm 1 lần và sửa 3 lỗi phát âm' },
+          { id: 'vocab-ml', title: 'Học 10 từ: dataset, feature, label, model, accuracy...' },
+        ],
+      },
+      {
+        id: 'english-day-2',
+        day: 'Ngày 2',
+        time: '19:30 - 20:30',
+        focus: 'Data processing explanation',
+        learned: 'Nói được cách dùng Pandas để clean data.',
+        tasks: [
+          { id: 'data-script', title: 'Viết 5 câu về data cleaning bằng Pandas' },
+          { id: 'dictation', title: 'Daily Dictation 1 bài ngắn' },
+          { id: 'vocab-data', title: 'Học từ: missing value, preprocessing, normalize, encode' },
+        ],
+      },
+      {
+        id: 'english-day-3',
+        day: 'Ngày 3',
+        time: '19:30 - 20:30',
+        focus: 'ML model answers',
+        learned: 'Trả lời classification, regression, overfitting.',
+        tasks: [
+          { id: 'what-ml', title: 'Trả lời: What is machine learning?' },
+          { id: 'class-reg', title: 'Trả lời: classification vs regression' },
+          { id: 'overfit-en', title: 'Trả lời: What is overfitting?' },
+        ],
+      },
+      {
+        id: 'english-day-4',
+        day: 'Ngày 4',
+        time: '19:30 - 20:30',
+        focus: 'Deep learning answers',
+        learned: 'Trả lời neural network, gradient descent, loss function.',
+        tasks: [
+          { id: 'nn-en', title: 'Trả lời: What is a neural network?' },
+          { id: 'gd-en', title: 'Trả lời: What is gradient descent?' },
+          { id: 'loss-en', title: 'Trả lời: What is a loss function?' },
+        ],
+      },
+      {
+        id: 'english-day-5',
+        day: 'Ngày 5',
+        time: '19:30 - 20:30',
+        focus: 'CV/GenAI vocabulary',
+        learned: 'Nói cơ bản về CNN, embedding, RAG.',
+        tasks: [
+          { id: 'cnn-en', title: 'Trả lời: What is CNN?' },
+          { id: 'embedding-en', title: 'Trả lời: What is an embedding?' },
+          { id: 'rag-en', title: 'Trả lời: What is RAG?' },
+        ],
+      },
+      {
+        id: 'english-day-6',
+        day: 'Ngày 6',
+        time: '19:30 - 20:30',
+        focus: 'Project explanation',
+        learned: 'Kể project theo Problem, Dataset, Model, Result, Learning.',
+        tasks: [
+          { id: 'project-script', title: 'Viết project explanation 10-12 câu' },
+          { id: 'project-record', title: 'Ghi âm giải thích project 2 phút' },
+          { id: 'star-answer', title: 'Chuẩn bị 1 câu STAR về bug/khó khăn' },
+        ],
+      },
+      {
+        id: 'english-day-7',
+        day: 'Ngày 7',
+        time: '19:30 - 20:30',
+        focus: 'Mock interview',
+        learned: 'Trả lời phỏng vấn không học vẹt, giữ ý rõ và tự tin.',
+        tasks: [
+          { id: 'mock-intro', title: 'Mock: Tell me about yourself' },
+          { id: 'mock-fpt', title: 'Mock: Why FPT Software and why AI Engineer?' },
+          { id: 'mock-project', title: 'Mock: Tell me about your AI project' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'project',
+    title: 'Thực hành AI',
+    target: 'Có 1 mini project scikit-learn để trình bày khi test/phỏng vấn.',
+    days: [
+      {
+        id: 'project-day-1',
+        day: 'Ngày 1',
+        time: '15:45 - 17:00',
+        focus: 'First sklearn model',
+        learned: 'Load dataset, split data, train Logistic Regression, in accuracy.',
+        tasks: [
+          { id: 'iris-load', title: 'Load Iris dataset bằng sklearn' },
+          { id: 'iris-train', title: 'Train Logistic Regression' },
+          { id: 'iris-eval', title: 'In accuracy và giải thích kết quả' },
+        ],
+      },
+      {
+        id: 'project-day-2',
+        day: 'Ngày 2',
+        time: '15:45 - 17:00',
+        focus: 'Pandas preprocessing',
+        learned: 'read_csv, info, describe, isnull, groupby, fill missing values.',
+        tasks: [
+          { id: 'pandas-read', title: 'Đọc 1 dataset CSV hoặc built-in dataset' },
+          { id: 'pandas-clean', title: 'Kiểm tra missing values và xử lý đơn giản' },
+          { id: 'pandas-summary', title: 'Tạo summary bằng groupby/describe' },
+        ],
+      },
+      {
+        id: 'project-day-3',
+        day: 'Ngày 3',
+        time: '15:45 - 17:00',
+        focus: 'Train classical ML',
+        learned: 'So sánh Logistic Regression, KNN, Random Forest.',
+        tasks: [
+          { id: 'train-logistic', title: 'Train Logistic Regression' },
+          { id: 'train-knn-rf', title: 'Train KNN hoặc Random Forest' },
+          { id: 'compare-models', title: 'So sánh accuracy/F1 giữa các model' },
+        ],
+      },
+      {
+        id: 'project-day-4',
+        day: 'Ngày 4',
+        time: '15:45 - 17:00',
+        focus: 'PyTorch/TensorFlow workflow',
+        learned: 'Tensor, forward pass, loss, optimizer step ở mức cơ bản.',
+        tasks: [
+          { id: 'tensor-basic', title: 'Tạo tensor và kiểm tra shape' },
+          { id: 'train-loop-read', title: 'Đọc hiểu skeleton training loop' },
+          { id: 'dl-terms', title: 'Ghi nghĩa epoch, batch size, learning rate' },
+        ],
+      },
+      {
+        id: 'project-day-5',
+        day: 'Ngày 5',
+        time: '15:45 - 17:00',
+        focus: 'Computer Vision/GenAI quick demo',
+        learned: 'Image classification/object detection/RAG ở mức concept.',
+        tasks: [
+          { id: 'cv-notes', title: 'Ghi note CNN: convolution, pooling, classifier' },
+          { id: 'rag-notes', title: 'Ghi flow RAG: chunk, embed, retrieve, generate' },
+          { id: 'demo-choice', title: 'Chọn project để kể: Iris/Titanic/Spam/House Price' },
+        ],
+      },
+      {
+        id: 'project-day-6',
+        day: 'Ngày 6',
+        time: '15:45 - 17:00',
+        focus: 'Mini project finish',
+        learned: 'Một pipeline hoàn chỉnh đủ để đưa vào CV/phỏng vấn.',
+        tasks: [
+          { id: 'project-notebook', title: 'Hoàn thành notebook/script mini project' },
+          { id: 'project-readme', title: 'Viết README: Problem, Dataset, Model, Metric' },
+          { id: 'project-result', title: 'Ghi kết quả và cách cải thiện' },
+        ],
+      },
+      {
+        id: 'project-day-7',
+        day: 'Ngày 7',
+        time: '15:45 - 17:00',
+        focus: 'Review and polish',
+        learned: 'Biết trình bày project mạch lạc dưới áp lực test.',
+        tasks: [
+          { id: 'project-clean-code', title: 'Dọn code/notebook cho dễ đọc' },
+          { id: 'project-practice', title: 'Tập demo hoặc kể project trong 2 phút' },
+          { id: 'project-gap', title: 'Ghi 3 điểm còn yếu để học tiếp sau test' },
+        ],
+      },
+    ],
   },
 ]
 
@@ -393,6 +762,30 @@ const calendarDays = [
 
 const weekLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
+function calculatePrepProgress(section) {
+  const tasks = section.days.flatMap((day) => day.tasks)
+  const done = tasks.filter((task) => task.done).length
+  const total = tasks.length
+
+  return {
+    done,
+    total,
+    percent: total === 0 ? 0 : Math.round((done / total) * 100),
+  }
+}
+
+function loadFptPrepPlan() {
+  try {
+    const savedPlan = window.localStorage.getItem(fptPrepStorageKey)
+
+    if (!savedPlan) return initialFptPrepPlan
+
+    return JSON.parse(savedPlan)
+  } catch {
+    return initialFptPrepPlan
+  }
+}
+
 function getPreviewItems(day) {
   return day.items
     ?.filter((item) => item.id !== 'sleep' && item.id !== 'wake')
@@ -403,10 +796,15 @@ function App() {
   const [tasks, setTasks] = useState(initialTasks)
   const [weekPlans, setWeekPlans] = useState(initialWeekPlans)
   const [selectedDayId, setSelectedDayId] = useState(initialWeekPlans[0].id)
+  const [fptPrepPlan, setFptPrepPlan] = useState(loadFptPrepPlan)
   const [mathExercises, setMathExercises] = useState(initialMathExercises)
   const [englishInterview, setEnglishInterview] = useState(initialEnglishInterview)
   const [aiInterview, setAiInterview] = useState(initialAiInterview)
   const [activeCategory, setActiveCategory] = useState('Tất cả')
+
+  useEffect(() => {
+    window.localStorage.setItem(fptPrepStorageKey, JSON.stringify(fptPrepPlan))
+  }, [fptPrepPlan])
 
   const selectedDay = weekPlans.find((day) => day.id === selectedDayId) ?? weekPlans[0]
   const selectedDate = selectedDay.id.split('-').reverse().slice(0, 2).join('/')
@@ -418,6 +816,20 @@ function App() {
 
   const completedCount = selectedDay.items.filter((task) => task.done).length
   const progress = Math.round((completedCount / selectedDay.items.length) * 100)
+  const prepTotals = fptPrepPlan.reduce(
+    (summary, section) => {
+      const sectionProgress = calculatePrepProgress(section)
+
+      return {
+        done: summary.done + sectionProgress.done,
+        total: summary.total + sectionProgress.total,
+      }
+    },
+    { done: 0, total: 0 },
+  )
+  const prepProgress = prepTotals.total === 0
+    ? 0
+    : Math.round((prepTotals.done / prepTotals.total) * 100)
 
   function toggleTask(id) {
     setTasks((currentTasks) =>
@@ -466,6 +878,32 @@ function App() {
     )
   }
 
+  function togglePrepTask(sectionId, dayId, taskId) {
+    setFptPrepPlan((currentPlan) =>
+      currentPlan.map((section) =>
+        section.id === sectionId
+          ? {
+              ...section,
+              days: section.days.map((day) =>
+                day.id === dayId
+                  ? {
+                      ...day,
+                      tasks: day.tasks.map((task) =>
+                        task.id === taskId ? { ...task, done: !task.done } : task,
+                      ),
+                    }
+                  : day,
+              ),
+            }
+          : section,
+      ),
+    )
+  }
+
+  function resetFptPrepPlan() {
+    setFptPrepPlan(initialFptPrepPlan)
+  }
+
   return (
     <main className="planner">
       <section className="page-header">
@@ -490,6 +928,106 @@ function App() {
         <p>
           {completedCount} / {selectedDay.items.length} việc trong ngày đã hoàn thành
         </p>
+      </section>
+
+      <section className="fpt-prep-panel">
+        <div className="fpt-prep-header">
+          <div>
+            <span>FPT AI test prep</span>
+            <h2>Lộ trình gấp 7 ngày: code, AI math, English</h2>
+          </div>
+          <div className="storage-status">
+            <b>Local saved</b>
+            <small>MongoDB-ready khi có backend API</small>
+          </div>
+        </div>
+
+        <div className="prep-overview">
+          <article>
+            <span>Tổng tiến độ</span>
+            <strong>{prepProgress}%</strong>
+            <div className="progress-track" aria-label={`${prepProgress}% FPT prep completed`}>
+              <span style={{ width: `${prepProgress}%` }} />
+            </div>
+            <p>{prepTotals.done}/{prepTotals.total} đầu việc đã xong</p>
+          </article>
+          <article>
+            <span>Giờ tự học/ngày</span>
+            <strong>8h</strong>
+            <p>08:00-12:00 coding, 13:30-17:00 AI, 19:30-20:30 English.</p>
+          </article>
+          <article>
+            <span>Kết quả cần đạt</span>
+            <strong>1 project</strong>
+            <p>Mini ML pipeline + English script để kể khi test/phỏng vấn.</p>
+          </article>
+        </div>
+
+        <div className="prep-section-grid">
+          {fptPrepPlan.map((section) => {
+            const sectionProgress = calculatePrepProgress(section)
+
+            return (
+              <article className="prep-section" key={section.id}>
+                <div className="prep-section-title">
+                  <div>
+                    <span>{section.title}</span>
+                    <strong>{sectionProgress.percent}%</strong>
+                  </div>
+                  <p>{section.target}</p>
+                  <div className="progress-track" aria-label={`${section.title} ${sectionProgress.percent}% completed`}>
+                    <span style={{ width: `${sectionProgress.percent}%` }} />
+                  </div>
+                </div>
+
+                <div className="prep-days">
+                  {section.days.map((day) => {
+                    const done = day.tasks.filter((task) => task.done).length
+                    const dayProgress = Math.round((done / day.tasks.length) * 100)
+
+                    return (
+                      <details className="prep-day" key={day.id}>
+                        <summary>
+                          <span>
+                            <b>{day.day}</b>
+                            <small>{day.time}</small>
+                          </span>
+                          <span>{dayProgress}%</span>
+                        </summary>
+                        <div className="prep-day-body">
+                          <strong>{day.focus}</strong>
+                          <p>Học được: {day.learned}</p>
+                          <div className="prep-task-list">
+                            {day.tasks.map((task) => (
+                              <label className={`prep-task ${task.done ? 'done' : ''}`} key={task.id}>
+                                <input
+                                  checked={Boolean(task.done)}
+                                  onChange={() => togglePrepTask(section.id, day.id, task.id)}
+                                  type="checkbox"
+                                />
+                                <span className="checkmark" />
+                                <span>{task.title}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      </details>
+                    )
+                  })}
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        <div className="prep-actions">
+          <button onClick={resetFptPrepPlan} type="button">Reset tiến độ 7 ngày</button>
+          <p>
+            Dữ liệu hiện lưu bằng localStorage. Khi thêm backend, gửi payload này lên MongoDB collection
+            <code> study_progress </code>
+            theo userId và ngày cập nhật.
+          </p>
+        </div>
       </section>
 
       <section className="calendar-panel">

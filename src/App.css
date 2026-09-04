@@ -1251,6 +1251,7 @@ button {
   text-decoration: line-through;
 }
 
+.leetcode-method,
 .leetcode-grid,
 .ielts-grid,
 .portfolio-grid,
@@ -1263,6 +1264,41 @@ button {
 .ielts-grid,
 .leetcode-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.leetcode-method {
+  grid-template-columns: 1.1fr 1fr 1fr;
+}
+
+.leetcode-method article {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.leetcode-method span {
+  color: #101828;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.leetcode-method p {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.leetcode-method b {
+  flex: 0 0 auto;
+  color: #182230;
 }
 
 .portfolio-grid,
@@ -1307,6 +1343,41 @@ button {
   color: #667085;
   font-size: 14px;
   line-height: 1.45;
+}
+
+.leetcode-day-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.leetcode-day {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 4px 10px;
+  padding: 10px;
+  border: 1px solid #e6eaf0;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.leetcode-day b {
+  grid-row: span 2;
+  color: #101828;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.leetcode-day span {
+  color: #182230;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.leetcode-day p {
+  color: #667085;
+  font-size: 12px;
 }
 
 .ielts-task-list {
@@ -1382,6 +1453,7 @@ button {
   }
 
   .interview-grid,
+  .leetcode-method,
   .ielts-grid,
   .leetcode-grid,
   .portfolio-grid,
@@ -1481,6 +1553,7 @@ button {
   }
 
   .interview-grid,
+  .leetcode-method,
   .ielts-grid,
   .leetcode-grid,
   .portfolio-grid,

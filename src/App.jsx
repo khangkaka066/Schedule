@@ -728,11 +728,80 @@ const confidenceStats = [
   ['Portfolio shipped', '0/4 projects'],
 ]
 
+const leetcodeRoutine = [
+  ['15 phút', 'Ôn lại note hôm qua và nói lại pattern bằng lời của mình.'],
+  ['70 phút', 'Làm 2 bài mới: brute force trước, tối ưu sau, luôn tính time/space.'],
+  ['25 phút', 'Đọc lời giải, ghi lỗi, viết câu chốt nhớ lâu vào sổ tay.'],
+  ['10 phút', 'Làm lại nhanh 1 bài cũ hoặc viết pseudo-code không nhìn đáp án.'],
+]
+
+const leetcodeNotebookTemplate = [
+  'Tên bài + chủ đề',
+  'Dấu hiệu nhận diện pattern',
+  'Brute force và điểm nghẽn',
+  'Ý tưởng tối ưu + độ phức tạp',
+  'Lỗi mình mắc và câu chốt nhớ lâu',
+]
+
 const leetcodeRoadmap = [
-  ['Tuần 1', 'Array, String, HashMap', 'Two Sum, Valid Anagram, Contains Duplicate, Group Anagrams, Product of Array Except Self'],
-  ['Tuần 2', 'Two Pointers, Sliding Window, Stack', 'Valid Palindrome, 3Sum, Best Time to Buy/Sell Stock, Longest Substring, Valid Parentheses'],
-  ['Tuần 3', 'Binary Search, Linked List, Tree', 'Binary Search, Search Insert Position, Reverse Linked List, Merge Two Lists, Maximum Depth'],
-  ['Tuần 4', 'Graph, DP cơ bản, Mock Interview', 'Number of Islands, Clone Graph, Climbing Stairs, House Robber, 2 mock interviews'],
+  {
+    week: 'Tuần 1',
+    pattern: 'Array, String, HashMap',
+    target: 'Quen cách biến đề thành cấu trúc dữ liệu, tự viết brute force và tối ưu bằng dict/set/prefix.',
+    days: [
+      ['Ngày 1', 'Array cơ bản', 'Two Sum, Contains Duplicate, Best Time to Buy and Sell Stock'],
+      ['Ngày 2', 'Prefix Sum', 'Running Sum, Range Sum Query Immutable, Subarray Sum Equals K'],
+      ['Ngày 3', 'HashMap/HashSet', 'Valid Anagram, Group Anagrams, Top K Frequent Elements'],
+      ['Ngày 4', 'String', 'Valid Palindrome, Is Subsequence, Longest Common Prefix'],
+      ['Ngày 5', 'Two Pointers', 'Two Sum II, 3Sum, Container With Most Water'],
+      ['Ngày 6', 'Sliding Window', 'Best Time to Buy/Sell Stock, Longest Substring Without Repeating Characters, Minimum Size Subarray Sum'],
+      ['Ngày 7', 'Review', 'Làm lại 5 bài đã sai hoặc phải xem gợi ý'],
+    ],
+  },
+  {
+    week: 'Tuần 2',
+    pattern: 'Stack, Queue, Binary Search, Linked List',
+    target: 'Nhận diện pattern nhanh hơn, viết pointer/binary search không kẹt loop.',
+    days: [
+      ['Ngày 8', 'Stack', 'Valid Parentheses, Min Stack, Daily Temperatures'],
+      ['Ngày 9', 'Monotonic Stack', 'Next Greater Element I, Daily Temperatures, Largest Rectangle in Histogram nếu còn sức'],
+      ['Ngày 10', 'Queue/BFS cơ bản', 'Number of Recent Calls, Moving Average from Data Stream, Binary Tree Level Order Traversal'],
+      ['Ngày 11', 'Binary Search', 'Binary Search, Search Insert Position, First Bad Version'],
+      ['Ngày 12', 'Binary Search nâng hơn', 'Search in Rotated Sorted Array, Find Minimum in Rotated Sorted Array, Koko Eating Bananas'],
+      ['Ngày 13', 'Linked List', 'Reverse Linked List, Merge Two Sorted Lists, Linked List Cycle'],
+      ['Ngày 14', 'Review', 'Làm lại bài khó nhất mỗi ngày trong tuần'],
+    ],
+  },
+  {
+    week: 'Tuần 3',
+    pattern: 'Tree, Graph, Recursion, Backtracking',
+    target: 'Luyện tư duy đệ quy, BFS/DFS và duyệt trạng thái có visited/checkpoint rõ ràng.',
+    days: [
+      ['Ngày 15', 'Tree DFS', 'Maximum Depth of Binary Tree, Same Tree, Invert Binary Tree'],
+      ['Ngày 16', 'Tree nâng hơn', 'Diameter of Binary Tree, Balanced Binary Tree, Lowest Common Ancestor'],
+      ['Ngày 17', 'BFS trên grid', 'Number of Islands, Max Area of Island, Flood Fill'],
+      ['Ngày 18', 'Graph cơ bản', 'Clone Graph, Course Schedule, Graph Valid Tree'],
+      ['Ngày 19', 'Recursion', 'Fibonacci, Climbing Stairs, Pow(x, n)'],
+      ['Ngày 20', 'Backtracking', 'Subsets, Permutations, Combination Sum'],
+      ['Ngày 21', 'Review', 'Chọn 6 bài bất kỳ, nhìn đề và nói hướng giải trước khi code'],
+    ],
+  },
+  {
+    week: 'Tuần 4',
+    pattern: 'Dynamic Programming, Greedy, Heap, Mock',
+    target: 'Biết xác định state/base/transition, luyện giải thích solution như phỏng vấn.',
+    days: [
+      ['Ngày 22', 'DP 1D', 'Climbing Stairs, House Robber, Min Cost Climbing Stairs'],
+      ['Ngày 23', 'DP chuỗi', 'Longest Palindromic Substring, Longest Common Subsequence'],
+      ['Ngày 24', 'DP mảng', 'Maximum Subarray, Coin Change, Partition Equal Subset Sum'],
+      ['Ngày 25', 'Greedy', 'Jump Game, Gas Station, Merge Intervals'],
+      ['Ngày 26', 'Heap/Priority Queue', 'Kth Largest Element in an Array, Last Stone Weight, Merge K Sorted Lists'],
+      ['Ngày 27', 'Mixed Practice', 'Làm 4 bài random Easy/Medium, không xem tag trong 15 phút đầu'],
+      ['Ngày 28', 'Mock Interview', '2 bài Medium, timer 45 phút/bài'],
+      ['Ngày 29', 'Redo sai', 'Làm lại toàn bộ bài sai, không đọc lời giải cũ ngay'],
+      ['Ngày 30', 'Tổng kết pattern', 'Chia sổ tay theo HashMap, Two Pointers, Sliding Window, Stack, Binary Search, Tree, Graph, Backtracking, DP, Greedy, Heap'],
+    ],
+  },
 ]
 
 const ieltsRoadmap = [
@@ -1423,15 +1492,44 @@ function App() {
         <div className="panel-title">
           <div>
             <span>LeetCode roadmap</span>
-            <h2>Lộ trình giải thuật 4 tuần để phỏng vấn</h2>
+            <h2>Lộ trình 30 ngày để tăng khả năng tự giải</h2>
           </div>
         </div>
+        <div className="leetcode-method">
+          <article>
+            <span>Routine mỗi ngày</span>
+            {leetcodeRoutine.map(([time, task]) => (
+              <p key={time}><b>{time}</b>{task}</p>
+            ))}
+          </article>
+          <article>
+            <span>Sổ tay mỗi bài</span>
+            {leetcodeNotebookTemplate.map((item) => (
+              <p key={item}>{item}</p>
+            ))}
+          </article>
+          <article>
+            <span>Khi bí</span>
+            <p><b>20 phút</b>Tự nghĩ brute force, ví dụ nhỏ và edge case.</p>
+            <p><b>10 phút</b>Xem hint nhẹ, không đọc full code ngay.</p>
+            <p><b>30 phút</b>Tự code lại và ghi vì sao mình chưa nghĩ ra.</p>
+          </article>
+        </div>
         <div className="leetcode-grid">
-          {leetcodeRoadmap.map(([week, pattern, problems]) => (
-            <article className="leetcode-card" key={week}>
-              <span>{week}</span>
-              <strong>{pattern}</strong>
-              <p>{problems}</p>
+          {leetcodeRoadmap.map((week) => (
+            <article className="leetcode-card" key={week.week}>
+              <span>{week.week}</span>
+              <strong>{week.pattern}</strong>
+              <p>{week.target}</p>
+              <div className="leetcode-day-list">
+                {week.days.map(([day, focus, problems]) => (
+                  <div className="leetcode-day" key={`${week.week}-${day}`}>
+                    <b>{day}</b>
+                    <span>{focus}</span>
+                    <p>{problems}</p>
+                  </div>
+                ))}
+              </div>
               <a href="https://leetcode.com" rel="noreferrer" target="_blank">Open LeetCode</a>
             </article>
           ))}

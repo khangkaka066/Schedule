@@ -203,6 +203,41 @@ const englishSkillMethods = [
   },
 ]
 
+const leetcodeComplexityGuide = [
+  {
+    topic: 'Đếm vòng lặp',
+    notes: [
+      'Một vòng chạy n lần là O(n).',
+      'Hai vòng lồng nhau thường là O(n^2).',
+      'Hai vòng tách rời O(n) + O(n) vẫn là O(n).',
+    ],
+  },
+  {
+    topic: 'Nhìn kích thước input',
+    notes: [
+      'n khoảng 10^5 thường cần O(n) hoặc O(n log n).',
+      'n khoảng 10^3 có thể chịu O(n^2).',
+      'n nhỏ dưới 20 thường có thể backtracking/bitmask O(2^n).',
+    ],
+  },
+  {
+    topic: 'Nhận diện log n',
+    notes: [
+      'Mỗi bước bỏ đi một nửa search space là O(log n).',
+      'Binary search trên mảng sort hoặc answer space thường là O(log n) nhân chi phí check.',
+      'Heap push/pop là O(log n), làm n lần là O(n log n).',
+    ],
+  },
+  {
+    topic: 'Tính space complexity',
+    notes: [
+      'HashMap/HashSet lưu tối đa n phần tử là O(n).',
+      'Recursion depth h dùng O(h) call stack; tree skewed có thể là O(n).',
+      'Nếu sửa in-place và chỉ dùng vài biến phụ thì thường là O(1).',
+    ],
+  },
+]
+
 const tracks = [
   {
     id: 'leetcode',
@@ -212,10 +247,12 @@ const tracks = [
     goal: 'Từ nền tảng array/string đến mock interview, ưu tiên nhận diện pattern, tự giải lại và giải thích độ phức tạp.',
     accent: '#2563eb',
     daily: [
-      ['15 phút', 'Ôn note hôm qua, nói lại pattern bằng lời của mình.'],
-      ['70 phút', 'Làm 2 bài mới: brute force trước, tối ưu sau.'],
-      ['25 phút', 'Ghi sổ tay: pattern, lỗi sai, time/space complexity.'],
-      ['10 phút', 'Redo nhanh 1 bài cũ hoặc viết pseudo-code.'],
+      ['1. Hiểu đề', 'Viết lại đề bằng lời của mình, xác định input/output, constraints và edge cases.'],
+      ['2. Ví dụ nhỏ', 'Tự chạy tay 2-3 ví dụ, gồm case rỗng, 1 phần tử, trùng lặp, số âm hoặc biên lớn.'],
+      ['3. Brute force', 'Nghĩ cách đơn giản nhất trước, dù chậm, để biết bài đang yêu cầu kiểm tra/tối ưu điều gì.'],
+      ['4. Tìm pattern', 'Hỏi: có cần HashMap, Two Pointers, Sliding Window, Stack, Binary Search, BFS/DFS hay DP không?'],
+      ['5. Tối ưu', 'Chỉ tối ưu điểm nghẽn lớn nhất: vòng lặp thừa, lookup chậm, trạng thái lặp lại hoặc sort được.'],
+      ['6. Code và test', 'Code theo pseudo-code, test sample, edge case và tự tính time/space trước khi submit.'],
     ],
     metrics: [
       ['Mục tiêu bài', '120+'],
@@ -733,7 +770,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
 
       <section className="track-support">
         <article>
-          <span>Nhịp học mỗi ngày</span>
+          <span>{track.id === 'leetcode' ? 'Quy trình suy nghĩ' : 'Nhịp học mỗi ngày'}</span>
           {track.daily.map(([time, task]) => (
             <p key={time}><b>{time}</b><em>{task}</em></p>
           ))}
@@ -753,6 +790,28 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
           </div>
         </article>
       </section>
+
+      {track.id === 'leetcode' && (
+        <section className="skill-method-panel leetcode-guide-panel">
+          <div className="method-heading">
+            <span>Cách tính độ phức tạp</span>
+            <h3>Ước lượng Big-O bằng số lần chạy và bộ nhớ phụ</h3>
+          </div>
+
+          <div className="skill-method-grid">
+            {leetcodeComplexityGuide.map((guide) => (
+              <article className="skill-method-card leetcode-method-card" key={guide.topic}>
+                <span>{guide.topic}</span>
+                <ol>
+                  {guide.notes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {track.id === 'english' && (
         <section className="skill-method-panel">

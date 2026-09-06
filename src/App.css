@@ -368,6 +368,15 @@ button {
   background: #f8fafc;
 }
 
+.leetcode-guide-panel .method-heading span,
+.leetcode-method-card span {
+  color: #2563eb;
+}
+
+.leetcode-method-card {
+  border-left-color: #2563eb;
+}
+
 .skill-method-card p {
   margin: 0;
   color: #334155;

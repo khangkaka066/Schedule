@@ -3,6 +3,7 @@ import './App.css'
 
 const progressKey = 'study-roadmap-progress-v1'
 const scheduleProgressKey = 'daily-schedule-progress-v1'
+const ownerName = 'Khang'
 
 const weeklySchedule = [
   {
@@ -80,6 +81,8 @@ const weeklySchedule = [
       ['08:00 - 12:00', 'Làm việc cố định', 'Work'],
       ['14:00 - 15:30', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['16:00 - 17:30', 'Đồ án: code/report phần quan trọng nhất tuần', 'Project'],
+      ['17:30 - 18:00', 'Báo cáo tiến độ với giáo viên hướng dẫn', 'Advisor'],
+      ['18:00 - 18:15', 'Ghi lại feedback và việc cần sửa sau buổi báo cáo', 'Review'],
       ['18:20 - 19:30', 'LeetCode timed practice trước giờ trade', 'LeetCode'],
       ['20:00 - 22:10', 'Trade cố định, cuối phiên chốt weekly journal', 'Trading'],
       ['22:20 - 23:00', 'Speaking Part 1 hoặc shadowing nhẹ', 'English'],
@@ -127,7 +130,123 @@ const fixedCommitments = [
   ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
   ['Tiếng Anh', 'Thứ 3 học 18:00 - 19:30; Chủ nhật học 15:00 - 16:30.'],
   ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
+  ['Báo cáo GVHD', 'Mỗi thứ 6 lúc 17:30 báo cáo tiến độ với giáo viên hướng dẫn.'],
   ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
+]
+
+const khangProjectWeeks = [
+  {
+    week: 'Tuần 1',
+    focus: 'Nền móng C++ project, CLI skeleton và dashboard wireframe',
+    report: 'Demo được CMake build, CLI skeleton, dashboard wireframe và contract dữ liệu đã thống nhất.',
+    days: [
+      ['Thứ 2', 'Setup C/C++ project structure và CMake, đảm bảo build được project rỗng.'],
+      ['Thứ 3', 'Thiết kế tracker interface: input, config, output schema và pseudo flow.'],
+      ['Thứ 4', 'Thiết kế CLI skeleton nhận input/config/output và in kết quả mẫu đúng schema.'],
+      ['Thứ 5', 'Thiết kế dashboard layout: floor map, heatmap, zone stats, transition, journey.'],
+      ['Thứ 6', 'Tổng hợp CMake + CLI + wireframe, chuẩn bị báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Sửa feedback sau báo cáo, bổ sung README setup ban đầu.'],
+      ['Chủ nhật', 'Chốt checklist tuần 1 và chuẩn bị task port bottleneck tuần 2.'],
+    ],
+  },
+  {
+    week: 'Tuần 2',
+    focus: 'Port bottleneck ban đầu, CLI flags và dashboard đọc mock data',
+    report: 'Có initial C++ core, CLI flags cơ bản và dashboard prototype đọc mock_tracks.csv.',
+    days: [
+      ['Thứ 2', 'Đọc bottleneck report, chọn module cần port sang C/C++.'],
+      ['Thứ 3', 'Port module bottleneck sang C/C++ bản tối thiểu chạy được sample input.'],
+      ['Thứ 4', 'Thiết kế Linux CLI flags: input, output, config, device.'],
+      ['Thứ 5', 'Implement dashboard prototype đọc mock data và hiển thị panel chính.'],
+      ['Thứ 6', 'Chạy demo C++ core + CLI flags + dashboard mock, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Fix lỗi build/CLI sau feedback, ghi lại dependency còn thiếu.'],
+      ['Chủ nhật', 'Chuẩn bị kế hoạch tiếp tục port LTC-DMA core tuần 3.'],
+    ],
+  },
+  {
+    week: 'Tuần 3',
+    focus: 'C++ core milestone, shared library và first end-to-end prototype',
+    report: 'Có C++ core milestone, libltcdma.so build được và first end-to-end prototype.',
+    days: [
+      ['Thứ 2', 'Tiếp tục port LTC-DMA core sang C++, ưu tiên module chính.'],
+      ['Thứ 3', 'Viết test/sample input để kiểm tra output C++ core.'],
+      ['Thứ 4', 'Build shared library .so trên Linux hoặc môi trường tương đương.'],
+      ['Thứ 5', 'Integrate Python tracker output vào dashboard để có first end-to-end prototype.'],
+      ['Thứ 6', 'Chuẩn bị demo Python tracker -> analytics/dashboard, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Ghi lỗi integration và cập nhật contract nếu có thay đổi.'],
+      ['Chủ nhật', 'Chuẩn bị task Python binding/API cho tuần 4.'],
+    ],
+  },
+  {
+    week: 'Tuần 4',
+    focus: 'Python binding/API, backend swap và analytics dashboard',
+    report: 'C++ core gọi được từ Python/API, backend swap Python/C++ và analytics dashboard chạy được.',
+    days: [
+      ['Thứ 2', 'Expose C++ core qua Python binding/API bản tối thiểu.'],
+      ['Thứ 3', 'Viết wrapper để gọi C++ backend từ Python với output đúng contract.'],
+      ['Thứ 4', 'Implement backend swap Python <-> C++ bằng config hoặc CLI flag.'],
+      ['Thứ 5', 'Kết nối analytics output vào dashboard, kiểm tra heatmap/zone stats.'],
+      ['Thứ 6', 'Demo backend swap + analytics dashboard, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Sửa bug binding/API và ghi checklist rủi ro realtime.'],
+      ['Chủ nhật', 'Chuẩn bị threading/async pipeline tuần 5.'],
+    ],
+  },
+  {
+    week: 'Tuần 5',
+    focus: 'Realtime pipeline, full CLI và live dashboard',
+    report: 'Có pipeline threading/async nếu cần, CLI đầy đủ và live dashboard kết nối backend.',
+    days: [
+      ['Thứ 2', 'Implement threading/async pipeline nếu bottleneck realtime còn rõ.'],
+      ['Thứ 3', 'Kiểm tra queue/buffer, tránh block UI hoặc mất frame.'],
+      ['Thứ 4', 'Complete CLI: input, output, device, display, save, config.'],
+      ['Thứ 5', 'Kết nối live dashboard với C++/Python backend, chạy video mẫu.'],
+      ['Thứ 6', 'Demo CLI đầy đủ + live dashboard, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Fix realtime issues và thêm fallback nếu FPS chưa đạt.'],
+      ['Chủ nhật', 'Chuẩn bị evaluation Python vs C++ tuần 6.'],
+    ],
+  },
+  {
+    week: 'Tuần 6',
+    focus: 'Performance evaluation, reproducible build và polished dashboard',
+    report: 'Có report FPS/latency/resource, build instructions và dashboard polished theo feedback.',
+    days: [
+      ['Thứ 2', 'Performance evaluation Python vs C++: FPS, latency, CPU/GPU, memory.'],
+      ['Thứ 3', 'Viết bảng so sánh, nhận xét bottleneck còn lại và giới hạn hệ thống.'],
+      ['Thứ 4', 'Package reproducible Linux build: dependency, commands, expected output.'],
+      ['Thứ 5', 'Polish dashboard theo user feedback, dọn UI lỗi và trạng thái loading/error.'],
+      ['Thứ 6', 'Nộp/report evaluation + build instruction, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Chạy lại build từ đầu, ghi lỗi môi trường nếu có.'],
+      ['Chủ nhật', 'Chuẩn bị release candidate tuần 7.'],
+    ],
+  },
+  {
+    week: 'Tuần 7',
+    focus: 'Release candidate, clean install test và demo video draft',
+    report: 'Có package .so/DLL/CLI gần final, clean install test và demo video draft.',
+    days: [
+      ['Thứ 2', 'Finalize .so/DLL/CLI packaging, dọn tên file và version.'],
+      ['Thứ 3', 'Run installation test on clean environment, ghi lại lỗi reproduce.'],
+      ['Thứ 4', 'Sửa lỗi install/package, cập nhật README theo kết quả test.'],
+      ['Thứ 5', 'Chuẩn bị demo video draft: flow, script, screen cần quay.'],
+      ['Thứ 6', 'Demo release candidate + clean install + video draft, báo cáo GVHD lúc 17:30.'],
+      ['Thứ 7', 'Sửa feedback, khóa danh sách việc còn lại cho tuần final.'],
+      ['Chủ nhật', 'Chuẩn bị tài liệu build, CLI, API cho tuần 8.'],
+    ],
+  },
+  {
+    week: 'Tuần 8',
+    focus: 'Final documentation, deployment docs và demo cuối',
+    report: 'Hoàn thiện README, build docs, CLI/API docs và final ExhibitFlow system demo.',
+    days: [
+      ['Thứ 2', 'Finalize documentation: build, CLI, API.'],
+      ['Thứ 3', 'Viết deployment docs và troubleshooting cho môi trường Linux/demo.'],
+      ['Thứ 4', 'Chạy full demo từ setup -> CLI -> dashboard -> kết quả analytics.'],
+      ['Thứ 5', 'Polish final: screenshot, sample command, known limitations, backup plan.'],
+      ['Thứ 6', 'Báo cáo final progress với GVHD lúc 17:30, chốt việc còn thiếu.'],
+      ['Thứ 7', 'Sửa lần cuối theo feedback, chuẩn bị trình bày.'],
+      ['Chủ nhật', 'Tổng duyệt demo và đóng gói final submission.'],
+    ],
+  },
 ]
 
 const englishSkillMethods = [
@@ -452,6 +571,10 @@ function makeScheduleTaskId(day, time, title) {
   return `${day}-${time}-${title}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 }
 
+function makeProjectTaskId(week, day, title) {
+  return `exhibitflow-${week}-${day}-${title}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
 function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
@@ -548,7 +671,7 @@ function App() {
     <main className="app-shell">
       <aside className="sidebar" aria-label="Study sections">
         <div className="brand-block">
-          <span>Study OS</span>
+          <span>{ownerName} Study OS</span>
           <h1>Roadmap 3 tháng</h1>
         </div>
 
@@ -618,7 +741,7 @@ function Overview({ tracks, onOpenTrack }) {
       <section className="hero-panel">
         <div>
           <span>Personal learning system</span>
-          <h2>LeetCode, AI Math và English tách riêng để học sâu trong 3 tháng</h2>
+          <h2>Khang học LeetCode, AI Math và English trong 3 tháng</h2>
           <p>
             Mỗi phần có lộ trình 12 tuần, checklist lưu local, tài nguyên riêng và nhịp học hằng ngày.
           </p>
@@ -668,15 +791,20 @@ function SchedulePage({ progress, onToggleTask, onResetDay }) {
   const allScheduleTasks = weeklySchedule.flatMap((day) =>
     day.blocks.map(([time, title]) => makeScheduleTaskId(day.day, time, title)),
   )
+  const allProjectTasks = khangProjectWeeks.flatMap((week) =>
+    week.days.map(([day, title]) => makeProjectTaskId(week.week, day, title)),
+  )
   const doneCount = allScheduleTasks.filter((id) => progress[id]).length
-  const totalCount = allScheduleTasks.length
-  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100)
+  const projectDoneCount = allProjectTasks.filter((id) => progress[id]).length
+  const totalCount = allScheduleTasks.length + allProjectTasks.length
+  const combinedDoneCount = doneCount + projectDoneCount
+  const percent = totalCount === 0 ? 0 : Math.round((combinedDoneCount / totalCount) * 100)
 
   return (
     <>
       <section className="track-header schedule-header" style={{ '--accent': '#7c3aed' }}>
         <div>
-          <span>Daily schedule</span>
+          <span>{ownerName} daily schedule</span>
           <h2>Lịch trình hàng ngày theo các block cố định</h2>
           <p>
             Lịch này giữ cứng giờ học tại trường và trading, phần còn lại được chia thành slot học
@@ -685,7 +813,7 @@ function SchedulePage({ progress, onToggleTask, onResetDay }) {
         </div>
         <div className="track-progress">
           <strong>{percent}%</strong>
-          <span>{doneCount}/{totalCount} việc trong tuần đã tick</span>
+          <span>{combinedDoneCount}/{totalCount} việc đã tick</span>
           <div className="progress-line" aria-label="Fixed commitments planned">
             <span style={{ width: `${percent}%`, background: '#7c3aed' }} />
           </div>
@@ -699,6 +827,51 @@ function SchedulePage({ progress, onToggleTask, onResetDay }) {
             <p>{value}</p>
           </article>
         ))}
+      </section>
+
+      <section className="project-plan-panel">
+        <div className="method-heading">
+          <span>ExhibitFlow của Khang</span>
+          <h3>Chia task đồ án theo ngày để kịp báo cáo thứ 6 lúc 17:30</h3>
+        </div>
+
+        <div className="project-week-grid">
+          {khangProjectWeeks.map((week) => {
+            const taskIds = week.days.map(([day, title]) => makeProjectTaskId(week.week, day, title))
+            const weekDone = taskIds.filter((id) => progress[id]).length
+            const weekPercent = Math.round((weekDone / week.days.length) * 100)
+
+            return (
+              <article className="project-week-card" key={week.week}>
+                <div className="project-week-title">
+                  <div>
+                    <span>{week.week}</span>
+                    <h4>{week.focus}</h4>
+                  </div>
+                  <b>{weekPercent}%</b>
+                </div>
+                <p><strong>Báo cáo:</strong> {week.report}</p>
+                <div className="task-stack">
+                  {week.days.map(([day, title]) => {
+                    const taskId = makeProjectTaskId(week.week, day, title)
+
+                    return (
+                      <label className={`task-check ${progress[taskId] ? 'done' : ''}`} key={taskId}>
+                        <input
+                          checked={Boolean(progress[taskId])}
+                          onChange={() => onToggleTask(taskId)}
+                          type="checkbox"
+                        />
+                        <span aria-hidden="true" />
+                        <em><b>{day}</b>{title}</em>
+                      </label>
+                    )
+                  })}
+                </div>
+              </article>
+            )
+          })}
+        </div>
       </section>
 
       <section className="schedule-grid">

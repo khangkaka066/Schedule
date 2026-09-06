@@ -202,6 +202,8 @@ button {
 .fixed-grid article,
 .track-support article,
 .schedule-day,
+.project-plan-panel,
+.project-week-card,
 .month-panel {
   min-width: 0;
   border: 1px solid #dfe6ef;
@@ -327,6 +329,55 @@ button {
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.project-plan-panel {
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.project-week-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.project-week-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(248, 250, 252, 0.96);
+}
+
+.project-week-title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.project-week-title h4 {
+  margin: 6px 0 0;
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.project-week-title b {
+  color: #7c3aed;
+  font-size: 20px;
+}
+
+.project-week-card > p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.project-week-card > p strong {
+  color: #0f172a;
 }
 
 .skill-method-panel {
@@ -649,6 +700,19 @@ button {
     #22c55e;
 }
 
+.task-check em {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  color: inherit;
+  font-style: normal;
+}
+
+.task-check em b {
+  color: #0f172a;
+  font-size: 12px;
+}
+
 @media (max-width: 1100px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -674,6 +738,10 @@ button {
   }
 
   .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-week-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -705,6 +773,7 @@ button {
   .fixed-grid,
   .track-support,
   .skill-method-panel,
+  .project-plan-panel,
   .schedule-grid,
   .month-stack {
     width: 100%;
@@ -716,6 +785,7 @@ button {
   .hero-panel,
   .track-header,
   .skill-method-panel,
+  .project-plan-panel,
   .month-panel {
     width: 100%;
     max-width: 100%;

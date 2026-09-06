@@ -3,6 +3,95 @@ import './App.css'
 
 const progressKey = 'study-roadmap-progress-v1'
 
+const weeklySchedule = [
+  {
+    day: 'Thứ 2',
+    type: 'Trade night',
+    blocks: [
+      ['06:30 - 07:00', 'Ôn nhẹ English hoặc xem note LeetCode hôm qua', 'Study'],
+      ['12:30 - 13:00', 'AI Math drill ngắn: 1 công thức + 1 ví dụ số', 'AI Math'],
+      ['18:30 - 19:30', 'LeetCode: 1 bài mới hoặc redo bài sai', 'LeetCode'],
+      ['20:00 - 22:10', 'Trade cố định, ngồi theo plan và ghi journal sau lệnh', 'Trading'],
+      ['22:20 - 22:45', 'Review nhanh: trade journal + chọn task ngày mai', 'Review'],
+    ],
+  },
+  {
+    day: 'Thứ 3',
+    type: 'Trade night',
+    blocks: [
+      ['06:30 - 07:00', 'Vocabulary + 5 câu speaking ngắn', 'English'],
+      ['12:30 - 13:00', 'LeetCode pattern review: brute force -> tối ưu', 'LeetCode'],
+      ['18:30 - 19:30', 'AI Math notebook hoặc bài tính tay', 'AI Math'],
+      ['20:00 - 22:10', 'Trade cố định, ưu tiên kỷ luật entry/exit', 'Trading'],
+      ['22:20 - 22:45', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
+    ],
+  },
+  {
+    day: 'Thứ 4',
+    type: 'School day',
+    blocks: [
+      ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
+      ['09:30 - 12:00', 'Học tại trường', 'School'],
+      ['12:00 - 12:30', 'Di chuyển về hoặc tới điểm tiếp theo', 'Travel'],
+      ['14:30 - 15:30', 'English Listening/Reading nhẹ', 'English'],
+      ['16:00 - 17:00', 'LeetCode redo: làm lại bài sai, không xem lời giải', 'LeetCode'],
+      ['20:00 - 22:10', 'Trade cố định', 'Trading'],
+      ['22:20 - 22:40', 'Review ngắn, không học nặng sau trade', 'Review'],
+    ],
+  },
+  {
+    day: 'Thứ 5',
+    type: 'Trade night',
+    blocks: [
+      ['06:30 - 07:00', 'AI Math flashcard: metric/loss/threshold', 'AI Math'],
+      ['12:30 - 13:00', 'English collocation + active recall', 'English'],
+      ['18:30 - 19:30', 'LeetCode: 1 bài Medium theo roadmap', 'LeetCode'],
+      ['20:00 - 22:10', 'Trade cố định', 'Trading'],
+      ['22:20 - 22:45', 'Tổng kết bài LeetCode và trade journal', 'Review'],
+    ],
+  },
+  {
+    day: 'Thứ 6',
+    type: 'Trade night',
+    blocks: [
+      ['06:30 - 07:00', 'Ôn lại notebook AI Math trong tuần', 'AI Math'],
+      ['12:30 - 13:00', 'Speaking Part 1 hoặc shadowing', 'English'],
+      ['18:20 - 19:30', 'LeetCode timed practice trước giờ trade', 'LeetCode'],
+      ['20:00 - 22:10', 'Trade cố định, cuối phiên chốt weekly journal', 'Trading'],
+      ['22:20 - 22:50', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
+    ],
+  },
+  {
+    day: 'Thứ 7',
+    type: 'School day',
+    blocks: [
+      ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
+      ['09:30 - 12:00', 'Học tại trường', 'School'],
+      ['12:00 - 12:30', 'Di chuyển về hoặc nghỉ trưa', 'Travel'],
+      ['15:00 - 16:30', 'AI Math hoặc project notebook sâu hơn', 'AI Math'],
+      ['17:00 - 18:00', 'English Writing/Speaking', 'English'],
+      ['20:30 - 22:00', 'Weekly LeetCode review: redo bài sai và cập nhật sổ tay', 'LeetCode'],
+    ],
+  },
+  {
+    day: 'Chủ nhật',
+    type: 'Recovery and planning',
+    blocks: [
+      ['09:00 - 10:30', 'Mock LeetCode hoặc review 1 pattern yếu nhất', 'LeetCode'],
+      ['10:45 - 11:45', 'AI Math recap: viết lại công thức và ví dụ số', 'AI Math'],
+      ['15:00 - 16:30', 'English mock mini: listening/reading hoặc writing', 'English'],
+      ['20:00 - 21:00', 'Plan tuần mới theo 3 roadmap', 'Planning'],
+      ['21:00 - 21:30', 'Chuẩn bị sổ tay, bài cần redo và checklist tuần tới', 'Review'],
+    ],
+  },
+]
+
+const fixedCommitments = [
+  ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
+  ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
+  ['Nguyên tắc tối', 'Sau trade chỉ review nhẹ, không nhồi bài thuật toán khó.'],
+]
+
 const tracks = [
   {
     id: 'leetcode',
@@ -207,6 +296,8 @@ function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
 
+    if (route === 'schedule') return route
+
     return tracks.some((track) => track.id === route) ? route : 'overview'
   })
   const [progress, setProgress] = useState(loadProgress)
@@ -214,6 +305,12 @@ function App() {
   useEffect(() => {
     function syncRoute() {
       const route = window.location.hash.replace('#', '')
+      if (route === 'schedule') {
+        setActiveTrackId(route)
+
+        return
+      }
+
       setActiveTrackId(tracks.some((track) => track.id === route) ? route : 'overview')
     }
 
@@ -243,6 +340,7 @@ function App() {
   )
 
   const activeTrack = trackSummaries.find((track) => track.id === activeTrackId)
+  const isSchedulePage = activeTrackId === 'schedule'
 
   function toggleTask(id) {
     setProgress((current) => ({
@@ -280,6 +378,14 @@ function App() {
           >
             Tổng quan
           </button>
+          <button
+            className={isSchedulePage ? 'active' : ''}
+            onClick={() => navigate('schedule')}
+            style={{ '--accent': '#7c3aed' }}
+            type="button"
+          >
+            Lịch ngày
+          </button>
           {trackSummaries.map((track) => (
             <button
               className={activeTrackId === track.id ? 'active' : ''}
@@ -296,7 +402,9 @@ function App() {
       </aside>
 
       <section className="workspace">
-        {activeTrack ? (
+        {isSchedulePage ? (
+          <SchedulePage />
+        ) : activeTrack ? (
           <TrackPage
             onReset={() => resetTrack(activeTrack)}
             onToggleTask={toggleTask}
@@ -336,6 +444,23 @@ function Overview({ tracks, onOpenTrack }) {
       </section>
 
       <section className="overview-grid">
+        <article className="overview-card schedule-overview-card">
+          <span>Lịch cố định</span>
+          <h3>Lịch ngày</h3>
+          <p>
+            Tách rõ giờ học trường, 30 phút di chuyển, trade tối thứ 2-6 và các slot còn lại cho
+            LeetCode, AI Math, English.
+          </p>
+          <div className="commitment-preview">
+            {fixedCommitments.map(([label, value]) => (
+              <small key={label}><b>{label}</b>{value}</small>
+            ))}
+          </div>
+          <div className="card-footer">
+            <small>7 ngày/tuần</small>
+            <button onClick={() => onOpenTrack('schedule')} type="button">Mở lịch</button>
+          </div>
+        </article>
         {tracks.map((track) => (
           <article className="overview-card" key={track.id}>
             <span style={{ color: track.accent }}>{track.eyebrow}</span>
@@ -345,6 +470,61 @@ function Overview({ tracks, onOpenTrack }) {
             <div className="card-footer">
               <small>{track.done}/{track.total} checklist</small>
               <button onClick={() => onOpenTrack(track.id)} type="button">Mở page</button>
+            </div>
+          </article>
+        ))}
+      </section>
+    </>
+  )
+}
+
+function SchedulePage() {
+  return (
+    <>
+      <section className="track-header schedule-header" style={{ '--accent': '#7c3aed' }}>
+        <div>
+          <span>Daily schedule</span>
+          <h2>Lịch trình hàng ngày theo các block cố định</h2>
+          <p>
+            Lịch này giữ cứng giờ học tại trường và trading, phần còn lại được chia thành slot học
+            vừa sức cho LeetCode, AI Math và English.
+          </p>
+        </div>
+        <div className="track-progress">
+          <strong>7</strong>
+          <span>ngày được lên lịch</span>
+          <div className="progress-line" aria-label="Fixed commitments planned">
+            <span style={{ width: '100%', background: '#7c3aed' }} />
+          </div>
+        </div>
+      </section>
+
+      <section className="fixed-grid">
+        {fixedCommitments.map(([label, value]) => (
+          <article key={label}>
+            <span>{label}</span>
+            <p>{value}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="schedule-grid">
+        {weeklySchedule.map((day) => (
+          <article className="schedule-day" key={day.day}>
+            <div className="schedule-day-title">
+              <div>
+                <span>{day.type}</span>
+                <h3>{day.day}</h3>
+              </div>
+            </div>
+            <div className="schedule-blocks">
+              {day.blocks.map(([time, title, category]) => (
+                <div className="schedule-block" data-category={category} key={`${day.day}-${time}`}>
+                  <time>{time}</time>
+                  <p>{title}</p>
+                  <span>{category}</span>
+                </div>
+              ))}
             </div>
           </article>
         ))}

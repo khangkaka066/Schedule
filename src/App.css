@@ -37,6 +37,8 @@ button {
 .hero-panel span,
 .track-header span,
 .track-support span,
+.fixed-grid span,
+.schedule-day-title span,
 .month-title span,
 .week-panel > span,
 .overview-card > span {
@@ -181,6 +183,7 @@ button {
 }
 
 .overview-grid,
+.fixed-grid,
 .track-support {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -189,7 +192,9 @@ button {
 }
 
 .overview-card,
+.fixed-grid article,
 .track-support article,
+.schedule-day,
 .month-panel {
   min-width: 0;
   border: 1px solid #dfe6ef;
@@ -216,6 +221,27 @@ button {
   font-size: 14px;
 }
 
+.schedule-overview-card {
+  border-top: 4px solid #7c3aed;
+}
+
+.commitment-preview {
+  display: grid;
+  gap: 8px;
+}
+
+.commitment-preview small {
+  display: grid;
+  gap: 2px;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.commitment-preview b {
+  color: #0f172a;
+}
+
 .card-footer {
   display: flex;
   align-items: center;
@@ -225,6 +251,28 @@ button {
 
 .track-header {
   border-top: 5px solid var(--accent);
+}
+
+.schedule-header {
+  margin-bottom: 18px;
+}
+
+.fixed-grid {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.fixed-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.fixed-grid p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .track-support article {
@@ -272,6 +320,93 @@ button {
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.schedule-day {
+  padding: 18px;
+}
+
+.schedule-day-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.schedule-day-title h3 {
+  margin: 6px 0 0;
+  color: #0f172a;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.schedule-blocks {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.schedule-block {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr) 84px;
+  gap: 10px;
+  align-items: center;
+  min-height: 56px;
+  padding: 11px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #94a3b8;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.schedule-block time {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.schedule-block p {
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.schedule-block span {
+  justify-self: end;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.schedule-block[data-category="Trading"] {
+  border-left-color: #7c3aed;
+}
+
+.schedule-block[data-category="School"],
+.schedule-block[data-category="Travel"] {
+  border-left-color: #0f766e;
+}
+
+.schedule-block[data-category="LeetCode"] {
+  border-left-color: #2563eb;
+}
+
+.schedule-block[data-category="AI Math"] {
+  border-left-color: #059669;
+}
+
+.schedule-block[data-category="English"] {
+  border-left-color: #dc2626;
 }
 
 .month-stack {
@@ -391,7 +526,7 @@ button {
   }
 
   .track-nav {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .hero-panel,
@@ -402,6 +537,10 @@ button {
 
   .week-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -417,13 +556,16 @@ button {
 
   .track-nav,
   .overview-grid,
+  .fixed-grid,
   .track-support,
   .week-grid {
     grid-template-columns: 1fr;
   }
 
   .overview-grid,
+  .fixed-grid,
   .track-support,
+  .schedule-grid,
   .month-stack {
     width: calc(100% - 24px);
     margin-right: auto;
@@ -451,6 +593,19 @@ button {
 
   .week-panel {
     min-height: 0;
+  }
+
+  .schedule-day {
+    padding: 16px;
+  }
+
+  .schedule-block {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .schedule-block span {
+    justify-self: start;
   }
 
   .track-support p {

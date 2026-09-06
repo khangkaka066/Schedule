@@ -3,6 +3,7 @@ import './App.css'
 
 const progressKey = 'study-roadmap-progress-v1'
 const scheduleProgressKey = 'daily-schedule-progress-v1'
+const exhibitFlowProgressKey = 'exhibitflow-team-progress-v1'
 const ownerName = 'Khang'
 
 const weeklySchedule = [
@@ -245,6 +246,141 @@ const khangProjectWeeks = [
       ['Thứ 6', 'Báo cáo final progress với GVHD lúc 17:30, chốt việc còn thiếu.'],
       ['Thứ 7', 'Sửa lần cuối theo feedback, chuẩn bị trình bày.'],
       ['Chủ nhật', 'Tổng duyệt demo và đóng gói final submission.'],
+    ],
+  },
+]
+
+const exhibitFlowTeam = [
+  {
+    member: 'Khang',
+    role: 'Systems, Integration, Dashboard, Deployment',
+    accent: '#7c3aed',
+    summary: 'Owns the technical backbone: C/C++ build, CLI, backend integration, dashboard wiring, packaging, documentation, and final demo polish.',
+    weeks: [
+      ['Week 1', [
+        'Set up the C/C++ project structure and CMake build system.',
+        'Design the tracker interface and CLI skeleton.',
+        'Design the ExhibitFlow dashboard layout with floor map, heatmap, zone stats, transitions, and visitor journeys.',
+      ]],
+      ['Week 2', [
+        'Port the selected bottleneck module to an initial C/C++ core.',
+        'Design and implement Linux CLI flags for input, output, config, and device.',
+        'Implement a dashboard prototype that reads mock track data.',
+      ]],
+      ['Week 3', [
+        'Continue porting the LTC-DMA core to C++.',
+        'Build the shared library libltcdma.so on Linux.',
+        'Integrate Python tracker output into the dashboard for the first end-to-end prototype.',
+      ]],
+      ['Week 4', [
+        'Expose the C++ core through a Python binding or API.',
+        'Implement backend swapping between Python and C++ without breaking the track contract.',
+        'Integrate analytics output into the dashboard.',
+      ]],
+      ['Week 5', [
+        'Implement a threading or async pipeline if real-time performance requires it.',
+        'Complete the CLI with input, output, device, display, save, and config options.',
+        'Integrate the real-time track stream into the dashboard.',
+      ]],
+      ['Week 6', [
+        'Evaluate Python vs C++ performance using FPS, latency, CPU/GPU, and memory metrics.',
+        'Package a reproducible Linux build with clear build instructions.',
+        'Improve dashboard UX for the exhibition demo.',
+      ]],
+      ['Week 7', [
+        'Finalize .so, DLL, and CLI packaging for the release candidate.',
+        'Run installation testing on a clean environment.',
+        'Run the full exhibition demo rehearsal.',
+      ]],
+      ['Week 8', [
+        'Finalize build, CLI, API, README, and deployment documentation.',
+        'Polish the dashboard, final demo, and slide integration.',
+      ]],
+    ],
+  },
+  {
+    member: 'Thuận',
+    role: 'Spatial Analytics and Visualization',
+    accent: '#059669',
+    summary: 'Owns floor mapping, zones, visitor analytics, dwell time, heatmaps, journey paths, case studies, and final insight reports.',
+    weeks: [
+      ['Week 1', [
+        'Design the initial floor plan and analysis zones.',
+        'Define analytics metrics and the track data schema.',
+        'Create mock track data for analytics and dashboard development.',
+      ]],
+      ['Week 2', [
+        'Implement foot-point extraction and homography mapping.',
+        'Implement visitor count and dwell time metrics.',
+        'Implement interactive floor map visualization.',
+      ]],
+      ['Week 3', [
+        'Implement heatmap generation and zone transition matrix.',
+        'Test analytics with synthetic scenarios.',
+        'Visualize live or recorded visitor trajectories.',
+      ]],
+      ['Week 4', [
+        'Refine dwell time and transition logic using real tracker output.',
+        'Implement visitor journey path reconstruction.',
+        'Prepare the end-to-end demo checkpoint.',
+      ]],
+      ['Week 5', [
+        'Implement hot zone and dead zone classification.',
+        'Implement congestion detection from mapped trajectories.',
+        'Implement visitor flow replay with basic timeline controls.',
+      ]],
+      ['Week 6', [
+        'Evaluate zone count, dwell time, and transition accuracy.',
+        'Prepare the Layout A vs Layout B case study.',
+      ]],
+      ['Week 7', [
+        'Run exhibition scenarios for normal flow, dead zones, congestion, and occlusion.',
+        'Finalize analytics findings for count, dwell, heatmap, transition, journey, and hot/dead zones.',
+        'Prepare recording and presentation assets.',
+      ]],
+      ['Week 8', [
+        'Finalize analytics tables, figures, and case study results.',
+      ]],
+    ],
+  },
+  {
+    member: 'Hưng',
+    role: 'Algorithm and Performance',
+    accent: '#2563eb',
+    summary: 'Owns LTC-DMA benchmarking, profiling, optimization, tracking evaluation, stress testing, performance figures, and technical documentation.',
+    weeks: [
+      ['Week 1', [
+        'Benchmark the current LTC-DMA pipeline for FPS, latency, CPU/GPU, and memory.',
+        'Profile the pipeline to identify the main bottleneck.',
+      ]],
+      ['Week 2', [
+        'Optimize the Python LTC-DMA version with vectorization, caching, and reduced data copying.',
+        'Benchmark the baseline Python version against the optimized Python version.',
+      ]],
+      ['Week 3', [
+        'Validate that the optimized version preserves tracking quality.',
+        'Benchmark tracking quality against the baseline and ByteTrack.',
+      ]],
+      ['Week 4', [
+        'Benchmark the optimized Python version against the C++ version.',
+        'Analyze the speed-quality tradeoff and propose the demo configuration.',
+      ]],
+      ['Week 5', [
+        'Optimize remaining bottlenecks after integration.',
+        'Stress test occlusion and crowded scenes.',
+      ]],
+      ['Week 6', [
+        'Evaluate LTC-DMA against ByteTrack using HOTA, IDF1, MOTA, IDSW, or suitable alternatives.',
+        'Analyze how tracking errors affect analytics stability.',
+        'Visualize benchmark and analytics results for reports and dashboard pages.',
+      ]],
+      ['Week 7', [
+        'Run final stress testing and bug fixing.',
+        'Prepare algorithm and performance figures for the final report and slides.',
+      ]],
+      ['Week 8', [
+        'Finalize the benchmark report and technical tracking documentation.',
+      ]],
     ],
   },
 ]
@@ -575,21 +711,38 @@ function makeProjectTaskId(week, day, title) {
   return `exhibitflow-${week}-${day}-${title}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 }
 
+function makeTeamTaskId(member, week, task) {
+  return `team-${member}-${week}-${task}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
+function getMemberTaskIds(memberPlan) {
+  return memberPlan.weeks.flatMap(([week, tasks]) =>
+    tasks.map((task) => makeTeamTaskId(memberPlan.member, week, task)),
+  )
+}
+
 function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
 
-    if (route === 'schedule') return route
+    if (route === 'schedule' || route === 'exhibitflow') return route
 
     return tracks.some((track) => track.id === route) ? route : 'overview'
   })
   const [progress, setProgress] = useState(loadProgress)
   const [scheduleProgress, setScheduleProgress] = useState(loadScheduleProgress)
+  const [exhibitFlowProgress, setExhibitFlowProgress] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem(exhibitFlowProgressKey)) ?? {}
+    } catch {
+      return {}
+    }
+  })
 
   useEffect(() => {
     function syncRoute() {
       const route = window.location.hash.replace('#', '')
-      if (route === 'schedule') {
+      if (route === 'schedule' || route === 'exhibitflow') {
         setActiveTrackId(route)
 
         return
@@ -611,6 +764,10 @@ function App() {
     window.localStorage.setItem(scheduleProgressKey, JSON.stringify(scheduleProgress))
   }, [scheduleProgress])
 
+  useEffect(() => {
+    window.localStorage.setItem(exhibitFlowProgressKey, JSON.stringify(exhibitFlowProgress))
+  }, [exhibitFlowProgress])
+
   const trackSummaries = useMemo(
     () => tracks.map((track) => {
       const taskIds = getTrackTaskIds(track)
@@ -629,6 +786,7 @@ function App() {
 
   const activeTrack = trackSummaries.find((track) => track.id === activeTrackId)
   const isSchedulePage = activeTrackId === 'schedule'
+  const isProjectPage = activeTrackId === 'exhibitflow'
 
   function toggleTask(id) {
     setProgress((current) => ({
@@ -651,6 +809,21 @@ function App() {
 
     setScheduleProgress((current) =>
       Object.fromEntries(Object.entries(current).filter(([key]) => !dayTaskIds.has(key))),
+    )
+  }
+
+  function toggleTeamTask(id) {
+    setExhibitFlowProgress((current) => ({
+      ...current,
+      [id]: !current[id],
+    }))
+  }
+
+  function resetMember(memberPlan) {
+    const memberTaskIds = new Set(getMemberTaskIds(memberPlan))
+
+    setExhibitFlowProgress((current) =>
+      Object.fromEntries(Object.entries(current).filter(([key]) => !memberTaskIds.has(key))),
     )
   }
 
@@ -691,6 +864,14 @@ function App() {
           >
             Lịch ngày
           </button>
+          <button
+            className={isProjectPage ? 'active' : ''}
+            onClick={() => navigate('exhibitflow')}
+            style={{ '--accent': '#0f766e' }}
+            type="button"
+          >
+            ExhibitFlow
+          </button>
           {trackSummaries.map((track) => (
             <button
               className={activeTrackId === track.id ? 'active' : ''}
@@ -707,7 +888,13 @@ function App() {
       </aside>
 
       <section className="workspace">
-        {isSchedulePage ? (
+        {isProjectPage ? (
+          <ExhibitFlowPage
+            onResetMember={resetMember}
+            onToggleTask={toggleTeamTask}
+            progress={exhibitFlowProgress}
+          />
+        ) : isSchedulePage ? (
           <SchedulePage
             onResetDay={resetScheduleDay}
             onToggleTask={toggleScheduleTask}
@@ -753,6 +940,23 @@ function Overview({ tracks, onOpenTrack }) {
       </section>
 
       <section className="overview-grid">
+        <article className="overview-card exhibitflow-overview-card">
+          <span>Capstone project</span>
+          <h3>ExhibitFlow</h3>
+          <p>
+            Manage weekly progress for Khang, Thuận, and Hưng with English task names,
+            ownership, deliverables, and checkable milestones.
+          </p>
+          <div className="commitment-preview">
+            <small><b>Khang</b>Systems, integration, dashboard, deployment</small>
+            <small><b>Thuận</b>Spatial analytics and visualization</small>
+            <small><b>Hưng</b>Algorithm and performance</small>
+          </div>
+          <div className="card-footer">
+            <small>8-week project plan</small>
+            <button onClick={() => onOpenTrack('exhibitflow')} type="button">Open project</button>
+          </div>
+        </article>
         <article className="overview-card schedule-overview-card">
           <span>Lịch cố định</span>
           <h3>Lịch ngày</h3>
@@ -919,6 +1123,106 @@ function SchedulePage({ progress, onToggleTask, onResetDay }) {
             </article>
           )
         })}
+      </section>
+    </>
+  )
+}
+
+function ExhibitFlowPage({ progress, onToggleTask, onResetMember }) {
+  const memberSummaries = exhibitFlowTeam.map((memberPlan) => {
+    const taskIds = getMemberTaskIds(memberPlan)
+    const done = taskIds.filter((id) => progress[id]).length
+
+    return {
+      ...memberPlan,
+      done,
+      total: taskIds.length,
+      percent: taskIds.length === 0 ? 0 : Math.round((done / taskIds.length) * 100),
+    }
+  })
+  const totalDone = memberSummaries.reduce((sum, member) => sum + member.done, 0)
+  const totalTasks = memberSummaries.reduce((sum, member) => sum + member.total, 0)
+  const totalPercent = totalTasks === 0 ? 0 : Math.round((totalDone / totalTasks) * 100)
+
+  return (
+    <>
+      <section className="track-header exhibitflow-header" style={{ '--accent': '#0f766e' }}>
+        <div>
+          <span>ExhibitFlow project control</span>
+          <h2>Team progress by owner, week, and deliverable</h2>
+          <p>
+            Tasks are translated from the Excel project plan and grouped by Khang, Thuận, and Hưng
+            so each owner can track weekly progress clearly.
+          </p>
+        </div>
+        <div className="track-progress">
+          <strong>{totalPercent}%</strong>
+          <span>{totalDone}/{totalTasks} project tasks completed</span>
+          <ProgressBar accent="#0f766e" percent={totalPercent} />
+        </div>
+      </section>
+
+      <section className="member-summary-grid">
+        {memberSummaries.map((member) => (
+          <article className="member-summary-card" key={member.member} style={{ '--accent': member.accent }}>
+            <span>{member.role}</span>
+            <h3>{member.member}</h3>
+            <p>{member.summary}</p>
+            <ProgressBar accent={member.accent} percent={member.percent} />
+            <div className="card-footer">
+              <small>{member.done}/{member.total} tasks</small>
+              <button onClick={() => onResetMember(member)} type="button">Reset</button>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="team-board">
+        {memberSummaries.map((member) => (
+          <article className="member-board" key={member.member} style={{ '--accent': member.accent }}>
+            <div className="member-board-title">
+              <div>
+                <span>{member.role}</span>
+                <h3>{member.member}</h3>
+              </div>
+              <strong>{member.percent}%</strong>
+            </div>
+
+            <div className="member-week-stack">
+              {member.weeks.map(([week, tasks]) => {
+                const taskIds = tasks.map((task) => makeTeamTaskId(member.member, week, task))
+                const done = taskIds.filter((id) => progress[id]).length
+                const percent = Math.round((done / tasks.length) * 100)
+
+                return (
+                  <section className="member-week" key={`${member.member}-${week}`}>
+                    <div className="member-week-title">
+                      <span>{week}</span>
+                      <b>{percent}%</b>
+                    </div>
+                    <div className="task-stack">
+                      {tasks.map((task) => {
+                        const taskId = makeTeamTaskId(member.member, week, task)
+
+                        return (
+                          <label className={`task-check ${progress[taskId] ? 'done' : ''}`} key={taskId}>
+                            <input
+                              checked={Boolean(progress[taskId])}
+                              onChange={() => onToggleTask(taskId)}
+                              type="checkbox"
+                            />
+                            <span aria-hidden="true" />
+                            {task}
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </section>
+                )
+              })}
+            </div>
+          </article>
+        ))}
       </section>
     </>
   )

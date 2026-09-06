@@ -43,6 +43,9 @@ button {
 .schedule-day-title span,
 .method-heading span,
 .skill-method-card span,
+.member-summary-card span,
+.member-board-title span,
+.member-week-title span,
 .month-title span,
 .week-panel > span,
 .overview-card > span {
@@ -51,6 +54,7 @@ button {
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .brand-block h1 {
@@ -124,6 +128,7 @@ button {
   font-size: 44px;
   line-height: 1.02;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .hero-panel p,
@@ -234,6 +239,10 @@ button {
   border-top: 4px solid #7c3aed;
 }
 
+.exhibitflow-overview-card {
+  border-top: 4px solid #0f766e;
+}
+
 .commitment-preview {
   display: grid;
   gap: 8px;
@@ -329,6 +338,107 @@ button {
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.exhibitflow-header {
+  margin-bottom: 18px;
+}
+
+.member-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.member-summary-card,
+.member-board,
+.member-week {
+  min-width: 0;
+  border: 1px solid #dfe6ef;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.13);
+}
+
+.member-summary-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-top: 4px solid var(--accent);
+}
+
+.member-summary-card h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 25px;
+}
+
+.member-summary-card p {
+  min-height: 112px;
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.team-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.member-board {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px;
+  border-top: 5px solid var(--accent);
+}
+
+.member-board-title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.member-board-title h3 {
+  margin: 6px 0 0;
+  color: #0f172a;
+  font-size: 26px;
+  overflow-wrap: anywhere;
+}
+
+.member-board-title strong {
+  color: var(--accent);
+  font-size: 24px;
+}
+
+.member-week-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.member-week {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  background: #f8fafc;
+  box-shadow: none;
+}
+
+.member-week-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.member-week-title b {
+  color: var(--accent);
+  font-size: 16px;
 }
 
 .project-plan-panel {
@@ -737,6 +847,11 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .member-summary-grid,
+  .team-board {
+    grid-template-columns: 1fr;
+  }
+
   .schedule-grid {
     grid-template-columns: 1fr;
   }
@@ -771,6 +886,8 @@ button {
 
   .overview-grid,
   .fixed-grid,
+  .member-summary-grid,
+  .team-board,
   .track-support,
   .skill-method-panel,
   .project-plan-panel,
@@ -796,7 +913,11 @@ button {
 
   .hero-panel h2,
   .track-header h2 {
-    font-size: 26px;
+    font-size: 24px;
+  }
+
+  .member-summary-card p {
+    min-height: 0;
   }
 
   .overview-card p {

@@ -2,94 +2,132 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const progressKey = 'study-roadmap-progress-v1'
+const scheduleProgressKey = 'daily-schedule-progress-v1'
 
 const weeklySchedule = [
   {
     day: 'Thứ 2',
-    type: 'Trade night',
+    type: 'Work + trade',
     blocks: [
-      ['06:30 - 07:00', 'Ôn nhẹ English hoặc xem note LeetCode hôm qua', 'Study'],
-      ['12:30 - 13:00', 'AI Math drill ngắn: 1 công thức + 1 ví dụ số', 'AI Math'],
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:00 - 07:00', 'Ôn note LeetCode hoặc English nhẹ', 'Study'],
+      ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
+      ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
       ['18:30 - 19:30', 'LeetCode: 1 bài mới hoặc redo bài sai', 'LeetCode'],
       ['20:00 - 22:10', 'Trade cố định, ngồi theo plan và ghi journal sau lệnh', 'Trading'],
-      ['22:20 - 22:45', 'Review nhanh: trade journal + chọn task ngày mai', 'Review'],
+      ['22:20 - 23:10', 'Làm bài tập hoặc học bài trên trường', 'School'],
+      ['23:10 - 00:00', 'Đồ án: chốt 1 task nhỏ hoặc ghi tiến độ', 'Project'],
+      ['00:00 - 00:20', 'Review nhanh và chuẩn bị task ngày mai', 'Review'],
     ],
   },
   {
     day: 'Thứ 3',
-    type: 'Trade night',
+    type: 'English + trade',
     blocks: [
-      ['06:30 - 07:00', 'Vocabulary + 5 câu speaking ngắn', 'English'],
-      ['12:30 - 13:00', 'LeetCode pattern review: brute force -> tối ưu', 'LeetCode'],
-      ['18:30 - 19:30', 'AI Math notebook hoặc bài tính tay', 'AI Math'],
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:00 - 07:00', 'AI Math drill: 1 công thức + 2 ví dụ số', 'AI Math'],
+      ['09:00 - 11:00', 'Làm bài tập hoặc học bài trên trường', 'School'],
+      ['14:00 - 16:00', 'Đồ án: code/report/demo một phần rõ ràng', 'Project'],
+      ['18:00 - 19:30', 'Học tiếng Anh cố định', 'English'],
       ['20:00 - 22:10', 'Trade cố định, ưu tiên kỷ luật entry/exit', 'Trading'],
-      ['22:20 - 22:45', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
+      ['22:20 - 23:20', 'LeetCode pattern review hoặc redo bài sai', 'LeetCode'],
+      ['23:20 - 00:15', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
     ],
   },
   {
     day: 'Thứ 4',
     type: 'School day',
     blocks: [
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:00 - 07:30', 'Làm bài tập hoặc ôn bài trước khi tới trường', 'School'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc tới điểm tiếp theo', 'Travel'],
-      ['14:30 - 15:30', 'English Listening/Reading nhẹ', 'English'],
-      ['16:00 - 17:00', 'LeetCode redo: làm lại bài sai, không xem lời giải', 'LeetCode'],
+      ['14:00 - 15:30', 'Đồ án: hoàn thành 1 việc có thể demo/commit', 'Project'],
+      ['16:00 - 17:00', 'AI Math hoặc học lại bài trên trường', 'AI Math'],
+      ['18:30 - 19:30', 'LeetCode redo: làm lại bài sai, không xem lời giải', 'LeetCode'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
-      ['22:20 - 22:40', 'Review ngắn, không học nặng sau trade', 'Review'],
+      ['22:20 - 23:20', 'English Listening/Reading nhẹ', 'English'],
+      ['23:20 - 00:15', 'Review ngắn, không học nặng sau trade', 'Review'],
     ],
   },
   {
     day: 'Thứ 5',
-    type: 'Trade night',
+    type: 'Work + trade',
     blocks: [
-      ['06:30 - 07:00', 'AI Math flashcard: metric/loss/threshold', 'AI Math'],
-      ['12:30 - 13:00', 'English collocation + active recall', 'English'],
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:00 - 07:00', 'AI Math flashcard: metric/loss/threshold', 'AI Math'],
+      ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
+      ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
       ['18:30 - 19:30', 'LeetCode: 1 bài Medium theo roadmap', 'LeetCode'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
-      ['22:20 - 22:45', 'Tổng kết bài LeetCode và trade journal', 'Review'],
+      ['22:20 - 23:10', 'Làm bài tập hoặc học bài trên trường', 'School'],
+      ['23:10 - 00:00', 'Đồ án: sửa 1 bug nhỏ hoặc viết report', 'Project'],
+      ['00:00 - 00:20', 'Tổng kết bài LeetCode và trade journal', 'Review'],
     ],
   },
   {
     day: 'Thứ 6',
-    type: 'Trade night',
+    type: 'Work half-day + trade',
     blocks: [
-      ['06:30 - 07:00', 'Ôn lại notebook AI Math trong tuần', 'AI Math'],
-      ['12:30 - 13:00', 'Speaking Part 1 hoặc shadowing', 'English'],
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:00 - 07:00', 'Ôn lại notebook AI Math trong tuần', 'AI Math'],
+      ['08:00 - 12:00', 'Làm việc cố định', 'Work'],
+      ['14:00 - 15:30', 'Làm bài tập hoặc học bài trên trường', 'School'],
+      ['16:00 - 17:30', 'Đồ án: code/report phần quan trọng nhất tuần', 'Project'],
       ['18:20 - 19:30', 'LeetCode timed practice trước giờ trade', 'LeetCode'],
       ['20:00 - 22:10', 'Trade cố định, cuối phiên chốt weekly journal', 'Trading'],
-      ['22:20 - 22:50', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
+      ['22:20 - 23:00', 'Speaking Part 1 hoặc shadowing nhẹ', 'English'],
+      ['23:00 - 00:15', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
     ],
   },
   {
     day: 'Thứ 7',
     type: 'School day',
     blocks: [
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
+      ['06:30 - 07:30', 'Ôn bài trước khi tới trường', 'School'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc nghỉ trưa', 'Travel'],
-      ['15:00 - 16:30', 'AI Math hoặc project notebook sâu hơn', 'AI Math'],
-      ['17:00 - 18:00', 'English Writing/Speaking', 'English'],
-      ['20:30 - 22:00', 'Weekly LeetCode review: redo bài sai và cập nhật sổ tay', 'LeetCode'],
+      ['14:00 - 15:30', 'Làm bài tập trên trường', 'School'],
+      ['15:45 - 17:30', 'Đồ án: deep work không bị cắt bởi trade', 'Project'],
+      ['19:30 - 21:00', 'AI Math hoặc project notebook sâu hơn', 'AI Math'],
+      ['21:15 - 22:30', 'Weekly LeetCode review: redo bài sai và cập nhật sổ tay', 'LeetCode'],
+      ['23:00 - 00:00', 'English Writing/Speaking nhẹ', 'English'],
     ],
   },
   {
     day: 'Chủ nhật',
-    type: 'Recovery and planning',
+    type: 'English + planning',
     blocks: [
+      ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
+      ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
       ['09:00 - 10:30', 'Mock LeetCode hoặc review 1 pattern yếu nhất', 'LeetCode'],
-      ['10:45 - 11:45', 'AI Math recap: viết lại công thức và ví dụ số', 'AI Math'],
-      ['15:00 - 16:30', 'English mock mini: listening/reading hoặc writing', 'English'],
+      ['10:45 - 12:00', 'AI Math recap: viết lại công thức và ví dụ số', 'AI Math'],
+      ['13:30 - 14:45', 'Làm bài tập hoặc học bài trên trường', 'School'],
+      ['15:00 - 16:30', 'Học tiếng Anh cố định', 'English'],
+      ['17:00 - 18:30', 'Đồ án: tổng hợp tiến độ, chuẩn bị phần tuần tới', 'Project'],
       ['20:00 - 21:00', 'Plan tuần mới theo 3 roadmap', 'Planning'],
-      ['21:00 - 21:30', 'Chuẩn bị sổ tay, bài cần redo và checklist tuần tới', 'Review'],
+      ['21:00 - 22:00', 'Chuẩn bị sổ tay, bài cần redo và checklist tuần tới', 'Review'],
+      ['22:00 - 23:00', 'English hoặc đọc lại bài trường nhẹ', 'English'],
     ],
   },
 ]
 
 const fixedCommitments = [
+  ['Ngủ và dậy', 'Đi ngủ 00:30, dậy 05:30 mỗi ngày để giữ nhịp ổn định.'],
+  ['Làm việc', 'Thứ 2 và thứ 5 làm 08:00 - 17:00; thứ 6 làm 08:00 - 12:00.'],
   ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
+  ['Tiếng Anh', 'Thứ 3 học 18:00 - 19:30; Chủ nhật học 15:00 - 16:30.'],
   ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
-  ['Nguyên tắc tối', 'Sau trade chỉ review nhẹ, không nhồi bài thuật toán khó.'],
+  ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
 ]
 
 const tracks = [
@@ -292,6 +330,18 @@ function loadProgress() {
   }
 }
 
+function loadScheduleProgress() {
+  try {
+    return JSON.parse(window.localStorage.getItem(scheduleProgressKey)) ?? {}
+  } catch {
+    return {}
+  }
+}
+
+function makeScheduleTaskId(day, time, title) {
+  return `${day}-${time}-${title}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
 function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
@@ -301,6 +351,7 @@ function App() {
     return tracks.some((track) => track.id === route) ? route : 'overview'
   })
   const [progress, setProgress] = useState(loadProgress)
+  const [scheduleProgress, setScheduleProgress] = useState(loadScheduleProgress)
 
   useEffect(() => {
     function syncRoute() {
@@ -322,6 +373,10 @@ function App() {
   useEffect(() => {
     window.localStorage.setItem(progressKey, JSON.stringify(progress))
   }, [progress])
+
+  useEffect(() => {
+    window.localStorage.setItem(scheduleProgressKey, JSON.stringify(scheduleProgress))
+  }, [scheduleProgress])
 
   const trackSummaries = useMemo(
     () => tracks.map((track) => {
@@ -347,6 +402,23 @@ function App() {
       ...current,
       [id]: !current[id],
     }))
+  }
+
+  function toggleScheduleTask(id) {
+    setScheduleProgress((current) => ({
+      ...current,
+      [id]: !current[id],
+    }))
+  }
+
+  function resetScheduleDay(day) {
+    const dayTaskIds = new Set(
+      day.blocks.map(([time, title]) => makeScheduleTaskId(day.day, time, title)),
+    )
+
+    setScheduleProgress((current) =>
+      Object.fromEntries(Object.entries(current).filter(([key]) => !dayTaskIds.has(key))),
+    )
   }
 
   function resetTrack(track) {
@@ -403,7 +475,11 @@ function App() {
 
       <section className="workspace">
         {isSchedulePage ? (
-          <SchedulePage />
+          <SchedulePage
+            onResetDay={resetScheduleDay}
+            onToggleTask={toggleScheduleTask}
+            progress={scheduleProgress}
+          />
         ) : activeTrack ? (
           <TrackPage
             onReset={() => resetTrack(activeTrack)}
@@ -478,7 +554,14 @@ function Overview({ tracks, onOpenTrack }) {
   )
 }
 
-function SchedulePage() {
+function SchedulePage({ progress, onToggleTask, onResetDay }) {
+  const allScheduleTasks = weeklySchedule.flatMap((day) =>
+    day.blocks.map(([time, title]) => makeScheduleTaskId(day.day, time, title)),
+  )
+  const doneCount = allScheduleTasks.filter((id) => progress[id]).length
+  const totalCount = allScheduleTasks.length
+  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100)
+
   return (
     <>
       <section className="track-header schedule-header" style={{ '--accent': '#7c3aed' }}>
@@ -491,10 +574,10 @@ function SchedulePage() {
           </p>
         </div>
         <div className="track-progress">
-          <strong>7</strong>
-          <span>ngày được lên lịch</span>
+          <strong>{percent}%</strong>
+          <span>{doneCount}/{totalCount} việc trong tuần đã tick</span>
           <div className="progress-line" aria-label="Fixed commitments planned">
-            <span style={{ width: '100%', background: '#7c3aed' }} />
+            <span style={{ width: `${percent}%`, background: '#7c3aed' }} />
           </div>
         </div>
       </section>
@@ -509,25 +592,50 @@ function SchedulePage() {
       </section>
 
       <section className="schedule-grid">
-        {weeklySchedule.map((day) => (
-          <article className="schedule-day" key={day.day}>
-            <div className="schedule-day-title">
-              <div>
-                <span>{day.type}</span>
-                <h3>{day.day}</h3>
-              </div>
-            </div>
-            <div className="schedule-blocks">
-              {day.blocks.map(([time, title, category]) => (
-                <div className="schedule-block" data-category={category} key={`${day.day}-${time}`}>
-                  <time>{time}</time>
-                  <p>{title}</p>
-                  <span>{category}</span>
+        {weeklySchedule.map((day) => {
+          const taskIds = day.blocks.map(([time, title]) => makeScheduleTaskId(day.day, time, title))
+          const dayDone = taskIds.filter((id) => progress[id]).length
+          const dayPercent = Math.round((dayDone / day.blocks.length) * 100)
+
+          return (
+            <article className="schedule-day" key={day.day}>
+              <div className="schedule-day-title">
+                <div>
+                  <span>{day.type}</span>
+                  <h3>{day.day}</h3>
                 </div>
-              ))}
-            </div>
-          </article>
-        ))}
+                <div className="day-progress">
+                  <b>{dayPercent}%</b>
+                  <small>{dayDone}/{day.blocks.length}</small>
+                  <button onClick={() => onResetDay(day)} type="button">Reset</button>
+                </div>
+              </div>
+              <div className="schedule-blocks">
+                {day.blocks.map(([time, title, category]) => {
+                  const taskId = makeScheduleTaskId(day.day, time, title)
+
+                  return (
+                    <label
+                      className={`schedule-block ${progress[taskId] ? 'done' : ''}`}
+                      data-category={category}
+                      key={taskId}
+                    >
+                      <input
+                        checked={Boolean(progress[taskId])}
+                        onChange={() => onToggleTask(taskId)}
+                        type="checkbox"
+                      />
+                      <span className="schedule-check" aria-hidden="true" />
+                      <time>{time}</time>
+                      <p>{title}</p>
+                      <span className="schedule-tag">{category}</span>
+                    </label>
+                  )
+                })}
+              </div>
+            </article>
+          )
+        })}
       </section>
     </>
   )

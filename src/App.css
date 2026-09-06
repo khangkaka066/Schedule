@@ -11,6 +11,8 @@ button {
 .app-shell {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
+  width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
   background:
@@ -125,11 +127,14 @@ button {
 .hero-panel p,
 .track-header p,
 .overview-card p,
-.month-title p {
+.fixed-grid p,
+.month-title p,
+.schedule-block p {
   margin: 14px 0 0;
   color: #475569;
   font-size: 16px;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .hero-meter,
@@ -353,8 +358,9 @@ button {
 }
 
 .schedule-block {
+  position: relative;
   display: grid;
-  grid-template-columns: 118px minmax(0, 1fr) 84px;
+  grid-template-columns: 24px 118px minmax(0, 1fr) 84px;
   gap: 10px;
   align-items: center;
   min-height: 56px;
@@ -363,6 +369,22 @@ button {
   border-left: 4px solid #94a3b8;
   border-radius: 8px;
   background: #f8fafc;
+  cursor: pointer;
+}
+
+.schedule-block input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.schedule-check {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
 }
 
 .schedule-block time {
@@ -378,13 +400,58 @@ button {
   line-height: 1.35;
 }
 
-.schedule-block span {
+.schedule-tag {
   justify-self: end;
   padding: 5px 8px;
   border-radius: 999px;
   background: #ffffff;
   color: #475569;
   font-size: 11px;
+  font-weight: 800;
+}
+
+.schedule-block.done {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.schedule-block.done .schedule-check {
+  border-color: #22c55e;
+  background:
+    linear-gradient(135deg, transparent 44%, #ffffff 45% 55%, transparent 56%),
+    #22c55e;
+}
+
+.schedule-block.done p {
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.day-progress {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  min-width: 72px;
+}
+
+.day-progress b {
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.day-progress small {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.day-progress button {
+  min-height: 28px;
+  padding: 0 9px;
+  border-radius: 8px;
+  background: #eef2f7;
+  color: #334155;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -546,11 +613,16 @@ button {
 
 @media (max-width: 760px) {
   .workspace {
-    width: 100%;
+    width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    margin-right: auto;
+    margin-left: auto;
     padding: 18px 0 28px;
   }
 
   .sidebar {
+    width: 100vw;
+    max-width: 100vw;
     padding: 20px 12px;
   }
 
@@ -567,7 +639,8 @@ button {
   .track-support,
   .schedule-grid,
   .month-stack {
-    width: calc(100% - 24px);
+    width: 100%;
+    max-width: 100%;
     margin-right: auto;
     margin-left: auto;
   }
@@ -575,8 +648,8 @@ button {
   .hero-panel,
   .track-header,
   .month-panel {
-    width: calc(100% - 24px);
-    max-width: calc(100% - 24px);
+    width: 100%;
+    max-width: 100%;
     margin-right: auto;
     margin-left: auto;
     padding: 18px;
@@ -584,7 +657,7 @@ button {
 
   .hero-panel h2,
   .track-header h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .overview-card p {
@@ -599,12 +672,27 @@ button {
     padding: 16px;
   }
 
+  .schedule-day-title {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   .schedule-block {
-    grid-template-columns: 1fr;
+    grid-template-columns: 24px minmax(0, 1fr);
     align-items: start;
   }
 
-  .schedule-block span {
+  .schedule-check {
+    grid-row: span 3;
+  }
+
+  .schedule-block time,
+  .schedule-block p,
+  .schedule-tag {
+    grid-column: 2;
+  }
+
+  .schedule-tag {
     justify-self: start;
   }
 

@@ -130,6 +130,79 @@ const fixedCommitments = [
   ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
 ]
 
+const englishSkillMethods = [
+  {
+    skill: 'Listening',
+    goal: 'Nghe để bắt keyword, paraphrase và distractor, không chỉ nghe lấy đáp án.',
+    steps: [
+      'Làm 1 section có timer, khoanh câu không chắc.',
+      'Chấm điểm rồi nghe lại từng câu sai với transcript.',
+      'Ghi cụm paraphrase: price -> cost, student -> learner, cancel -> call off.',
+      'Nghe lại lần 2 không nhìn transcript, chỉ dừng ở đoạn sai.',
+    ],
+  },
+  {
+    skill: 'Reading',
+    goal: 'Tìm thông tin nhanh và nhận ra paraphrase giữa câu hỏi và bài đọc.',
+    steps: [
+      'Đọc câu hỏi trước, gạch keyword chính và loại thông tin cần tìm.',
+      'Scan tên riêng, số, danh từ cụ thể trước khi đọc kỹ.',
+      'Với T/F/NG, hỏi: bài có nói đúng ý này không hay chỉ liên quan?',
+      'Sau khi sai, ghi lý do: sai keyword, bị distractor, hiểu nhầm phủ định.',
+    ],
+  },
+  {
+    skill: 'Writing Task 1',
+    goal: 'Viết rõ overview, so sánh đúng số liệu, không kể từng chi tiết rời rạc.',
+    steps: [
+      'Nhìn biểu đồ 2 phút: trend chính, cao nhất, thấp nhất, thay đổi lớn.',
+      'Viết intro bằng paraphrase đề.',
+      'Overview có 2 ý lớn, không cần số liệu chi tiết.',
+      'Body chia nhóm thông minh: tăng/giảm, cao/thấp, nhóm giống nhau.',
+    ],
+  },
+  {
+    skill: 'Writing Task 2',
+    goal: 'Bài có thesis rõ, mỗi đoạn một ý chính, giải thích đủ sâu.',
+    steps: [
+      'Dành 5 phút lập dàn ý: position, 2 main ideas, example.',
+      'Mỗi body theo Claim -> Why -> Example -> Result.',
+      'Không dùng từ quá khó nếu làm câu sai grammar.',
+      'Sau khi viết, rewrite 5 câu yếu nhất cho ngắn và đúng hơn.',
+    ],
+  },
+  {
+    skill: 'Speaking',
+    goal: 'Nói tự nhiên, có phát triển ý, không học thuộc sample cứng.',
+    steps: [
+      'Part 1: Answer -> Reason -> Example trong 2-3 câu.',
+      'Part 2: chuẩn bị story theo Past -> Detail -> Feeling -> Lesson.',
+      'Part 3: Opinion -> Reason -> Contrast -> Consequence.',
+      'Ghi âm 2 phút, nghe lại và sửa pronunciation, pause, grammar lỗi lặp.',
+    ],
+  },
+  {
+    skill: 'Vocabulary',
+    goal: 'Học cụm dùng được trong nói/viết, không học list từ đơn lẻ.',
+    steps: [
+      'Mỗi ngày 10-15 collocations theo chủ đề.',
+      'Mỗi cụm đặt 1 câu thật liên quan tới bản thân hoặc bài IELTS.',
+      'Ôn active recall: che nghĩa, tự nhớ lại cụm và ví dụ.',
+      'Gắn nhãn dùng cho Speaking, Writing Task 1 hoặc Writing Task 2.',
+    ],
+  },
+  {
+    skill: 'Grammar',
+    goal: 'Tăng độ chính xác câu trước, rồi mới tăng độ dài và độ phức tạp.',
+    steps: [
+      'Mỗi ngày chọn 1 lỗi chính: tense, article, plural, preposition, clause.',
+      'Viết 8 câu ngắn đúng 100% trước khi viết câu dài.',
+      'Rewrite câu sai từ bài writing/speaking log.',
+      'Cuối tuần tổng hợp 5 lỗi lặp nhiều nhất để drill lại.',
+    ],
+  },
+]
+
 const tracks = [
   {
     id: 'leetcode',
@@ -680,6 +753,29 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
           </div>
         </article>
       </section>
+
+      {track.id === 'english' && (
+        <section className="skill-method-panel">
+          <div className="method-heading">
+            <span>Cách học từng kỹ năng</span>
+            <h3>Học English theo quy trình để biết mình đang sửa lỗi gì</h3>
+          </div>
+
+          <div className="skill-method-grid">
+            {englishSkillMethods.map((method) => (
+              <article className="skill-method-card" key={method.skill}>
+                <span>{method.skill}</span>
+                <p>{method.goal}</p>
+                <ol>
+                  {method.steps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="month-stack">
         {track.months.map((month) => (

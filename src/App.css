@@ -41,6 +41,8 @@ button {
 .track-support span,
 .fixed-grid span,
 .schedule-day-title span,
+.method-heading span,
+.skill-method-card span,
 .month-title span,
 .week-panel > span,
 .overview-card > span {
@@ -325,6 +327,62 @@ button {
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.skill-method-panel {
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid #dfe6ef;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.13);
+}
+
+.method-heading {
+  display: grid;
+  gap: 7px;
+}
+
+.method-heading h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.skill-method-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.skill-method-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.skill-method-card p {
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.skill-method-card ol {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 20px;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .schedule-grid {
@@ -637,6 +695,7 @@ button {
   .overview-grid,
   .fixed-grid,
   .track-support,
+  .skill-method-panel,
   .schedule-grid,
   .month-stack {
     width: 100%;
@@ -647,6 +706,7 @@ button {
 
   .hero-panel,
   .track-header,
+  .skill-method-panel,
   .month-panel {
     width: 100%;
     max-width: 100%;
@@ -666,6 +726,10 @@ button {
 
   .week-panel {
     min-height: 0;
+  }
+
+  .skill-method-grid {
+    grid-template-columns: 1fr;
   }
 
   .schedule-day {

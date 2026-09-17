@@ -6,6 +6,17 @@ const exerciseResponsesKey = 'english-exercise-responses-v1'
 const quizAttemptsKey = 'english-quiz-attempts-v1'
 const errorLogKey = 'english-error-log-v1'
 
+const bookFiles = {
+  student: {
+    label: 'Student Book · 509 trang',
+    url: '/books/azar-student-book.pdf',
+  },
+  answerKey: {
+    label: 'Answer Key · 56 trang',
+    url: '/books/azar-answer-key.pdf',
+  },
+}
+
 const cd1Files = import.meta.glob('../CD1/**/*.mp3', { eager: true, import: 'default', query: '?url' })
 const cd2Files = import.meta.glob('../CD2/**/*.mp3', { eager: true, import: 'default', query: '?url' })
 
@@ -114,6 +125,7 @@ export default function EnglishLab() {
   const [selectedDay, setSelectedDay] = useState(todayIndex)
   const [dailyProgress, setDailyProgress] = useState(() => loadJson(dailyProgressKey, {}))
   const [exerciseResponses, setExerciseResponses] = useState(() => loadJson(exerciseResponsesKey, {}))
+  const [readerMode, setReaderMode] = useState('student')
   const [selectedQuizId, setSelectedQuizId] = useState(quizSets[0].id)
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -206,6 +218,21 @@ export default function EnglishLab() {
           <div className="progress-line"><span style={{ width: `${(completedDaily / 3) * 100}%`, background: '#dc2626' }} /></div>
         </div>
       </div>
+
+      <section className="english-book-reader">
+        <div className="lab-section-title">
+          <div>
+            <span>Scan sách ngay trong web</span>
+            <h4>Đọc đúng Exercise đang làm</h4>
+          </div>
+          <a href={bookFiles[readerMode].url} rel="noreferrer" target="_blank">Mở tab mới ↗</a>
+        </div>
+        <div className="book-reader-tabs" role="tablist" aria-label="Chọn tài liệu">
+          {Object.entries(bookFiles).map(([id, file]) => <button className={readerMode === id ? 'active' : ''} key={id} onClick={() => setReaderMode(id)} type="button">{file.label}</button>)}
+        </div>
+        <p className="book-reader-help">Dùng thanh tìm kiếm của trình đọc PDF để tìm “EXERCISE {activeExerciseGroup[0]}”, rồi nhập bài làm vào các ô bên dưới. Answer Key chỉ nên mở sau khi bạn đã làm xong.</p>
+        <iframe className="book-reader-frame" src={`${bookFiles[readerMode].url}#view=FitH`} title={bookFiles[readerMode].label} />
+      </section>
 
       <div className="english-lab-grid">
         <section className="english-day-panel">

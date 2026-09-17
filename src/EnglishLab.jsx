@@ -1,12 +1,10 @@
 import { useMemo, useState } from 'react'
 import { englishChapterSchedule, quizSets } from './englishPracticeData'
-import chapter1ExerciseData from './data/azarChapter1Exercises.json'
 
 const dailyProgressKey = 'english-daily-practice-v1'
 const exerciseResponsesKey = 'english-exercise-responses-v1'
 const quizAttemptsKey = 'english-quiz-attempts-v1'
 const errorLogKey = 'english-error-log-v1'
-const chapter1ExerciseMap = new Map(chapter1ExerciseData.exercises.map((exercise) => [exercise.number, exercise]))
 
 const bookFiles = {
   student: {
@@ -290,26 +288,19 @@ export default function EnglishLab() {
               {activeExerciseGroup.map((exercise) => {
                 const responseId = makeExerciseResponseId(chapterPlan.chapterNumber, exercise)
                 const response = exerciseResponses[responseId] ?? ''
-                const scannedExercise = chapterPlan.chapterNumber === 1 ? chapter1ExerciseMap.get(exercise) : null
 
                 return <article className={`exercise-response-card ${response.trim() ? 'is-complete' : ''}`} key={responseId}>
                   <div className="exercise-response-heading">
                     <span>Exercise {exercise}</span>
                     <strong>{response.trim() ? 'Đã nhập' : 'Chưa làm'}</strong>
                   </div>
-                  {scannedExercise ? <details className="exercise-prompt-details">
-                    <summary>Xem đề bài OCR · Student Book p. {scannedExercise.bookPage}</summary>
-                    <pre>{scannedExercise.ocrText}</pre>
-                  </details> : <p className="exercise-prompt-placeholder">Chapter này đã có lịch bài. Mở Student Book PDF ở trên để xem đề Exercise {exercise}.</p>}
+                  <p className="exercise-prompt-placeholder">Mở Student Book PDF ở trên để xem đề Exercise {exercise}.</p>
                   <textarea
                     onChange={(event) => updateExerciseResponse(exercise, event.target.value)}
                     placeholder={`Nhập đáp án, câu viết hoặc ghi chú cho Exercise ${exercise}...`}
                     value={response}
                   />
-                  {scannedExercise?.answerKeyText ? <details className="exercise-answer-details">
-                    <summary>Xem Answer Key OCR · chỉ mở sau khi làm</summary>
-                    <pre>{scannedExercise.answerKeyText}</pre>
-                  </details> : <small>Đối chiếu Answer Key sau khi bấm lưu bài trong sách.</small>}
+                  <small>Đối chiếu Answer Key sau khi bấm lưu bài trong sách.</small>
                 </article>
               })}
             </div>

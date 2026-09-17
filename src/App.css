@@ -1356,43 +1356,6 @@ button {
   line-height: 1.35;
 }
 
-.exercise-prompt-details,
-.exercise-answer-details {
-  border: 1px solid #dbe3ee;
-  border-radius: 7px;
-  background: #ffffff;
-  color: #334155;
-  font-size: 12px;
-}
-
-.exercise-prompt-details summary,
-.exercise-answer-details summary {
-  cursor: pointer;
-  padding: 8px 10px;
-  font-weight: 800;
-}
-
-.exercise-prompt-details pre,
-.exercise-answer-details pre {
-  max-height: 260px;
-  overflow: auto;
-  margin: 0;
-  padding: 10px;
-  border-top: 1px solid #e2e8f0;
-  white-space: pre-wrap;
-  font: inherit;
-  line-height: 1.45;
-}
-
-.exercise-answer-details {
-  border-color: #fde68a;
-  background: #fffbeb;
-}
-
-.exercise-answer-details pre {
-  border-top-color: #fde68a;
-}
-
 .exercise-prompt-placeholder {
   margin: 0;
   color: #64748b;

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import EnglishLab from './EnglishLab'
 
 const progressKey = 'study-roadmap-progress-v1'
 const scheduleProgressKey = 'daily-schedule-progress-v1'
@@ -13,29 +14,30 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:00', 'Ôn note LeetCode hoặc English nhẹ', 'Study'],
+      ['06:00 - 07:30', 'English: học 1 cặp thì + viết/nói + dictation', 'English'],
       ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
       ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
-      ['18:30 - 19:30', 'LeetCode: 1 bài mới hoặc redo bài sai', 'LeetCode'],
+      ['18:30 - 19:30', 'Làm bài tập trường hoặc chốt 1 task đồ án nhỏ', 'School'],
       ['20:00 - 22:10', 'Trade cố định, ngồi theo plan và ghi journal sau lệnh', 'Trading'],
-      ['22:20 - 23:10', 'Làm bài tập hoặc học bài trên trường', 'School'],
-      ['23:10 - 00:00', 'Đồ án: chốt 1 task nhỏ hoặc ghi tiến độ', 'Project'],
-      ['00:00 - 00:20', 'Review nhanh và chuẩn bị task ngày mai', 'Review'],
+      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: 1 bài theo chủ đề ngày', 'LeetCode'],
+      ['23:30 - 00:20', 'Ghi pattern notebook, chuẩn bị bài English sáng mai', 'Review'],
     ],
   },
   {
     day: 'Thứ 3',
-    type: 'English + trade',
+    type: 'Work + trade',
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:00', 'AI Math drill: 1 công thức + 2 ví dụ số', 'AI Math'],
+      ['06:00 - 07:30', 'English: ôn từ vựng cách quãng + shadowing + speaking', 'English'],
       ['09:00 - 11:00', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['14:00 - 16:00', 'Đồ án: code/report/demo một phần rõ ràng', 'Project'],
-      ['18:00 - 19:30', 'Học tiếng Anh cố định', 'English'],
+      ['18:00 - 19:30', 'AI Math hoặc đồ án: hoàn thành 1 phần rõ ràng', 'AI Math'],
       ['20:00 - 22:10', 'Trade cố định, ưu tiên kỷ luật entry/exit', 'Trading'],
-      ['22:20 - 23:20', 'LeetCode pattern review hoặc redo bài sai', 'LeetCode'],
-      ['23:20 - 00:15', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
+      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: Two Pointers / Prefix Sum', 'LeetCode'],
+      ['23:30 - 00:15', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
     ],
   },
   {
@@ -44,16 +46,17 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'Làm bài tập hoặc ôn bài trước khi tới trường', 'School'],
+      ['06:00 - 07:30', 'English: phân biệt 2 thì dễ nhầm + nghe chép chính tả', 'English'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc tới điểm tiếp theo', 'Travel'],
       ['14:00 - 15:30', 'Đồ án: hoàn thành 1 việc có thể demo/commit', 'Project'],
       ['16:00 - 17:00', 'AI Math hoặc học lại bài trên trường', 'AI Math'],
-      ['18:30 - 19:30', 'LeetCode redo: làm lại bài sai, không xem lời giải', 'LeetCode'],
+      ['18:30 - 19:30', 'Làm bài tập trường hoặc review AI Math nhẹ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
-      ['22:20 - 23:20', 'English Listening/Reading nhẹ', 'English'],
-      ['23:20 - 00:15', 'Review ngắn, không học nặng sau trade', 'Review'],
+      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: Sliding Window', 'LeetCode'],
+      ['23:30 - 00:15', 'Review ngắn, không học nặng sau trade', 'Review'],
     ],
   },
   {
@@ -62,14 +65,14 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:00', 'AI Math flashcard: metric/loss/threshold', 'AI Math'],
+      ['06:00 - 07:30', 'English: từ vựng theo cụm + nghe 4 bước', 'English'],
       ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
       ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
-      ['18:30 - 19:30', 'LeetCode: 1 bài Medium theo roadmap', 'LeetCode'],
+      ['18:30 - 19:30', 'Làm bài tập trường hoặc chốt 1 task đồ án nhỏ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
-      ['22:20 - 23:10', 'Làm bài tập hoặc học bài trên trường', 'School'],
-      ['23:10 - 00:00', 'Đồ án: sửa 1 bug nhỏ hoặc viết report', 'Project'],
-      ['00:00 - 00:20', 'Tổng kết bài LeetCode và trade journal', 'Review'],
+      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: Stack / Monotonic Stack', 'LeetCode'],
+      ['23:30 - 00:20', 'Tổng kết bài LeetCode và trade journal', 'Review'],
     ],
   },
   {
@@ -78,16 +81,17 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:00', 'Ôn lại notebook AI Math trong tuần', 'AI Math'],
+      ['06:00 - 07:30', 'English: ghi âm dùng thì trong câu chuyện cá nhân', 'English'],
       ['08:00 - 12:00', 'Làm việc cố định', 'Work'],
       ['14:00 - 15:30', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['16:00 - 17:30', 'Đồ án: code/report phần quan trọng nhất tuần', 'Project'],
       ['17:30 - 18:00', 'Báo cáo tiến độ với giáo viên hướng dẫn', 'Advisor'],
       ['18:00 - 18:15', 'Ghi lại feedback và việc cần sửa sau buổi báo cáo', 'Review'],
-      ['18:20 - 19:30', 'LeetCode timed practice trước giờ trade', 'LeetCode'],
+      ['18:20 - 19:30', 'Làm bài tập trường hoặc xử lý việc đồ án còn dang dở', 'School'],
       ['20:00 - 22:10', 'Trade cố định, cuối phiên chốt weekly journal', 'Trading'],
-      ['22:20 - 23:00', 'Speaking Part 1 hoặc shadowing nhẹ', 'English'],
-      ['23:00 - 00:15', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
+      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: Binary Search / Linked List', 'LeetCode'],
+      ['23:30 - 00:15', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
     ],
   },
   {
@@ -96,31 +100,35 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:30 - 07:30', 'Ôn bài trước khi tới trường', 'School'],
+      ['06:00 - 07:30', 'English: viết đoạn ngắn dùng 2-4 thì + nghe tóm tắt', 'English'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc nghỉ trưa', 'Travel'],
       ['14:00 - 15:30', 'Làm bài tập trên trường', 'School'],
       ['15:45 - 17:30', 'Đồ án: deep work không bị cắt bởi trade', 'Project'],
       ['19:30 - 21:00', 'AI Math hoặc project notebook sâu hơn', 'AI Math'],
-      ['21:15 - 22:30', 'Weekly LeetCode review: redo bài sai và cập nhật sổ tay', 'LeetCode'],
-      ['23:00 - 00:00', 'English Writing/Speaking nhẹ', 'English'],
+      ['21:15 - 22:15', 'Chuẩn bị bài trường hoặc nghỉ sau ngày học dài', 'School'],
+      ['22:30 - 23:30', 'LeetCode cố định: Tree / Graph', 'LeetCode'],
+      ['23:30 - 00:00', 'Ghi pattern notebook và chuẩn bị bài English sáng Chủ nhật', 'Review'],
     ],
   },
   {
     day: 'Chủ nhật',
-    type: 'English + planning',
+    type: 'Planning + review',
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['09:00 - 10:30', 'Mock LeetCode hoặc review 1 pattern yếu nhất', 'LeetCode'],
+      ['06:00 - 07:30', 'English: kiểm tra 12 thì + review từ/nghe + nói 3 phút', 'English'],
+      ['09:00 - 10:00', 'Đồ án hoặc bài tập trường ưu tiên cao', 'School'],
+      ['10:00 - 10:30', 'Cập nhật pattern notebook và chọn bài cho tuần mới', 'Review'],
       ['10:45 - 12:00', 'AI Math recap: viết lại công thức và ví dụ số', 'AI Math'],
       ['13:30 - 14:45', 'Làm bài tập hoặc học bài trên trường', 'School'],
-      ['15:00 - 16:30', 'Học tiếng Anh cố định', 'English'],
+      ['15:00 - 16:30', 'Đồ án hoặc bài tập trường: hoàn thành việc ưu tiên tuần mới', 'Project'],
       ['17:00 - 18:30', 'Đồ án: tổng hợp tiến độ, chuẩn bị phần tuần tới', 'Project'],
       ['20:00 - 21:00', 'Plan tuần mới theo 3 roadmap', 'Planning'],
       ['21:00 - 22:00', 'Chuẩn bị sổ tay, bài cần redo và checklist tuần tới', 'Review'],
-      ['22:00 - 23:00', 'English hoặc đọc lại bài trường nhẹ', 'English'],
+      ['22:00 - 22:30', 'Chuẩn bị sổ tay và bài LeetCode redo', 'Review'],
+      ['22:30 - 23:30', 'LeetCode cố định: redo bài sai + pattern yếu nhất', 'LeetCode'],
     ],
   },
 ]
@@ -129,7 +137,8 @@ const fixedCommitments = [
   ['Ngủ và dậy', 'Đi ngủ 00:30, dậy 05:30 mỗi ngày để giữ nhịp ổn định.'],
   ['Làm việc', 'Thứ 2 và thứ 5 làm 08:00 - 17:00; thứ 6 làm 08:00 - 12:00.'],
   ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
-  ['Tiếng Anh', 'Thứ 3 học 18:00 - 19:30; Chủ nhật học 15:00 - 16:30.'],
+  ['Tiếng Anh', 'Cố định 06:00 - 07:30 mỗi ngày. Nội dung và bài nghe cụ thể nằm trong trang English.'],
+  ['LeetCode', 'Cố định 22:30 - 23:30 mỗi ngày. Làm đúng pattern của ngày, có 1 bài redo vào Chủ nhật.'],
   ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
   ['Báo cáo GVHD', 'Mỗi thứ 6 lúc 17:30 báo cáo tiến độ với giáo viên hướng dẫn.'],
   ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
@@ -387,75 +396,70 @@ const exhibitFlowTeam = [
 
 const englishSkillMethods = [
   {
-    skill: 'Listening',
-    goal: 'Nghe để bắt keyword, paraphrase và distractor, không chỉ nghe lấy đáp án.',
+    skill: '12 thì',
+    goal: 'Không học thuộc công thức riêng lẻ: mỗi thì phải đi cùng ngữ cảnh, câu viết và câu nói.',
     steps: [
-      'Làm 1 section có timer, khoanh câu không chắc.',
-      'Chấm điểm rồi nghe lại từng câu sai với transcript.',
-      'Ghi cụm paraphrase: price -> cost, student -> learner, cancel -> call off.',
-      'Nghe lại lần 2 không nhìn transcript, chỉ dừng ở đoạn sai.',
+      'Học 1 cặp thì trong tuần và ghi: form → cách dùng → dấu hiệu → ví dụ của mình.',
+      'Biến 1 ý thành 3 dạng: khẳng định, phủ định, câu hỏi; sau đó đổi chủ ngữ/thời gian.',
+      'Viết 8 câu rồi nói lại 8 câu không nhìn bài; đánh dấu lỗi tense trong error log.',
+      'Cuối tuần trộn các thì trong 1 đoạn 100 từ và 1 bài nói 2 phút.',
     ],
   },
   {
-    skill: 'Reading',
-    goal: 'Tìm thông tin nhanh và nhận ra paraphrase giữa câu hỏi và bài đọc.',
+    skill: 'Từ vựng nhớ dai',
+    goal: 'Học ít nhưng gọi lại được và dùng được; ưu tiên cụm từ thay vì danh sách từ đơn.',
     steps: [
-      'Đọc câu hỏi trước, gạch keyword chính và loại thông tin cần tìm.',
-      'Scan tên riêng, số, danh từ cụ thể trước khi đọc kỹ.',
-      'Với T/F/NG, hỏi: bài có nói đúng ý này không hay chỉ liên quan?',
-      'Sau khi sai, ghi lý do: sai keyword, bị distractor, hiểu nhầm phủ định.',
+      'Mỗi ngày chọn 8–10 cụm theo 1 chủ đề; ghi collocation, câu mẫu và tình huống dùng.',
+      'Ôn cách quãng vào ngày 0–1–3–7–14–30 bằng active recall, không nhìn nghĩa trước.',
+      'Mỗi cụm phải xuất hiện 2 lần: 1 câu viết và 1 câu nói về chính mình.',
+      'Mỗi Chủ nhật bỏ cụm chưa dùng được, giữ lại cụm nhớ và dùng được.',
     ],
   },
   {
-    skill: 'Writing Task 1',
-    goal: 'Viết rõ overview, so sánh đúng số liệu, không kể từng chi tiết rời rạc.',
+    skill: 'Listening 4 bước',
+    goal: 'Tăng khả năng nghe bằng một đoạn ngắn nghe sâu, rồi mới tăng độ dài và tốc độ.',
     steps: [
-      'Nhìn biểu đồ 2 phút: trend chính, cao nhất, thấp nhất, thay đổi lớn.',
-      'Viết intro bằng paraphrase đề.',
-      'Overview có 2 ý lớn, không cần số liệu chi tiết.',
-      'Body chia nhóm thông minh: tăng/giảm, cao/thấp, nhóm giống nhau.',
+      'Lần 1 nghe không transcript: ghi chủ đề, ai, ở đâu, 3 ý chính.',
+      'Lần 2 chép chính tả 30–60 giây; khoanh từ bị nuốt âm, nối âm hoặc không nhận ra.',
+      'Mở transcript để sửa, ghi 3 cụm nghe sai và shadow 5 câu.',
+      'Ngày hôm sau nghe lại không transcript và tóm tắt miệng 60 giây.',
     ],
   },
   {
-    skill: 'Writing Task 2',
-    goal: 'Bài có thesis rõ, mỗi đoạn một ý chính, giải thích đủ sâu.',
+    skill: 'Writing',
+    goal: 'Dùng được thì để kể, mô tả hiện tại và nói về kế hoạch; ưu tiên câu đúng trước câu hay.',
     steps: [
-      'Dành 5 phút lập dàn ý: position, 2 main ideas, example.',
-      'Mỗi body theo Claim -> Why -> Example -> Result.',
-      'Không dùng từ quá khó nếu làm câu sai grammar.',
-      'Sau khi viết, rewrite 5 câu yếu nhất cho ngắn và đúng hơn.',
+      'Viết theo khung 4 câu: bối cảnh → sự việc → kết quả → kế hoạch/nhận xét.',
+      'Mỗi bài phải gạch chân các thì đã dùng và kiểm tra lý do dùng từng thì.',
+      'Sau 24 giờ, tự sửa 5 câu; so sánh với checklist S-V, tense, article, plural.',
+      'Mỗi tuần lưu 1 đoạn trước/sau khi sửa để thấy lỗi lặp đã giảm chưa.',
     ],
   },
   {
     skill: 'Speaking',
-    goal: 'Nói tự nhiên, có phát triển ý, không học thuộc sample cứng.',
+    goal: 'Biến kiến thức ngữ pháp thành phản xạ nói trong tình huống quen thuộc.',
     steps: [
-      'Part 1: Answer -> Reason -> Example trong 2-3 câu.',
-      'Part 2: chuẩn bị story theo Past -> Detail -> Feeling -> Lesson.',
-      'Part 3: Opinion -> Reason -> Contrast -> Consequence.',
-      'Ghi âm 2 phút, nghe lại và sửa pronunciation, pause, grammar lỗi lặp.',
+      'Thứ 6 ghi âm 2 phút, bắt buộc dùng cặp thì đang học và 5 cụm từ trong tuần.',
+      'Nghe lại, chép ra 3 câu sai và nói lại ngay phiên bản đúng 3 lần.',
+      'Chủ nhật nói 3 phút kể một câu chuyện có quá khứ, hiện tại và tương lai.',
+      'Đánh giá 3 điểm: đúng thì, rõ ý, nghe tự nhiên; không chấm theo độ khó của từ.',
     ],
   },
-  {
-    skill: 'Vocabulary',
-    goal: 'Học cụm dùng được trong nói/viết, không học list từ đơn lẻ.',
-    steps: [
-      'Mỗi ngày 10-15 collocations theo chủ đề.',
-      'Mỗi cụm đặt 1 câu thật liên quan tới bản thân hoặc bài IELTS.',
-      'Ôn active recall: che nghĩa, tự nhớ lại cụm và ví dụ.',
-      'Gắn nhãn dùng cho Speaking, Writing Task 1 hoặc Writing Task 2.',
-    ],
-  },
-  {
-    skill: 'Grammar',
-    goal: 'Tăng độ chính xác câu trước, rồi mới tăng độ dài và độ phức tạp.',
-    steps: [
-      'Mỗi ngày chọn 1 lỗi chính: tense, article, plural, preposition, clause.',
-      'Viết 8 câu ngắn đúng 100% trước khi viết câu dài.',
-      'Rewrite câu sai từ bài writing/speaking log.',
-      'Cuối tuần tổng hợp 5 lỗi lặp nhiều nhất để drill lại.',
-    ],
-  },
+]
+
+const englishTenseRoadmap = [
+  ['Present Simple', 'S + V(s/es)', 'thói quen, sự thật', 'I work from home on Fridays.'],
+  ['Present Continuous', 'S + am/is/are + V-ing', 'đang diễn ra, tạm thời', 'I am working on a new project.'],
+  ['Present Perfect', 'S + have/has + V3', 'đã xảy ra, còn liên quan hiện tại', 'I have finished the report.'],
+  ['Present Perfect Continuous', 'S + have/has been + V-ing', 'bắt đầu trước và còn tiếp diễn', 'I have been learning English for a year.'],
+  ['Past Simple', 'S + V2/ed', 'đã kết thúc tại thời điểm quá khứ', 'I watched a film last night.'],
+  ['Past Continuous', 'S + was/were + V-ing', 'đang diễn ra tại một thời điểm quá khứ', 'I was studying at 8 p.m.'],
+  ['Past Perfect', 'S + had + V3', 'xảy ra trước một mốc quá khứ khác', 'I had left before he called.'],
+  ['Past Perfect Continuous', 'S + had been + V-ing', 'kéo dài trước một mốc quá khứ', 'I had been waiting for an hour.'],
+  ['Future Simple', 'S + will + V', 'quyết định nhanh, dự đoán, lời hứa', 'I will call you tonight.'],
+  ['Future Continuous', 'S + will be + V-ing', 'đang diễn ra tại mốc tương lai', 'I will be working at 9 a.m.'],
+  ['Future Perfect', 'S + will have + V3', 'hoàn tất trước mốc tương lai', 'I will have finished by Friday.'],
+  ['Future Perfect Continuous', 'S + will have been + V-ing', 'kéo dài đến mốc tương lai', 'I will have been studying for two years.'],
 ]
 
 const leetcodeComplexityGuide = [
@@ -493,6 +497,26 @@ const leetcodeComplexityGuide = [
   },
 ]
 
+const englishDailyPlan = [
+  ['Thứ 2', 'Học cặp thì của tuần', 'Nghe 1 đoạn 60–90 giây 4 bước: ý chính → chép chính tả → transcript → shadow.', 'Viết 8 câu với thì mới: khẳng định, phủ định, câu hỏi; đọc to toàn bộ.'],
+  ['Thứ 3', 'Từ vựng theo cụm + active recall', 'Nghe lại đoạn hôm qua không transcript, ghi 5 từ/cụm đã nghe được.', 'Học 8–10 collocations; ôn thẻ ngày 1 và đặt 5 câu dùng đúng thì tuần này.'],
+  ['Thứ 4', 'Phân biệt hai thì dễ nhầm', 'Nghe đoạn mới; đánh dấu chỗ nối âm, nuốt âm và từ không nhận ra.', 'Viết 1 đoạn 80–100 từ có ít nhất 2 thì; gạch chân và giải thích lý do dùng.'],
+  ['Thứ 5', 'Listening sâu + tóm tắt', 'Nghe 1 section ngắn theo timer, chỉ mở transcript ở câu sai rồi shadow 5 câu.', 'Tóm tắt nội dung bằng 5 câu, cố ý dùng 3 thì và 5 cụm từ đã học.'],
+  ['Thứ 6', 'Speaking dùng thì trong đời thật', 'Shadow một đoạn 3 vòng: chậm → cùng tốc độ → tự nói lại không nhìn.', 'Ghi âm 2 phút về tuần của mình; bắt buộc dùng cặp thì và 5 collocations.'],
+  ['Thứ 7', 'Writing + sửa lỗi', 'Nghe một bài ngắn rồi nói lại 3 ý chính bằng tiếng Anh.', 'Viết 120–150 từ; sau 24 giờ sửa 5 câu yếu và kiểm tra tense/S-V/article/plural.'],
+  ['Chủ nhật', 'Kiểm tra tuần + ôn cách quãng', 'Nghe lại bài từng sai sau 6 ngày, không transcript; tóm tắt trong 60 giây.', 'Ôn thẻ ngày 0–1–3–7, viết 12 câu trộn các thì và nói 3 phút kể chuyện.'],
+]
+
+const leetcodeDailyPlan = [
+  ['Thứ 2', 'Array / HashMap', 'Chọn 1 bài trong roadmap (ví dụ Two Sum hoặc Valid Anagram).'],
+  ['Thứ 3', 'Two Pointers / Prefix Sum', 'Chọn 1 bài mới, ưu tiên viết brute force trước rồi tối ưu.'],
+  ['Thứ 4', 'Sliding Window', 'Chọn 1 bài Easy/Medium và vẽ cửa sổ di chuyển bằng ví dụ nhỏ.'],
+  ['Thứ 5', 'Stack / Monotonic Stack', 'Chọn 1 bài theo tuần roadmap; ghi rõ điều gì được push/pop.'],
+  ['Thứ 6', 'Binary Search / Linked List', 'Làm 1 bài có timer 35 phút; test kỹ điều kiện biên.'],
+  ['Thứ 7', 'Tree / Graph', 'Chọn 1 DFS/BFS; vẽ tree/graph, thêm visited hoặc base case trước khi code.'],
+  ['Chủ nhật', 'Redo + pattern yếu nhất', 'Không xem đáp án: làm lại 1 bài sai sau 3–7 ngày và cập nhật pattern notebook.'],
+]
+
 const tracks = [
   {
     id: 'leetcode',
@@ -502,12 +526,10 @@ const tracks = [
     goal: 'Từ nền tảng array/string đến mock interview, ưu tiên nhận diện pattern, tự giải lại và giải thích độ phức tạp.',
     accent: '#2563eb',
     daily: [
-      ['1. Hiểu đề', 'Viết lại đề bằng lời của mình, xác định input/output, constraints và edge cases.'],
-      ['2. Ví dụ nhỏ', 'Tự chạy tay 2-3 ví dụ, gồm case rỗng, 1 phần tử, trùng lặp, số âm hoặc biên lớn.'],
-      ['3. Brute force', 'Nghĩ cách đơn giản nhất trước, dù chậm, để biết bài đang yêu cầu kiểm tra/tối ưu điều gì.'],
-      ['4. Tìm pattern', 'Hỏi: có cần HashMap, Two Pointers, Sliding Window, Stack, Binary Search, BFS/DFS hay DP không?'],
-      ['5. Tối ưu', 'Chỉ tối ưu điểm nghẽn lớn nhất: vòng lặp thừa, lookup chậm, trạng thái lặp lại hoặc sort được.'],
-      ['6. Code và test', 'Code theo pseudo-code, test sample, edge case và tự tính time/space trước khi submit.'],
+      ['05 phút', 'Đọc đề, tự nói input/output/constraints và chạy tay 1 ví dụ.'],
+      ['35 phút', 'Tự giải: brute force → nhận diện pattern → code. Không mở lời giải trước khi hết giờ.'],
+      ['10 phút', 'Test edge case, submit và ghi time/space complexity.'],
+      ['10 phút', 'Xem lời giải nếu cần; note 1 pattern và ngày redo sau 3–7 ngày.'],
     ],
     metrics: [
       ['Mục tiêu bài', '120+'],
@@ -617,58 +639,59 @@ const tracks = [
   {
     id: 'english',
     label: 'English',
-    eyebrow: 'IELTS 6.5',
-    title: '3 tháng nâng nền English và luyện IELTS có kiểm soát',
-    goal: 'Từ grammar/vocab/listening nền sang IELTS skills, luôn có error log để sửa đúng lỗi đang kéo band xuống.',
+    eyebrow: '12 tuần · 3 mục tiêu chính',
+    title: '12 tuần dùng được 12 thì trong viết và nói',
+    goal: 'Mỗi tuần học một cặp thì, luyện từ vựng theo cách quên rồi nhớ lại, và nghe sâu một đoạn ngắn. Mục tiêu là tạo được câu đúng, nói được thành đoạn và hiểu ý chính khi nghe.',
     accent: '#dc2626',
     daily: [
-      ['30 phút', 'Grammar và sentence drill, ưu tiên câu đúng trước câu hay.'],
-      ['30 phút', 'Vocabulary bằng collocation, đặt câu và active recall.'],
-      ['45 phút', 'Listening/Reading luân phiên, luôn analyze lỗi.'],
-      ['45 phút', 'Writing/Speaking luân phiên, ghi âm hoặc rewrite.'],
+      ['10 phút', 'Ôn từ/cụm theo lịch 0–1–3–7–14–30 và sửa lỗi của hôm trước.'],
+      ['20 phút', 'Học 1 cặp thì: form, cách dùng, dấu hiệu và câu ví dụ của chính mình.'],
+      ['25 phút', 'Listening 4 bước: nghe ý → chép chính tả → transcript → shadow.'],
+      ['25 phút', 'Output: viết 8 câu/đoạn ngắn rồi ghi âm nói lại, bắt buộc dùng thì mới.'],
+      ['10 phút', 'Ghi error log: tense, từ vựng, nghe sai; chọn 1 lỗi để sửa ngày mai.'],
     ],
     metrics: [
-      ['Target', 'IELTS 6.5'],
-      ['Vocab', '1,200 collocations'],
-      ['Checkpoint', 'Mock ổn định L/R 6.5+'],
+      ['12 thì', '12 cặp bài học + 12 bài kiểm tra'],
+      ['Từ vựng', '8–10 cụm/ngày · ôn 6 mốc'],
+      ['Nghe & nói', '7 audio + 3 recording/tuần'],
     ],
     resources: [
       ['Daily Dictation', 'https://dailydictation.com'],
-      ['IELTS Dictionary', 'https://theieltsdictionary.com/practice/writing/dich-cau/buoc2-education'],
-      ['YouPass IELTS', 'https://youpass.vn/luyen-thi/ielts/writing'],
+      ['YouGlish', 'https://youglish.com'],
+      ['Oxford Learner’s Dictionaries', 'https://www.oxfordlearnersdictionaries.com'],
     ],
     months: [
       {
         name: 'Tháng 1',
-        focus: 'English Core',
-        outcome: 'Viết câu đúng, nghe được thông tin cơ bản, nói câu ngắn rõ ý và có collocation dùng được.',
+        focus: 'Nắm 8 thì hiện tại và quá khứ',
+        outcome: 'Nhận diện đúng ngữ cảnh, viết câu ngắn không sai thì, và nói được thói quen, việc đang diễn ra, trải nghiệm và câu chuyện quá khứ.',
         weeks: [
-          ['Tuần 1', 'Grammar nền', ['S/V/O', 'be/do/have', 'present/past/future', 'articles', 'pronouns']],
-          ['Tuần 2', 'Sentence accuracy', ['modal verbs', 'comparatives', 'prepositions', 'countable nouns', 'compound sentences']],
-          ['Tuần 3', 'Complex sentences', ['relative clauses', 'passive voice', 'conditionals', 'gerund/infinitive', 'linking words']],
-          ['Tuần 4', 'Listening/Speaking base', ['numbers/dates/names', 'shadowing', 'Part 1 answers', 'Answer-Reason-Example', 'pronunciation log']],
+          ['Tuần 1', 'Present Simple + Present Continuous', ['form và dấu hiệu nhận biết', '8 câu thói quen/đang diễn ra', 'nghe chép chính tả 30 giây', 'nói 1 phút về lịch hằng ngày', 'ôn 40 collocations work/study']],
+          ['Tuần 2', 'Present Perfect + Present Perfect Continuous', ['for/since/already/yet', 'phân biệt kết quả và quá trình', 'viết 100 từ về việc đã làm', 'nói về quá trình học English', 'ôn cụm ngày 0–1–3–7']],
+          ['Tuần 3', 'Past Simple + Past Continuous', ['when/while và mốc thời gian', 'kể một ngày đã qua bằng 2 thì', 'nghe đoạn kể chuyện và bắt động từ', 'ghi âm 2 phút về một kỷ niệm', 'ôn 40 collocations daily life']],
+          ['Tuần 4', 'Past Perfect + Past Perfect Continuous', ['before/after/by the time', 'xếp thứ tự 2 sự việc quá khứ', 'viết lại 8 câu dễ nhầm', 'nói câu chuyện có nguyên nhân/kết quả', 'mini test 8 thì đầu']],
         ],
       },
       {
         name: 'Tháng 2',
-        focus: 'IELTS skills',
-        outcome: 'Biết dạng bài IELTS, tìm keyword/paraphrase, viết Task 1/2 có cấu trúc và nói Part 2 đủ thời gian.',
+        focus: '4 thì tương lai và phối hợp ngữ cảnh',
+        outcome: 'Nói/viết được kế hoạch, dự đoán, tiến độ và việc hoàn tất trước một mốc tương lai; biết chọn thì theo ý muốn diễn đạt.',
         weeks: [
-          ['Tuần 5', 'Listening types', ['form completion', 'note completion', 'multiple choice', 'matching', 'map']],
-          ['Tuần 6', 'Reading types', ['scanning', 'skimming', 'T/F/NG', 'matching headings', 'sentence completion']],
-          ['Tuần 7', 'Writing Task 1', ['intro', 'overview', 'body 1', 'body 2', 'trend comparison']],
-          ['Tuần 8', 'Writing Task 2 + Speaking', ['thesis', 'topic sentence', 'example', 'Part 2 story', 'Part 3 opinion']],
+          ['Tuần 5', 'Future Simple + Future Continuous', ['will và quyết định tức thời', 'kế hoạch đang diễn ra tại mốc tương lai', 'nghe dự đoán/kế hoạch', 'nói kế hoạch tuần tới', 'ôn 50 collocations future/work']],
+          ['Tuần 6', 'Future Perfect + Future Perfect Continuous', ['by/before và for', 'phân biệt hoàn tất và kéo dài', 'viết mục tiêu 1 năm', 'nói tiến độ dự án cá nhân', 'mini dictation 60 giây']],
+          ['Tuần 7', 'So sánh 12 thì theo timeline', ['vẽ timeline cho 12 thì', 'chọn thì từ ngữ cảnh thay vì dịch từng chữ', 'sửa 20 câu sai tense', 'nói 3 phút về quá khứ-hiện tại-tương lai', 'ôn thẻ ngày 0–1–3–7–14']],
+          ['Tuần 8', 'Viết và nói tích hợp', ['đoạn 150 từ dùng tối thiểu 6 thì', 'nghe rồi kể lại bằng thì phù hợp', 'ghi âm trả lời 5 câu hỏi', 'tự chấm theo checklist', 'kiểm tra 12 thì lần 1']],
         ],
       },
       {
         name: 'Tháng 3',
-        focus: 'Band optimization and mock',
-        outcome: 'Biết mất điểm ở đâu, mock đều, sửa grammar/vocab/timing theo error log thay vì cày đề vô hướng.',
+        focus: 'Tự động hóa qua nghe, viết và nói',
+        outcome: 'Không chỉ nhận diện công thức: dùng 12 thì tự nhiên hơn trong bài viết, câu trả lời nói và tóm tắt nội dung nghe.',
         weeks: [
-          ['Tuần 9', 'Listening/Reading speed', ['3 tests/week', 'transcript analysis', 'paraphrase bank', 'distractor log', 'redo wrong answers']],
-          ['Tuần 10', 'Writing improvement', ['3 Task 2/week', '2 Task 1/week', 'grammar rewrite', 'cohesion check', 'sample comparison']],
-          ['Tuần 11', 'Speaking fluency', ['Part 1 quick answers', 'Part 2 2-minute talk', 'Part 3 depth', 'recording review', 'pronunciation fixes']],
-          ['Tuần 12', 'Mock and stabilize', ['2 full mocks/week', 'timing control', 'weakest skill drill', 'final error log', 'band target review']],
+          ['Tuần 9', 'Listening tăng độ dài', ['3 audio/tuần: ngắn → 3 phút', 'chép chính tả 60 giây', 'ghi sổ từ nghe sai', 'tóm tắt 5 câu', 'nghe lại sau 7 ngày']],
+          ['Tuần 10', 'Writing 12 thì', ['3 đoạn 120–150 từ', 'gạch chân và gọi tên từng thì', 'rewrite 5 câu yếu', 'dùng 15 collocations đã ôn', 'tự sửa theo error log']],
+          ['Tuần 11', 'Speaking 12 thì', ['3 recording/tuần', 'kể chuyện 3 phút', 'trả lời nhanh 10 câu', 'sửa pause/phát âm/tense', 'nói lại sau 24 giờ']],
+          ['Tuần 12', 'Final check + duy trì', ['1 bài viết 200 từ', '1 bài nói 5 phút', '1 listening mini test', 'kiểm tra đủ 12 thì', 'lập lịch ôn từ và nghe tháng tiếp theo']],
         ],
       },
     ],
@@ -1249,7 +1272,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
         <article>
           <span>{track.id === 'leetcode' ? 'Quy trình suy nghĩ' : 'Nhịp học mỗi ngày'}</span>
           {track.daily.map(([time, task]) => (
-            <p key={time}><b>{time}</b><em>{task}</em></p>
+            <p key={`${time}-${task}`}><b>{time}</b><em>{task}</em></p>
           ))}
         </article>
         <article>
@@ -1267,6 +1290,30 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
           </div>
         </article>
       </section>
+
+      {track.id === 'english' && (
+        <TenseRoadmap />
+      )}
+
+      {track.id === 'english' && (
+        <DailyStudyPlan
+          duration="90 phút/ngày"
+          intro="Giữ đúng nhịp 90 phút. Mỗi ngày phải có cả input (nghe/ôn) và output (viết/nói); nếu bận, làm phiên bản tối thiểu 30 phút: 10 phút ôn + 10 phút nghe + 10 phút nói/viết."
+          plan={englishDailyPlan}
+          title="Lịch 7 ngày lặp lại để nhớ lâu và dùng được"
+          type="english"
+        />
+      )}
+
+      {track.id === 'leetcode' && (
+        <DailyStudyPlan
+          duration="60 phút/ngày"
+          intro="Giữ đúng 1 bài/ngày. Nếu chưa ra sau 35 phút, đọc lời giải để học pattern, rồi đánh dấu làm lại sau 3–7 ngày."
+          plan={leetcodeDailyPlan}
+          title="LeetCode hằng ngày: chủ đề và bài cần làm"
+          type="leetcode"
+        />
+      )}
 
       {track.id === 'leetcode' && (
         <section className="skill-method-panel leetcode-guide-panel">
@@ -1313,6 +1360,8 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
         </section>
       )}
 
+      {track.id === 'english' && <EnglishLab />}
+
       <section className="month-stack">
         {track.months.map((month) => (
           <article className="month-panel" key={month.name}>
@@ -1353,6 +1402,55 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
         ))}
       </section>
     </>
+  )
+}
+
+function DailyStudyPlan({ duration, intro, plan, title, type }) {
+  return (
+    <section className={`daily-study-panel ${type}`}>
+      <div className="method-heading">
+        <span>Bắt buộc · {duration}</span>
+        <h3>{title}</h3>
+        <p>{intro}</p>
+      </div>
+      <div className="daily-study-grid">
+        {plan.map(([day, focus, listenOrProblem, output]) => (
+          <article className="daily-study-card" key={day}>
+            <span>{day}</span>
+            <h4>{focus}</h4>
+            <p><b>{type === 'english' ? 'Nghe:' : 'Bài:'}</b> {listenOrProblem}</p>
+            {type === 'english' ? <p><b>Đầu ra:</b> {output}</p> : null}
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function TenseRoadmap() {
+  return (
+    <section className="tense-roadmap-panel">
+      <div className="method-heading">
+        <span>Trọng tâm bắt buộc · 12 thì</span>
+        <h3>Bản đồ 12 thì: học theo cặp, dùng ngay trong viết và nói</h3>
+        <p>
+          Mỗi tuần học một cặp. Với mỗi thì, đi theo chuỗi: nhận diện ngữ cảnh → biến đổi câu → viết → nói → ôn lại sau 1, 3, 7 và 14 ngày.
+        </p>
+      </div>
+      <div className="tense-roadmap-grid">
+        {englishTenseRoadmap.map(([tense, form, use, example], index) => (
+          <article className="tense-card" key={tense}>
+            <div className="tense-card-heading">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h4>{tense}</h4>
+            </div>
+            <p><b>Công thức:</b> {form}</p>
+            <p><b>Dùng khi:</b> {use}</p>
+            <p className="tense-example">“{example}”</p>
+          </article>
+        ))}
+      </div>
+    </section>
   )
 }
 

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { englishChapterSchedule, quizSets } from './englishPracticeData'
 
 const dailyProgressKey = 'english-daily-practice-v1'
+const exerciseResponsesKey = 'english-exercise-responses-v1'
 const quizAttemptsKey = 'english-quiz-attempts-v1'
 const errorLogKey = 'english-error-log-v1'
 
@@ -71,6 +72,10 @@ function formatExerciseGroup(exerciseGroup) {
   return exerciseGroup.map((exercise) => `Ex. ${exercise}`).join(', ')
 }
 
+function makeExerciseResponseId(chapterNumber, exercise) {
+  return `chapter-${chapterNumber}-exercise-${exercise}`
+}
+
 function buildDailyTasks(chapterPlan, exerciseDays, dayIndex, audioEntries) {
   const exerciseGroup = exerciseDays[dayIndex] ?? exerciseDays[0]
   const audio = audioEntries.find((entry) => entry.chapter === chapterPlan.chapterNumber && exerciseGroup.includes(Number(entry.exercise)))
@@ -108,6 +113,7 @@ export default function EnglishLab() {
   const [selectedChapter, setSelectedChapter] = useState(1)
   const [selectedDay, setSelectedDay] = useState(todayIndex)
   const [dailyProgress, setDailyProgress] = useState(() => loadJson(dailyProgressKey, {}))
+  const [exerciseResponses, setExerciseResponses] = useState(() => loadJson(exerciseResponsesKey, {}))
   const [selectedQuizId, setSelectedQuizId] = useState(quizSets[0].id)
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -116,19 +122,29 @@ export default function EnglishLab() {
 
   const chapterPlan = englishChapterSchedule[selectedChapter - 1]
   const exerciseDays = useMemo(() => makeExerciseDays(chapterPlan.exerciseCount), [chapterPlan])
-  const dailyTasks = useMemo(() => buildDailyTasks(chapterPlan, exerciseDays, selectedDay, audioEntries), [audioEntries, chapterPlan, exerciseDays, selectedDay])
+  const activeDay = exerciseDays[selectedDay] ? selectedDay : 0
+  const activeExerciseGroup = exerciseDays[activeDay]
+  const dailyTasks = useMemo(() => buildDailyTasks(chapterPlan, exerciseDays, activeDay, audioEntries), [activeDay, audioEntries, chapterPlan, exerciseDays])
   const selectedQuiz = quizSets.find((quiz) => quiz.id === selectedQuizId) ?? quizSets[0]
   const answeredCount = selectedQuiz.questions.filter((question) => answers[question.id] !== undefined && answers[question.id] !== '').length
   const score = submitted
     ? selectedQuiz.questions.filter((question) => isCorrect(question, answers[question.id])).length
     : 0
   const completedDaily = dailyTasks.filter((task) => dailyProgress[task.id]).length
+  const completedExercises = activeExerciseGroup.filter((exercise) => exerciseResponses[makeExerciseResponseId(chapterPlan.chapterNumber, exercise)]?.trim()).length
   const lastAttempt = quizAttempts.find((attempt) => attempt.quizId === selectedQuiz.id)
 
   function toggleDailyTask(taskId) {
     const next = { ...dailyProgress, [taskId]: !dailyProgress[taskId] }
     setDailyProgress(next)
     window.localStorage.setItem(dailyProgressKey, JSON.stringify(next))
+  }
+
+  function updateExerciseResponse(exercise, value) {
+    const responseId = makeExerciseResponseId(chapterPlan.chapterNumber, exercise)
+    const next = { ...exerciseResponses, [responseId]: value }
+    setExerciseResponses(next)
+    window.localStorage.setItem(exerciseResponsesKey, JSON.stringify(next))
   }
 
   function selectQuiz(quizId) {
@@ -207,14 +223,14 @@ export default function EnglishLab() {
               </select>
             </label>
             <label>Ngày trong chapter
-              <select value={selectedDay} onChange={(event) => setSelectedDay(Number(event.target.value))}>
+              <select value={activeDay} onChange={(event) => setSelectedDay(Number(event.target.value))}>
                 {exerciseDays.map((exerciseGroup, index) => <option key={`${chapterPlan.chapterNumber}-${index}`} value={index}>Ngày {index + 1} · {formatExerciseGroup(exerciseGroup)}</option>)}
               </select>
             </label>
           </div>
           <div className="selected-week-callout">
             <strong>{chapterPlan.chapter}: {chapterPlan.title}</strong>
-            <span>{chapterPlan.pages} · Ngày {selectedDay + 1} · {formatExerciseGroup(exerciseDays[selectedDay])}</span>
+            <span>{chapterPlan.pages} · Ngày {activeDay + 1} · {formatExerciseGroup(activeExerciseGroup)}</span>
           </div>
           <div className="daily-task-list">
             {dailyTasks.map((task) => (
@@ -232,6 +248,35 @@ export default function EnglishLab() {
             ))}
           </div>
           <p className="lab-tip"><b>Cách dùng:</b> làm đủ 2–3 exercise theo thứ tự, đối chiếu Answer Key sau cùng, rồi nghe audio nếu chapter có file. Nếu bận, không nhảy sang chapter mới khi chưa hoàn thành nhóm hiện tại.</p>
+          <section className="exercise-workbench">
+            <div className="lab-section-title">
+              <div>
+                <span>Bàn làm bài · không chỉ đánh dấu</span>
+                <h4>Nhập câu trả lời cho từng Exercise</h4>
+              </div>
+              <strong>{completedExercises}/{activeExerciseGroup.length} bài đã nhập</strong>
+            </div>
+            <p className="exercise-workbench-intro">Mở đúng bài trong Student Book, làm vào ô tương ứng bên dưới. Với bài nghe/nói/viết, nhập transcript, câu trả lời hoặc ghi chú của bạn. Nội dung được lưu tự động trên máy này.</p>
+            <div className="exercise-workbench-grid">
+              {activeExerciseGroup.map((exercise) => {
+                const responseId = makeExerciseResponseId(chapterPlan.chapterNumber, exercise)
+                const response = exerciseResponses[responseId] ?? ''
+
+                return <article className={`exercise-response-card ${response.trim() ? 'is-complete' : ''}`} key={responseId}>
+                  <div className="exercise-response-heading">
+                    <span>Exercise {exercise}</span>
+                    <strong>{response.trim() ? 'Đã nhập' : 'Chưa làm'}</strong>
+                  </div>
+                  <textarea
+                    onChange={(event) => updateExerciseResponse(exercise, event.target.value)}
+                    placeholder={`Nhập đáp án, câu viết hoặc ghi chú cho Exercise ${exercise}...`}
+                    value={response}
+                  />
+                  <small>Đối chiếu Answer Key sau khi bấm lưu bài trong sách.</small>
+                </article>
+              })}
+            </div>
+          </section>
         </section>
 
         <aside className="english-side-panel">
@@ -260,8 +305,8 @@ export default function EnglishLab() {
       <section className="english-quiz-panel">
         <div className="lab-section-title quiz-title-row">
           <div>
-            <span>Kiểm tra + đáp án sau khi nộp</span>
-            <h4>Chọn checkpoint, làm hết rồi bấm “Nộp bài”</h4>
+            <span>Kiểm tra tổng hợp · tuỳ chọn</span>
+            <h4>Checkpoint riêng, không thay thế Exercise trong sách</h4>
           </div>
           {lastAttempt ? <span className="last-attempt">Lần gần nhất: {lastAttempt.score}/{lastAttempt.total}</span> : null}
         </div>

@@ -396,13 +396,13 @@ const exhibitFlowTeam = [
 
 const englishSkillMethods = [
   {
-    skill: '12 thì',
-    goal: 'Không học thuộc công thức riêng lẻ: mỗi thì phải đi cùng ngữ cảnh, câu viết và câu nói.',
+    skill: 'Grammar trong từng exercise',
+    goal: 'Không tách grammar thành một lộ trình riêng: học đúng điểm ngữ pháp xuất hiện trong chart và exercise của chapter đang làm.',
     steps: [
-      'Học 1 cặp thì trong tuần và ghi: form → cách dùng → dấu hiệu → ví dụ của mình.',
-      'Biến 1 ý thành 3 dạng: khẳng định, phủ định, câu hỏi; sau đó đổi chủ ngữ/thời gian.',
-      'Viết 8 câu rồi nói lại 8 câu không nhìn bài; đánh dấu lỗi tense trong error log.',
-      'Cuối tuần trộn các thì trong 1 đoạn 100 từ và 1 bài nói 2 phút.',
+      'Đọc chart ngay trước nhóm exercise, ghi lại form/cách dùng bằng một ví dụ trong sách.',
+      'Làm từng exercise theo thứ tự, không xem Answer Key khi chưa hoàn thành.',
+      'Đối chiếu từng câu sai, ghi lý do sai vào error log rồi làm lại sau 1–3 ngày.',
+      'Chỉ chuyển sang nhóm exercise tiếp theo khi nhóm hiện tại đã được sửa lỗi.',
     ],
   },
   {
@@ -447,21 +447,6 @@ const englishSkillMethods = [
   },
 ]
 
-const englishTenseRoadmap = [
-  ['Present Simple', 'S + V(s/es)', 'thói quen, sự thật', 'I work from home on Fridays.'],
-  ['Present Continuous', 'S + am/is/are + V-ing', 'đang diễn ra, tạm thời', 'I am working on a new project.'],
-  ['Present Perfect', 'S + have/has + V3', 'đã xảy ra, còn liên quan hiện tại', 'I have finished the report.'],
-  ['Present Perfect Continuous', 'S + have/has been + V-ing', 'bắt đầu trước và còn tiếp diễn', 'I have been learning English for a year.'],
-  ['Past Simple', 'S + V2/ed', 'đã kết thúc tại thời điểm quá khứ', 'I watched a film last night.'],
-  ['Past Continuous', 'S + was/were + V-ing', 'đang diễn ra tại một thời điểm quá khứ', 'I was studying at 8 p.m.'],
-  ['Past Perfect', 'S + had + V3', 'xảy ra trước một mốc quá khứ khác', 'I had left before he called.'],
-  ['Past Perfect Continuous', 'S + had been + V-ing', 'kéo dài trước một mốc quá khứ', 'I had been waiting for an hour.'],
-  ['Future Simple', 'S + will + V', 'quyết định nhanh, dự đoán, lời hứa', 'I will call you tonight.'],
-  ['Future Continuous', 'S + will be + V-ing', 'đang diễn ra tại mốc tương lai', 'I will be working at 9 a.m.'],
-  ['Future Perfect', 'S + will have + V3', 'hoàn tất trước mốc tương lai', 'I will have finished by Friday.'],
-  ['Future Perfect Continuous', 'S + will have been + V-ing', 'kéo dài đến mốc tương lai', 'I will have been studying for two years.'],
-]
-
 const leetcodeComplexityGuide = [
   {
     topic: 'Đếm vòng lặp',
@@ -495,16 +480,6 @@ const leetcodeComplexityGuide = [
       'Nếu sửa in-place và chỉ dùng vài biến phụ thì thường là O(1).',
     ],
   },
-]
-
-const englishDailyPlan = [
-  ['Thứ 2', 'Học cặp thì của tuần', 'Nghe 1 đoạn 60–90 giây 4 bước: ý chính → chép chính tả → transcript → shadow.', 'Viết 8 câu với thì mới: khẳng định, phủ định, câu hỏi; đọc to toàn bộ.'],
-  ['Thứ 3', 'Từ vựng theo cụm + active recall', 'Nghe lại đoạn hôm qua không transcript, ghi 5 từ/cụm đã nghe được.', 'Học 8–10 collocations; ôn thẻ ngày 1 và đặt 5 câu dùng đúng thì tuần này.'],
-  ['Thứ 4', 'Phân biệt hai thì dễ nhầm', 'Nghe đoạn mới; đánh dấu chỗ nối âm, nuốt âm và từ không nhận ra.', 'Viết 1 đoạn 80–100 từ có ít nhất 2 thì; gạch chân và giải thích lý do dùng.'],
-  ['Thứ 5', 'Listening sâu + tóm tắt', 'Nghe 1 section ngắn theo timer, chỉ mở transcript ở câu sai rồi shadow 5 câu.', 'Tóm tắt nội dung bằng 5 câu, cố ý dùng 3 thì và 5 cụm từ đã học.'],
-  ['Thứ 6', 'Speaking dùng thì trong đời thật', 'Shadow một đoạn 3 vòng: chậm → cùng tốc độ → tự nói lại không nhìn.', 'Ghi âm 2 phút về tuần của mình; bắt buộc dùng cặp thì và 5 collocations.'],
-  ['Thứ 7', 'Writing + sửa lỗi', 'Nghe một bài ngắn rồi nói lại 3 ý chính bằng tiếng Anh.', 'Viết 120–150 từ; sau 24 giờ sửa 5 câu yếu và kiểm tra tense/S-V/article/plural.'],
-  ['Chủ nhật', 'Kiểm tra tuần + ôn cách quãng', 'Nghe lại bài từng sai sau 6 ngày, không transcript; tóm tắt trong 60 giây.', 'Ôn thẻ ngày 0–1–3–7, viết 12 câu trộn các thì và nói 3 phút kể chuyện.'],
 ]
 
 const leetcodeDailyPlan = [
@@ -639,62 +614,26 @@ const tracks = [
   {
     id: 'english',
     label: 'English',
-    eyebrow: '12 tuần · 3 mục tiêu chính',
-    title: '12 tuần dùng được 12 thì trong viết và nói',
-    goal: 'Mỗi tuần học một cặp thì, luyện từ vựng theo cách quên rồi nhớ lại, và nghe sâu một đoạn ngắn. Mục tiêu là tạo được câu đúng, nói được thành đoạn và hiểu ý chính khi nghe.',
+    eyebrow: 'Azar 5th · 20 chapter · 2–3 exercise/ngày',
+    title: 'Lộ trình English theo đúng Chapter và Exercise trong sách',
+    goal: 'Mỗi ngày làm 2–3 exercise liên tiếp của cùng một chapter, nghe đúng audio nếu có, rồi đối chiếu Answer Key. Không chia bài theo các thì; các điểm ngữ pháp chỉ được học theo nội dung của từng exercise.',
     accent: '#dc2626',
     daily: [
-      ['10 phút', 'Ôn từ/cụm theo lịch 0–1–3–7–14–30 và sửa lỗi của hôm trước.'],
-      ['20 phút', 'Học 1 cặp thì: form, cách dùng, dấu hiệu và câu ví dụ của chính mình.'],
-      ['25 phút', 'Listening 4 bước: nghe ý → chép chính tả → transcript → shadow.'],
-      ['25 phút', 'Output: viết 8 câu/đoạn ngắn rồi ghi âm nói lại, bắt buộc dùng thì mới.'],
-      ['10 phút', 'Ghi error log: tense, từ vựng, nghe sai; chọn 1 lỗi để sửa ngày mai.'],
+      ['Bước 1', 'Mở đúng Chapter và làm 2–3 Exercise liên tiếp theo ngày đang chọn.'],
+      ['Bước 2', 'Nếu exercise có audio, nghe CD1/CD2 theo 4 lượt: ý chính → chép → transcript → shadow.'],
+      ['Bước 3', 'Mở Answer Key sau khi làm xong, ghi câu sai và đánh dấu bài cần làm lại.'],
     ],
     metrics: [
-      ['12 thì', '12 cặp bài học + 12 bài kiểm tra'],
-      ['Từ vựng', '8–10 cụm/ngày · ôn 6 mốc'],
-      ['Nghe & nói', '7 audio + 3 recording/tuần'],
+      ['Sách', '20 chapter · Chapter 1 → 20'],
+      ['Nhịp học', '2–3 exercise liên tiếp/ngày'],
+      ['Kiểm tra', 'Checkpoint sau từng nhóm chapter'],
     ],
     resources: [
       ['Daily Dictation', 'https://dailydictation.com'],
       ['YouGlish', 'https://youglish.com'],
       ['Oxford Learner’s Dictionaries', 'https://www.oxfordlearnersdictionaries.com'],
     ],
-    months: [
-      {
-        name: 'Tháng 1',
-        focus: 'Nắm 8 thì hiện tại và quá khứ',
-        outcome: 'Nhận diện đúng ngữ cảnh, viết câu ngắn không sai thì, và nói được thói quen, việc đang diễn ra, trải nghiệm và câu chuyện quá khứ.',
-        weeks: [
-          ['Tuần 1', 'Present Simple + Present Continuous', ['form và dấu hiệu nhận biết', '8 câu thói quen/đang diễn ra', 'nghe chép chính tả 30 giây', 'nói 1 phút về lịch hằng ngày', 'ôn 40 collocations work/study']],
-          ['Tuần 2', 'Present Perfect + Present Perfect Continuous', ['for/since/already/yet', 'phân biệt kết quả và quá trình', 'viết 100 từ về việc đã làm', 'nói về quá trình học English', 'ôn cụm ngày 0–1–3–7']],
-          ['Tuần 3', 'Past Simple + Past Continuous', ['when/while và mốc thời gian', 'kể một ngày đã qua bằng 2 thì', 'nghe đoạn kể chuyện và bắt động từ', 'ghi âm 2 phút về một kỷ niệm', 'ôn 40 collocations daily life']],
-          ['Tuần 4', 'Past Perfect + Past Perfect Continuous', ['before/after/by the time', 'xếp thứ tự 2 sự việc quá khứ', 'viết lại 8 câu dễ nhầm', 'nói câu chuyện có nguyên nhân/kết quả', 'mini test 8 thì đầu']],
-        ],
-      },
-      {
-        name: 'Tháng 2',
-        focus: '4 thì tương lai và phối hợp ngữ cảnh',
-        outcome: 'Nói/viết được kế hoạch, dự đoán, tiến độ và việc hoàn tất trước một mốc tương lai; biết chọn thì theo ý muốn diễn đạt.',
-        weeks: [
-          ['Tuần 5', 'Future Simple + Future Continuous', ['will và quyết định tức thời', 'kế hoạch đang diễn ra tại mốc tương lai', 'nghe dự đoán/kế hoạch', 'nói kế hoạch tuần tới', 'ôn 50 collocations future/work']],
-          ['Tuần 6', 'Future Perfect + Future Perfect Continuous', ['by/before và for', 'phân biệt hoàn tất và kéo dài', 'viết mục tiêu 1 năm', 'nói tiến độ dự án cá nhân', 'mini dictation 60 giây']],
-          ['Tuần 7', 'So sánh 12 thì theo timeline', ['vẽ timeline cho 12 thì', 'chọn thì từ ngữ cảnh thay vì dịch từng chữ', 'sửa 20 câu sai tense', 'nói 3 phút về quá khứ-hiện tại-tương lai', 'ôn thẻ ngày 0–1–3–7–14']],
-          ['Tuần 8', 'Viết và nói tích hợp', ['đoạn 150 từ dùng tối thiểu 6 thì', 'nghe rồi kể lại bằng thì phù hợp', 'ghi âm trả lời 5 câu hỏi', 'tự chấm theo checklist', 'kiểm tra 12 thì lần 1']],
-        ],
-      },
-      {
-        name: 'Tháng 3',
-        focus: 'Tự động hóa qua nghe, viết và nói',
-        outcome: 'Không chỉ nhận diện công thức: dùng 12 thì tự nhiên hơn trong bài viết, câu trả lời nói và tóm tắt nội dung nghe.',
-        weeks: [
-          ['Tuần 9', 'Listening tăng độ dài', ['3 audio/tuần: ngắn → 3 phút', 'chép chính tả 60 giây', 'ghi sổ từ nghe sai', 'tóm tắt 5 câu', 'nghe lại sau 7 ngày']],
-          ['Tuần 10', 'Writing 12 thì', ['3 đoạn 120–150 từ', 'gạch chân và gọi tên từng thì', 'rewrite 5 câu yếu', 'dùng 15 collocations đã ôn', 'tự sửa theo error log']],
-          ['Tuần 11', 'Speaking 12 thì', ['3 recording/tuần', 'kể chuyện 3 phút', 'trả lời nhanh 10 câu', 'sửa pause/phát âm/tense', 'nói lại sau 24 giờ']],
-          ['Tuần 12', 'Final check + duy trì', ['1 bài viết 200 từ', '1 bài nói 5 phút', '1 listening mini test', 'kiểm tra đủ 12 thì', 'lập lịch ôn từ và nghe tháng tiếp theo']],
-        ],
-      },
-    ],
+    months: [],
   },
 ]
 
@@ -1291,20 +1230,6 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
         </article>
       </section>
 
-      {track.id === 'english' && (
-        <TenseRoadmap />
-      )}
-
-      {track.id === 'english' && (
-        <DailyStudyPlan
-          duration="90 phút/ngày"
-          intro="Giữ đúng nhịp 90 phút. Mỗi ngày phải có cả input (nghe/ôn) và output (viết/nói); nếu bận, làm phiên bản tối thiểu 30 phút: 10 phút ôn + 10 phút nghe + 10 phút nói/viết."
-          plan={englishDailyPlan}
-          title="Lịch 7 ngày lặp lại để nhớ lâu và dùng được"
-          type="english"
-        />
-      )}
-
       {track.id === 'leetcode' && (
         <DailyStudyPlan
           duration="60 phút/ngày"
@@ -1362,7 +1287,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
 
       {track.id === 'english' && <EnglishLab />}
 
-      <section className="month-stack">
+      {track.id !== 'english' && <section className="month-stack">
         {track.months.map((month) => (
           <article className="month-panel" key={month.name}>
             <div className="month-title">
@@ -1400,7 +1325,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
             </div>
           </article>
         ))}
-      </section>
+      </section>}
     </>
   )
 }
@@ -1420,33 +1345,6 @@ function DailyStudyPlan({ duration, intro, plan, title, type }) {
             <h4>{focus}</h4>
             <p><b>{type === 'english' ? 'Nghe:' : 'Bài:'}</b> {listenOrProblem}</p>
             {type === 'english' ? <p><b>Đầu ra:</b> {output}</p> : null}
-          </article>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function TenseRoadmap() {
-  return (
-    <section className="tense-roadmap-panel">
-      <div className="method-heading">
-        <span>Trọng tâm bắt buộc · 12 thì</span>
-        <h3>Bản đồ 12 thì: học theo cặp, dùng ngay trong viết và nói</h3>
-        <p>
-          Mỗi tuần học một cặp. Với mỗi thì, đi theo chuỗi: nhận diện ngữ cảnh → biến đổi câu → viết → nói → ôn lại sau 1, 3, 7 và 14 ngày.
-        </p>
-      </div>
-      <div className="tense-roadmap-grid">
-        {englishTenseRoadmap.map(([tense, form, use, example], index) => (
-          <article className="tense-card" key={tense}>
-            <div className="tense-card-heading">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h4>{tense}</h4>
-            </div>
-            <p><b>Công thức:</b> {form}</p>
-            <p><b>Dùng khi:</b> {use}</p>
-            <p className="tense-example">“{example}”</p>
           </article>
         ))}
       </div>

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { englishBookSchedule, quizSets } from './englishPracticeData'
+import { englishChapterSchedule, quizSets } from './englishPracticeData'
 
 const dailyProgressKey = 'english-daily-practice-v1'
 const quizAttemptsKey = 'english-quiz-attempts-v1'
@@ -33,10 +33,6 @@ function getAudioEntries() {
   }).sort((a, b) => a.chapter - b.chapter || a.path.localeCompare(b.path))
 }
 
-function getChapterNumbers(chapterLabel) {
-  return [...chapterLabel.matchAll(/\d+/g)].map((match) => Number(match[0]))
-}
-
 function normalizeAnswer(value) {
   return String(value ?? '')
     .trim()
@@ -57,48 +53,59 @@ function todayIndex() {
   return (new Date().getDay() + 6) % 7
 }
 
-function getTodayWeek() {
-  const start = new Date('2026-09-14T00:00:00')
-  const now = new Date()
-  const day = Math.max(0, Math.floor((now - start) / 86400000))
+function makeExerciseDays(exerciseCount) {
+  const exercises = Array.from({ length: exerciseCount }, (_, index) => index + 1)
+  const days = []
 
-  return Math.min(12, Math.floor(day / 7) + 1)
+  for (let index = 0; index < exercises.length;) {
+    const remaining = exercises.length - index
+    const size = remaining % 3 === 1 ? 2 : Math.min(3, remaining)
+    days.push(exercises.slice(index, index + size))
+    index += size
+  }
+
+  return days
 }
 
-function buildDailyTasks(weekPlan, dayIndex, audioEntries) {
-  const exercise = weekPlan.exercises[dayIndex]
-  const chapters = getChapterNumbers(weekPlan.chapter)
-  const audio = audioEntries.find((entry) => chapters.includes(entry.chapter))
+function formatExerciseGroup(exerciseGroup) {
+  return exerciseGroup.map((exercise) => `Ex. ${exercise}`).join(', ')
+}
+
+function buildDailyTasks(chapterPlan, exerciseDays, dayIndex, audioEntries) {
+  const exerciseGroup = exerciseDays[dayIndex] ?? exerciseDays[0]
+  const audio = audioEntries.find((entry) => entry.chapter === chapterPlan.chapterNumber && exerciseGroup.includes(Number(entry.exercise)))
+    ?? audioEntries.find((entry) => entry.chapter === chapterPlan.chapterNumber)
   const audioText = audio
     ? `Nghe ${audio.cd} · ${audio.label}; nghe 2 lần không transcript rồi shadow 5 câu.`
     : 'Nghe lại một đoạn đã học; chép chính tả 30–60 giây rồi shadow 5 câu.'
+  const exerciseLabel = exerciseGroup.map((exercise) => `Exercise ${exercise}`).join(' · ')
 
   return [
     {
-      id: `${weekPlan.week}-${dayIndex}-book`,
-      label: 'Bài sách',
-      title: `${weekPlan.chapter} · ${exercise}`,
-      detail: `Đọc chart và làm trọn ${exercise}. Gạch chân dấu hiệu thì/cấu trúc mới.`,
+      id: `${chapterPlan.chapterNumber}-${dayIndex}-book`,
+      label: `${exerciseGroup.length} bài trong sách`,
+      title: `${chapterPlan.chapter} · ${exerciseLabel}`,
+      detail: `Mở đúng ${chapterPlan.pages}, làm lần lượt từng bài trong sách. Không bỏ qua phần Warm-up/Review.`,
     },
     {
-      id: `${weekPlan.week}-${dayIndex}-listen`,
+      id: `${chapterPlan.chapterNumber}-${dayIndex}-listen`,
       label: 'Listening',
-      title: audio ? `${audio.cd} · Chapter ${String(audio.chapter).padStart(2, '0')}` : 'Ôn audio đã học',
+      title: audio ? `${audio.cd} · ${audio.label}` : 'Ôn audio đã học',
       detail: audioText,
       audio,
     },
     {
-      id: `${weekPlan.week}-${dayIndex}-output`,
-      label: 'Output',
-      title: 'Viết + nói 10 phút',
-      detail: 'Viết 5 câu dùng điểm ngữ pháp hôm nay, đọc to và ghi lại 1 lỗi vào error log.',
+      id: `${chapterPlan.chapterNumber}-${dayIndex}-answer-key`,
+      label: 'Đối chiếu đáp án',
+      title: `Answer Key · ${exerciseLabel}`,
+      detail: 'Chỉ mở answer key sau khi làm xong. Ghi câu sai vào error log và làm lại sau 1–3 ngày.',
     },
   ]
 }
 
 export default function EnglishLab() {
   const audioEntries = useMemo(() => getAudioEntries(), [])
-  const [selectedWeek, setSelectedWeek] = useState(getTodayWeek)
+  const [selectedChapter, setSelectedChapter] = useState(1)
   const [selectedDay, setSelectedDay] = useState(todayIndex)
   const [dailyProgress, setDailyProgress] = useState(() => loadJson(dailyProgressKey, {}))
   const [selectedQuizId, setSelectedQuizId] = useState(quizSets[0].id)
@@ -107,8 +114,9 @@ export default function EnglishLab() {
   const [quizAttempts, setQuizAttempts] = useState(() => loadJson(quizAttemptsKey, []))
   const [errorLog, setErrorLog] = useState(() => loadJson(errorLogKey, []))
 
-  const weekPlan = englishBookSchedule[selectedWeek - 1]
-  const dailyTasks = useMemo(() => buildDailyTasks(weekPlan, selectedDay, audioEntries), [audioEntries, selectedDay, weekPlan])
+  const chapterPlan = englishChapterSchedule[selectedChapter - 1]
+  const exerciseDays = useMemo(() => makeExerciseDays(chapterPlan.exerciseCount), [chapterPlan])
+  const dailyTasks = useMemo(() => buildDailyTasks(chapterPlan, exerciseDays, selectedDay, audioEntries), [audioEntries, chapterPlan, exerciseDays, selectedDay])
   const selectedQuiz = quizSets.find((quiz) => quiz.id === selectedQuizId) ?? quizSets[0]
   const answeredCount = selectedQuiz.questions.filter((question) => answers[question.id] !== undefined && answers[question.id] !== '').length
   const score = submitted
@@ -173,7 +181,7 @@ export default function EnglishLab() {
           <span>English Lab · làm 2–3 bài mỗi ngày</span>
           <h3>Học theo sách, nghe đúng audio, biết rõ mình sai ở đâu</h3>
           <p>
-            Lộ trình chia 20 chapter thành 12 tuần. Mỗi ngày chỉ cần hoàn thành 3 mục nhỏ; điểm số, bài sai và tiến độ được lưu ngay trên trình duyệt này.
+            Lộ trình bám đúng 20 chapter và thứ tự exercise trong Student Book. Mỗi ngày app gom 2–3 exercise liên tiếp; điểm số, bài sai và tiến độ được lưu ngay trên trình duyệt này.
           </p>
         </div>
         <div className="english-lab-stat">
@@ -187,26 +195,26 @@ export default function EnglishLab() {
         <section className="english-day-panel">
           <div className="lab-section-title">
             <div>
-              <span>Lộ trình 12 tuần</span>
-              <h4>Chọn tuần và ngày để lấy đúng 3 việc</h4>
+              <span>Lộ trình 20 chapter · Exercise</span>
+              <h4>Chọn chapter và ngày để lấy đúng 2–3 bài</h4>
             </div>
             <span className="lab-source-note">Nguồn: Student Book + Answer Key</span>
           </div>
           <div className="lab-select-row">
-            <label>Tuần
-              <select value={selectedWeek} onChange={(event) => setSelectedWeek(Number(event.target.value))}>
-                {englishBookSchedule.map((week) => <option key={week.week} value={week.week}>Tuần {week.week} · {week.chapter}</option>)}
+            <label>Chapter
+              <select value={selectedChapter} onChange={(event) => { setSelectedChapter(Number(event.target.value)); setSelectedDay(0) }}>
+                {englishChapterSchedule.map((chapter) => <option key={chapter.chapterNumber} value={chapter.chapterNumber}>{chapter.chapter} · {chapter.title}</option>)}
               </select>
             </label>
-            <label>Ngày
+            <label>Ngày trong chapter
               <select value={selectedDay} onChange={(event) => setSelectedDay(Number(event.target.value))}>
-                {['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'].map((day, index) => <option key={day} value={index}>{day}</option>)}
+                {exerciseDays.map((exerciseGroup, index) => <option key={`${chapterPlan.chapterNumber}-${index}`} value={index}>Ngày {index + 1} · {formatExerciseGroup(exerciseGroup)}</option>)}
               </select>
             </label>
           </div>
           <div className="selected-week-callout">
-            <strong>{weekPlan.chapter}: {weekPlan.title}</strong>
-            <span>{weekPlan.pages} · {weekPlan.exercises[selectedDay]}</span>
+            <strong>{chapterPlan.chapter}: {chapterPlan.title}</strong>
+            <span>{chapterPlan.pages} · Ngày {selectedDay + 1} · {formatExerciseGroup(exerciseDays[selectedDay])}</span>
           </div>
           <div className="daily-task-list">
             {dailyTasks.map((task) => (
@@ -223,7 +231,7 @@ export default function EnglishLab() {
               </article>
             ))}
           </div>
-          <p className="lab-tip"><b>Cách dùng:</b> làm Bài sách trước, nghe audio theo 4 bước, rồi mới làm Output. Nếu bận, giữ tối thiểu 1 bài sách + 1 audio.</p>
+          <p className="lab-tip"><b>Cách dùng:</b> làm đủ 2–3 exercise theo thứ tự, đối chiếu Answer Key sau cùng, rồi nghe audio nếu chapter có file. Nếu bận, không nhảy sang chapter mới khi chưa hoàn thành nhóm hiện tại.</p>
         </section>
 
         <aside className="english-side-panel">

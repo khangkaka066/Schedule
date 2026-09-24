@@ -939,7 +939,7 @@ function Overview({ tracks, onOpenTrack }) {
             Có tìm kiếm nhanh, lọc theo nhóm kiến thức và liên kết tài liệu học tiếp.
           </p>
           <div className="commitment-preview">
-            <small><b>90 thuật ngữ</b>Định nghĩa ngắn, có ví dụ và lưu ý khi áp dụng</small>
+            <small><b>190 thuật ngữ</b>Định nghĩa ngắn, có ví dụ và lưu ý khi áp dụng</small>
             <small><b>Lộ trình</b>Dữ liệu → ML → deep learning → LLM → vận hành</small>
           </div>
           <div className="card-footer">

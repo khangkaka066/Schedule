@@ -90,26 +90,129 @@ Tài liệu nhập môn dành cho người muốn xây dựng, đánh giá và �
 73. **Guardrails (rào chắn):** Kiểm tra đầu vào/đầu ra và quyền hành động để giảm nội dung không phù hợp, lộ dữ liệu hoặc thao tác nguy hiểm. Đây là một lớp bảo vệ trong thiết kế hệ thống, không phải bảo đảm an toàn tuyệt đối.
 74. **Prompt injection:** Nội dung không đáng tin trong prompt hoặc tài liệu truy xuất cố lừa mô hình bỏ qua chỉ dẫn hay làm hành động ngoài ý muốn. Xem dữ liệu người dùng và tài liệu truy xuất là không đáng tin; kiểm soát quyền ở lớp ứng dụng.
 
-## 5. Đánh giá, triển khai và vận hành
+## 5. Thuật ngữ chuyên sâu về LLM
 
-75. **Evaluation / eval (đánh giá):** Đo chất lượng hệ thống bằng bộ ví dụ, tiêu chí và cách chấm phù hợp với người dùng. Với LLM, nên kết hợp bộ kiểm thử cố định, kiểm tra nguồn, chấm theo rubric và rà soát con người.
-76. **Offline / online evaluation:** Offline đánh giá trên dữ liệu lưu sẵn trước phát hành; online đo trong luồng sử dụng thật. Cả hai cần theo dõi chất lượng, lỗi, độ trễ và chi phí.
-77. **MLOps:** Thực hành quản lý toàn vòng đời ML: dữ liệu, huấn luyện, phiên bản, triển khai, giám sát và tái huấn luyện. Mục tiêu là hệ thống có thể tái lập và vận hành ổn định.
-78. **Experiment tracking (theo dõi thí nghiệm):** Lưu cấu hình, phiên bản dữ liệu/mã, metric và artifact của từng lần thử để so sánh và tái lập kết quả.
-79. **Model registry (sổ đăng ký mô hình):** Nơi quản lý phiên bản mô hình, trạng thái và metadata như bản thử nghiệm hoặc bản phát hành.
-80. **Model serving (phục vụ mô hình):** Đưa mô hình ra giao diện gọi được, thường qua HTTP API hoặc xử lý batch; cần xử lý xác thực, timeout, tải đồng thời và lỗi.
-81. **Batch inference / online inference:** Batch xử lý nhiều ví dụ theo lịch; online inference xử lý yêu cầu tương tác từng lúc. Chọn kiểu phù hợp với yêu cầu độ trễ và tính mới của dữ liệu.
-82. **Latency / throughput:** Latency là thời gian một yêu cầu hoàn tất; throughput là số yêu cầu xử lý mỗi đơn vị thời gian. Tối ưu một chỉ số có thể ảnh hưởng chỉ số kia.
-83. **Monitoring (giám sát):** Theo dõi độ trễ, lỗi, tải, chi phí, chất lượng và thay đổi dữ liệu/mô hình sau khi phát hành. Metric kỹ thuật tốt không thay thế chỉ số kết quả nghiệp vụ.
-84. **Data drift / concept drift:** Data drift là phân phối đầu vào đổi; concept drift là quan hệ giữa đầu vào và mục tiêu đổi. Chúng có thể làm mô hình suy giảm và cần được phát hiện bằng giám sát, kiểm tra nhãn hoặc đánh giá định kỳ.
-85. **A/B test:** So sánh hai phiên bản trên nhóm người dùng được phân chia có kiểm soát; cần xác định trước chỉ số chính, thời gian và cách tránh kết luận từ nhiễu.
-86. **Canary / rollback:** Canary phát hành phiên bản mới cho một phần nhỏ lưu lượng trước; rollback quay về bản ổn định nếu gặp vấn đề. Đây là cơ chế giảm ảnh hưởng của lỗi triển khai.
-87. **Docker / container:** Đóng gói ứng dụng cùng các phụ thuộc trong môi trường nhất quán để chạy giữa máy phát triển và môi trường triển khai.
-88. **CI/CD:** Tự động hóa kiểm tra và phát hành thay đổi. Pipeline AI thường cần thêm kiểm tra dữ liệu, metric, artifact và tương thích mô hình bên cạnh kiểm thử mã.
-89. **Scalability (khả năng mở rộng):** Khả năng phục vụ tải lớn hơn bằng tăng tài nguyên hoặc thêm máy. Mô hình lớn có thể bị giới hạn bởi GPU, bộ nhớ, băng thông và chi phí.
-90. **Cost per request (chi phí mỗi yêu cầu):** Chi phí trung bình để xử lý một yêu cầu, gồm token/API, phần cứng, truy xuất và vận hành. Nên đo trên lưu lượng thực tế và đặt ngân sách.
+75. **Foundation model (mô hình nền tảng):** Mô hình được tiền huấn luyện trên dữ liệu rộng để có thể thích nghi với nhiều tác vụ. Tên gọi này không đảm bảo mô hình luôn đúng hoặc an toàn.
+76. **Base model (mô hình gốc):** Mô hình sau tiền huấn luyện, thường giỏi tiếp tục văn bản nhưng chưa chắc làm theo chỉ dẫn hội thoại ổn định.
+77. **Instruction-tuned model (mô hình tinh chỉnh theo chỉ dẫn):** Base model được huấn luyện thêm trên ví dụ yêu cầu và câu trả lời để phản hồi theo dạng trợ lý.
+78. **Causal language model:** Mô hình dự đoán token kế tiếp dựa trên các token đứng trước; mặt nạ causal ngăn nó nhìn trước đáp án khi huấn luyện.
+79. **Chat template (mẫu hội thoại):** Quy tắc biến danh sách thông điệp thành chuỗi token đúng định dạng model đã học. Sai template có thể làm chất lượng giảm.
+80. **Message role (vai trò thông điệp):** Nhãn như system, developer, user, assistant hoặc tool biểu thị nguồn và chức năng của thông điệp; cách mã hóa tùy model/API.
+81. **Control token (token điều khiển):** Token đặc biệt đánh dấu ranh giới thông điệp, kênh, lời gọi công cụ hoặc trạng thái kết thúc.
+82. **BOS / EOS:** Begin-of-sequence đánh dấu đầu chuỗi; end-of-sequence đánh dấu kết thúc. Token kết thúc thông điệp và kết thúc lượt assistant có thể khác nhau.
+83. **Padding token:** Token đệm để các chuỗi có cùng độ dài trong batch; cần attention mask đúng để model bỏ qua phần đệm.
+84. **Attention mask:** Mặt nạ quy định vị trí token nào được tham gia attention, thường để che padding hoặc token tương lai.
+85. **Vocabulary (bộ từ vựng token):** Tập token mà tokenizer ánh xạ từ văn bản. Các model khác nhau có thể chia cùng câu thành số token khác nhau.
+86. **BPE (Byte Pair Encoding):** Thuật toán token hóa bằng cách ghép các cặp đơn vị thường gặp, tạo token con để xử lý từ chưa thấy.
+87. **SentencePiece:** Bộ công cụ học đơn vị token trực tiếp từ văn bản thô; thường gặp các biến thể unigram và BPE.
+88. **Tokenization mismatch:** Lệch giữa cách prompt/dữ liệu được token hóa với định dạng model mong đợi, có thể gây sai ranh giới hoặc giảm chất lượng.
+89. **Logits:** Điểm chưa chuẩn hóa mà model gán cho từng token ứng viên kế tiếp; sampling biến đổi các điểm này trước khi chọn token.
+90. **Softmax:** Phép đổi logits thành phân phối xác suất tổng bằng 1. Xác suất cao nhất không có nghĩa câu trả lời đúng.
+91. **Autoregressive generation:** Sinh từng token rồi dùng token mới làm đầu vào cho bước sau; câu trả lời dài thường tốn thời gian hơn.
+92. **Greedy decoding:** Mỗi bước chọn token điểm cao nhất; ổn định nhưng có thể mắc vào lựa chọn cục bộ hoặc lặp.
+93. **Top-k sampling:** Chỉ lấy mẫu trong k token điểm cao nhất; k thấp giới hạn lựa chọn mạnh hơn.
+94. **Top-p / nucleus sampling:** Lấy mẫu từ tập token nhỏ nhất có xác suất cộng dồn đạt ngưỡng p; kích thước tập thay đổi theo từng bước.
+95. **Repetition penalty:** Điều chỉnh điểm token đã xuất hiện để giảm lặp; đặt quá mạnh có thể làm hỏng tên riêng hoặc cấu trúc cần lặp.
+96. **Stop sequence:** Token/chuỗi khiến quá trình sinh dừng; nên đặt theo ranh giới giao thức để không cắt giữa JSON hay câu trả lời.
+97. **Constrained decoding:** Giới hạn token sinh ra để đầu ra theo schema/ngữ pháp. Định dạng hợp lệ không đồng nghĩa nội dung đúng.
+98. **Beam search:** Giữ nhiều chuỗi ứng viên qua từng bước rồi chọn chuỗi có điểm tổng thể cao; phù hợp một số bài toán nhưng không mặc định tốt hơn sampling cho hội thoại.
+99. **Random seed:** Hạt giống bộ sinh số ngẫu nhiên để hỗ trợ tái lập sampling; không bảo đảm đầu ra giống hệt giữa phần cứng hoặc backend.
+100. **Multi-Head Attention (MHA):** Tính nhiều attention head song song để học các quan hệ khác nhau; key/value head riêng có thể làm KV cache lớn.
+101. **Q, K, V projections:** Query là thông tin cần tìm, Key là chỉ dấu nội dung có thể được chú ý, Value là nội dung được trộn vào đầu ra.
+102. **Grouped-Query Attention (GQA):** Nhiều query head chia sẻ nhóm key/value head, giảm bộ nhớ cache so với MHA.
+103. **Multi-Query Attention (MQA):** Mọi query head dùng chung một key và value head; giảm cache mạnh hơn GQA nhưng có thể giảm chất lượng tùy model.
+104. **Causal attention mask:** Mặt nạ tam giác cho token chỉ chú ý vị trí trước đó và chính nó, tránh rò rỉ token tương lai.
+105. **RoPE (Rotary Position Embedding):** Mã hóa vị trí bằng phép quay trên query/key để attention mang thông tin thứ tự; mở rộng context phụ thuộc cách triển khai.
+106. **Absolute positional embedding:** Cộng biểu diễn vị trí tuyệt đối vào token; là một họ mã hóa vị trí khác với RoPE.
+107. **RMSNorm:** Biến thể chuẩn hóa theo căn bậc hai trung bình bình phương, thường không trừ mean; được dùng trong nhiều Transformer hiện đại.
+108. **Residual connection:** Cộng đầu vào khối vào đầu ra khối, giúp tín hiệu và gradient đi qua mạng sâu.
+109. **Feed-forward network / MLP block:** Khối tuyến tính và phi tuyến biến đổi từng vị trí token, bổ sung tính toán ngoài attention.
+110. **Mixture of Experts (MoE):** Có nhiều mạng chuyên gia nhưng mỗi token chỉ kích hoạt một số chuyên gia; tổng tham số khác số tham số hoạt động mỗi token.
+111. **Router / gating network:** Chọn chuyên gia xử lý token trong MoE; cần cân bằng tải để tránh một số chuyên gia bị quá tải hoặc ít được học.
+112. **Active parameters:** Số tham số thực sự được dùng cho một token. Với MoE thường thấp hơn tổng tham số của model.
+113. **KV cache:** Lưu Key/Value của token trước để không tính lại ở bước sinh sau; tăng tốc decode nhưng tốn VRAM theo context và số phiên.
+114. **Prefill:** Pha đọc prompt và tính KV cache ban đầu; prompt dài thường làm tăng thời gian pha này.
+115. **Decode:** Pha sinh token đầu ra từng bước từ KV cache; thường bị giới hạn bởi băng thông bộ nhớ và tính tuần tự.
+116. **TTFT (time to first token):** Thời gian từ khi nhận yêu cầu đến token đầu tiên, gồm queue, prefill và xử lý hạ tầng.
+117. **TPOT (time per output token):** Thời gian trung bình giữa các token sau token đầu tiên; phản ánh độ mượt khi stream.
+118. **FlashAttention:** Thuật toán/kernel attention tối ưu truy cập bộ nhớ, giảm tensor trung gian và tăng tốc trên phần cứng phù hợp; không phải kiến trúc model.
+119. **PagedAttention:** Quản lý KV cache theo block để giảm phân mảnh và cấp phát linh hoạt khi phục vụ nhiều yêu cầu.
+120. **Continuous batching:** Thêm yêu cầu mới khi yêu cầu cũ kết thúc thay vì đợi cả batch; thường tăng thông lượng phục vụ.
+121. **Prefix caching:** Tái sử dụng tính toán/KV cache cho các tiền tố prompt trùng nhau; chỉ có ích nếu prefix lặp thường xuyên.
+122. **Speculative decoding:** Model nhỏ đề xuất token, model lớn kiểm tra song song; có thể tăng tốc trong khi giữ phân phối mục tiêu nếu triển khai đúng.
+123. **Tokens per second:** Số token sinh mỗi giây; cần nói rõ tính theo từng yêu cầu hay toàn hệ thống, có bao gồm queue/prefill không.
+124. **Full fine-tuning:** Cập nhật hầu hết/toàn bộ trọng số trên dữ liệu mục tiêu; linh hoạt nhưng cần nhiều VRAM, dữ liệu và lưu trữ checkpoint.
+125. **SFT (supervised fine-tuning):** Huấn luyện trên ví dụ chỉ dẫn và câu trả lời để model học định dạng, tác vụ và hành vi mong muốn.
+126. **Continued pretraining:** Tiếp tục mục tiêu tiền huấn luyện trên dữ liệu mới để model hấp thụ lĩnh vực/ngôn ngữ; khác SFT vốn dạy phản hồi theo yêu cầu.
+127. **PEFT:** Nhóm cách tinh chỉnh chỉ cập nhật một phần nhỏ tham số hoặc thêm tham số phụ, giảm chi phí so với cập nhật toàn model.
+128. **LoRA:** Đóng băng trọng số gốc và học hai ma trận hạng thấp biểu diễn phần cập nhật; adapter có thể lưu riêng.
+129. **LoRA rank và alpha:** Rank điều khiển dung lượng adapter, alpha điều chỉnh tỉ lệ cập nhật; rank lớn hơn tốn tài nguyên hơn và không tự đảm bảo tốt hơn.
+130. **QLoRA:** Huấn luyện LoRA trên trọng số gốc lượng tử hóa, thường 4-bit, để giảm bộ nhớ; cần kiểm tra kernel và chất lượng thực tế.
+131. **Adapter:** Tham số bổ sung gắn vào model đã huấn luyện để thích nghi cho tác vụ, tránh lưu một bản đầy đủ cho mỗi biến thể.
+132. **Prompt tuning:** Học embedding mềm được thêm vào đầu vào/tầng model; khác prompt engineering vì embedding được tối ưu bằng dữ liệu.
+133. **Catastrophic forgetting:** Mất một phần năng lực cũ sau khi fine-tune lệch vào dữ liệu mới; cần kiểm tra cả tác vụ đích và năng lực nền.
+134. **Data curation:** Chọn/lọc chất lượng, quyền sử dụng, độ đa dạng, bản sao và rủi ro riêng tư của dữ liệu huấn luyện.
+135. **Deduplication:** Phát hiện và bỏ bản ghi trùng/gần trùng để hạn chế lặp, rò rỉ benchmark và ghi nhớ nguyên văn.
+136. **Sequence packing:** Ghép ví dụ ngắn vào chuỗi để giảm padding; phải mask ranh giới để ví dụ không học lẫn nhau.
+137. **Loss masking:** Chọn token nào được tính loss, chẳng hạn tính trên câu trả lời assistant mà bỏ prompt; mask sai làm sai mục tiêu học.
+138. **Gradient accumulation:** Cộng gradient qua nhiều micro-batch rồi mới cập nhật để mô phỏng batch lớn khi VRAM hạn chế.
+139. **Learning-rate warmup:** Tăng learning rate dần ở bước đầu để ổn định, rồi giảm theo lịch huấn luyện.
+140. **Mixed-precision training:** Kết hợp nhiều kiểu số như FP16/BF16 và FP32 để giảm bộ nhớ/tăng tốc; cần theo dõi độ ổn định số học.
+141. **BF16:** Kiểu số 16-bit có dải số mũ rộng gần FP32, thường ổn định hơn FP16 trong một số tác vụ; hỗ trợ tùy phần cứng.
+142. **Quantization:** Lưu trọng số hoặc tính toán bằng ít bit hơn để giảm bộ nhớ và có thể tăng tốc; phải đo chất lượng, tốc độ và tương thích phần cứng.
+143. **Post-training quantization (PTQ):** Lượng tử hóa model sau huấn luyện, đôi khi dùng tập calibration nhỏ, không cần huấn luyện đầy đủ lại.
+144. **AWQ / GPTQ:** Các phương pháp lượng tử hóa trọng số LLM khác nhau về cách chọn/hiệu chỉnh; hiệu quả phụ thuộc model, kernel và phần cứng.
+145. **Calibration data:** Dữ liệu đại diện để ước lượng activation/chọn tham số lượng tử; dữ liệu lệch miền có thể gây suy giảm lớn.
+146. **Knowledge distillation:** Dạy model nhỏ từ đáp án hoặc phân phối của model lớn để giảm chi phí; model nhỏ không nhất thiết giữ mọi năng lực teacher.
+147. **Perplexity:** Metric xác suất trên chuỗi kiểm tra; thấp hơn thường nghĩa model dự đoán chuỗi đó tốt hơn, nhưng không đo trực tiếp ích dụng hay độ đúng.
+148. **Benchmark:** Bộ tác vụ, dữ liệu và quy tắc chấm để so model; cần công bố prompt, phiên bản và cách chấm mới so sánh được.
+149. **Benchmark contamination:** Model đã gặp câu hỏi/đáp án benchmark trong dữ liệu huấn luyện, làm điểm đo cao nhưng không phản ánh tổng quát hóa.
+150. **Golden set:** Bộ ví dụ chuẩn được rà soát để kiểm tra hồi quy khi đổi model, prompt, dữ liệu hoặc code.
+151. **Exact match:** Yêu cầu đầu ra trùng đáp án chuẩn sau chuẩn hóa; hợp với đáp án cố định nhưng khắt khe với văn bản tự do.
+152. **Pairwise evaluation:** So hai câu trả lời cho cùng câu hỏi theo rubric khi khó định nghĩa một đáp án duy nhất; cần kiểm soát thiên lệch vị trí.
+153. **LLM-as-a-judge:** Dùng model khác chấm theo rubric; cần so với người chấm và để ý thiên lệch độ dài/văn phong.
+154. **Pass@k:** Tỷ lệ bài mà ít nhất một trong k lần sinh vượt qua kiểm thử; phụ thuộc số mẫu và chất lượng test.
+155. **Sparse retrieval:** Tìm bằng khớp từ khóa/trọng số thưa; hữu ích với tên riêng, mã lỗi và thuật ngữ chính xác.
+156. **BM25:** Hàm xếp hạng tìm kiếm dùng tần suất từ, độ dài tài liệu và độ hiếm của từ; thường là baseline từ khóa tốt.
+157. **Hybrid retrieval:** Kết hợp tìm từ khóa và vector để lấy cả kết quả chính xác lẫn gần nghĩa; cần hợp nhất hoặc xếp hạng lại.
+158. **Recall@k:** Tỷ lệ tài liệu/đáp án liên quan xuất hiện trong k kết quả đầu; đo khả năng thu hồi, không đo thứ hạng tốt nhất.
+159. **MRR:** Trung bình nghịch đảo thứ hạng của kết quả liên quan đầu tiên; điểm cao khi kết quả đúng gần đầu danh sách.
+160. **nDCG:** Đo chất lượng xếp hạng có xét thứ tự và mức độ liên quan, phù hợp khi có nhiều mức nhãn.
+161. **MMR:** Chọn kết quả vừa liên quan vừa ít trùng với kết quả đã chọn, giúp giảm các đoạn gần như giống nhau.
+162. **Query rewriting:** Viết lại câu hỏi hội thoại thành truy vấn đủ ngữ cảnh; phải giữ ý định và thực thể quan trọng.
+163. **HyDE:** Tạo đoạn trả lời giả định rồi dùng embedding của nó để truy xuất đoạn tương tự; nội dung giả định không phải bằng chứng.
+164. **Parent-child retrieval:** Tìm bằng đoạn nhỏ chính xác rồi đưa thêm đoạn cha lớn hơn làm ngữ cảnh; phải giữ metadata nguồn.
+165. **Contextual compression:** Rút gọn nội dung truy xuất theo câu hỏi trước khi đưa vào prompt; tránh loại bỏ điều kiện/ý phủ định quan trọng.
+166. **Metadata filtering:** Lọc theo ngày, khách hàng, ngôn ngữ hoặc quyền trước/sau vector search; backend phải thực thi kiểm soát truy cập.
+167. **Groundedness / faithfulness:** Đo mức câu trả lời được ngữ cảnh hỗ trợ; có trích nguồn vẫn có thể sai nếu nguồn lỗi thời hoặc không liên quan.
+168. **Tool schema:** Khai báo tên hàm, ý nghĩa, kiểu và ràng buộc đối số để model phát yêu cầu có cấu trúc; backend vẫn phải xác thực.
+169. **Tool execution protocol:** Nhận tool call, kiểm tra quyền/đầu vào, chạy ở ứng dụng rồi gửi kết quả về model; cần log và xử lý lỗi.
+170. **Agent loop:** Model chọn hành động → công cụ chạy → nhận kết quả → model quyết định tiếp; nên giới hạn bước, thời gian, chi phí và quyền.
+171. **Workflow và agent:** Workflow là chuỗi bước định trước; agent chọn bước kế dựa trên kết quả. Workflow dễ kiểm thử hơn, agent linh hoạt hơn nhưng khó dự đoán.
+172. **Agent state:** Mục tiêu, công cụ đã gọi, kết quả và bước còn lại để tiếp tục công việc; không nên để lịch sử hội thoại dài là nơi lưu duy nhất.
+173. **Short-term / long-term memory:** Bộ nhớ phiên và bộ nhớ qua nhiều phiên; chỉ lưu dữ liệu có mục đích, quyền phù hợp và cơ chế sửa/xóa.
+174. **MCP (Model Context Protocol):** Giao thức mở chuẩn hóa cách ứng dụng AI kết nối nguồn dữ liệu/công cụ qua client/server; không tự cấp quyền an toàn cho công cụ.
 
-## 6. Lộ trình thực hành
+## 6. Đánh giá, triển khai và vận hành
+
+175. **Evaluation / eval (đánh giá):** Đo chất lượng hệ thống bằng bộ ví dụ, tiêu chí và cách chấm phù hợp với người dùng. Với LLM, nên kết hợp bộ kiểm thử cố định, kiểm tra nguồn, chấm theo rubric và rà soát con người.
+176. **Offline / online evaluation:** Offline đánh giá trên dữ liệu lưu sẵn trước phát hành; online đo trong luồng sử dụng thật. Cả hai cần theo dõi chất lượng, lỗi, độ trễ và chi phí.
+177. **MLOps:** Thực hành quản lý toàn vòng đời ML: dữ liệu, huấn luyện, phiên bản, triển khai, giám sát và tái huấn luyện. Mục tiêu là hệ thống có thể tái lập và vận hành ổn định.
+178. **Experiment tracking (theo dõi thí nghiệm):** Lưu cấu hình, phiên bản dữ liệu/mã, metric và artifact của từng lần thử để so sánh và tái lập kết quả.
+179. **Model registry (sổ đăng ký mô hình):** Nơi quản lý phiên bản mô hình, trạng thái và metadata như bản thử nghiệm hoặc bản phát hành.
+180. **Model serving (phục vụ mô hình):** Đưa mô hình ra giao diện gọi được, thường qua HTTP API hoặc xử lý batch; cần xử lý xác thực, timeout, tải đồng thời và lỗi.
+181. **Batch inference / online inference:** Batch xử lý nhiều ví dụ theo lịch; online inference xử lý yêu cầu tương tác từng lúc. Chọn kiểu phù hợp với yêu cầu độ trễ và tính mới của dữ liệu.
+182. **Latency / throughput:** Latency là thời gian một yêu cầu hoàn tất; throughput là số yêu cầu xử lý mỗi đơn vị thời gian. Tối ưu một chỉ số có thể ảnh hưởng chỉ số kia.
+183. **Monitoring (giám sát):** Theo dõi độ trễ, lỗi, tải, chi phí, chất lượng và thay đổi dữ liệu/mô hình sau khi phát hành. Metric kỹ thuật tốt không thay thế chỉ số kết quả nghiệp vụ.
+184. **Data drift / concept drift:** Data drift là phân phối đầu vào đổi; concept drift là quan hệ giữa đầu vào và mục tiêu đổi. Chúng có thể làm mô hình suy giảm và cần được phát hiện bằng giám sát, kiểm tra nhãn hoặc đánh giá định kỳ.
+185. **A/B test:** So sánh hai phiên bản trên nhóm người dùng được phân chia có kiểm soát; cần xác định trước chỉ số chính, thời gian và cách tránh kết luận từ nhiễu.
+186. **Canary / rollback:** Canary phát hành phiên bản mới cho một phần nhỏ lưu lượng trước; rollback quay về bản ổn định nếu gặp vấn đề. Đây là cơ chế giảm ảnh hưởng của lỗi triển khai.
+187. **Docker / container:** Đóng gói ứng dụng cùng các phụ thuộc trong môi trường nhất quán để chạy giữa máy phát triển và môi trường triển khai.
+188. **CI/CD:** Tự động hóa kiểm tra và phát hành thay đổi. Pipeline AI thường cần thêm kiểm tra dữ liệu, metric, artifact và tương thích mô hình bên cạnh kiểm thử mã.
+189. **Scalability (khả năng mở rộng):** Khả năng phục vụ tải lớn hơn bằng tăng tài nguyên hoặc thêm máy. Mô hình lớn có thể bị giới hạn bởi GPU, bộ nhớ, băng thông và chi phí.
+190. **Cost per request (chi phí mỗi yêu cầu):** Chi phí trung bình để xử lý một yêu cầu, gồm token/API, phần cứng, truy xuất và vận hành. Nên đo trên lưu lượng thực tế và đặt ngân sách.
+
+## 7. Lộ trình thực hành
 
 1. **Bắt đầu với Python, SQL và Git:** đọc một bộ dữ liệu, làm sạch và viết script tái lập được.
 2. **Làm một bài toán ML nhỏ:** phân loại hoặc hồi quy; chia train/validation/test đúng cách, lập baseline và chọn metric theo chi phí sai.
@@ -124,6 +227,12 @@ Tài liệu nhập môn dành cho người muốn xây dựng, đánh giá và �
 - [Google Machine Learning Glossary](https://developers.google.com/machine-learning/glossary) — tra thuật ngữ ML.
 - [PyTorch — Autograd mechanics](https://docs.pytorch.org/docs/stable/notes/autograd.html) — đồ thị tính toán và gradient.
 - [Hugging Face LLM Course](https://huggingface.co/learn/llm-course/chapter1/1) — Transformers, tokenizer, fine-tuning và công cụ LLM.
+- [Hugging Face Transformers — Chat templates](https://huggingface.co/docs/transformers/main/chat_templating) — roles, control tokens và định dạng hội thoại.
+- [Hugging Face PEFT — LoRA](https://huggingface.co/docs/peft/main/conceptual_guides/lora) — fine-tuning tiết kiệm tham số.
+- [Hugging Face PEFT — Quantization](https://huggingface.co/docs/peft/developer_guides/quantization) — QLoRA và lượng tử hóa.
+- [PyTorch — Transformer building blocks](https://docs.pytorch.org/tutorials/intermediate/transformer_building_blocks.html) — attention và các khối Transformer.
+- [vLLM documentation](https://docs.vllm.ai/en/latest/) — phục vụ LLM, KV cache và tối ưu suy luận.
+- [Model Context Protocol — TypeScript SDK](https://ts.sdk.modelcontextprotocol.io/v2/) — kết nối ứng dụng AI với tools, resources và prompts.
 - [OpenAI API — Evals](https://platform.openai.com/docs/guides/evals) — thiết kế đánh giá mô hình.
 - [OpenAI API — File Search](https://platform.openai.com/docs/guides/tools-file-search) — truy xuất tài liệu và vector stores.
 - [OpenAI API — Function calling](https://platform.openai.com/docs/guides/function-calling) — kết nối mô hình với công cụ trong ứng dụng.

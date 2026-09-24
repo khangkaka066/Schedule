@@ -9,12 +9,12 @@ function readGlossary(source) {
     .map((section) => {
       const [heading, ...body] = section.split('\n')
       const headingMatch = heading.match(/^(\d+)\.\s+(.+)$/)
-      if (!headingMatch || Number(headingMatch[1]) > 5) return null
+      if (!headingMatch || Number(headingMatch[1]) > 6) return null
 
-      const terms = [...body.join('\n').matchAll(/^\d+\. \*\*(.+?)\*\*: (.+)$/gm)]
+      const terms = [...body.join('\n').matchAll(/^\d+\. \*\*(.+?)\*\*:?[ \t]+(.+)$/gm)]
         .map(([, term, explanation], index) => ({
           id: `${headingMatch[1]}-${index}`,
-          term,
+          term: term.replace(/:$/, ''),
           explanation,
         }))
 

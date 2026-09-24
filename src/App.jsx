@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import EnglishLab from './EnglishLab'
+import AiEngineerGlossary from './AiEngineerGlossary'
 
 const progressKey = 'study-roadmap-progress-v1'
 const scheduleProgressKey = 'daily-schedule-progress-v1'
@@ -687,7 +688,7 @@ function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
 
-    if (route === 'schedule' || route === 'exhibitflow') return route
+    if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer') return route
 
     return tracks.some((track) => track.id === route) ? route : 'overview'
   })
@@ -704,7 +705,7 @@ function App() {
   useEffect(() => {
     function syncRoute() {
       const route = window.location.hash.replace('#', '')
-      if (route === 'schedule' || route === 'exhibitflow') {
+      if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer') {
         setActiveTrackId(route)
 
         return
@@ -749,6 +750,7 @@ function App() {
   const activeTrack = trackSummaries.find((track) => track.id === activeTrackId)
   const isSchedulePage = activeTrackId === 'schedule'
   const isProjectPage = activeTrackId === 'exhibitflow'
+  const isAiEngineerPage = activeTrackId === 'ai-engineer'
 
   function toggleTask(id) {
     setProgress((current) => ({
@@ -834,6 +836,14 @@ function App() {
           >
             ExhibitFlow
           </button>
+          <button
+            className={isAiEngineerPage ? 'active' : ''}
+            onClick={() => navigate('ai-engineer')}
+            style={{ '--accent': '#0f766e' }}
+            type="button"
+          >
+            AI Engineer
+          </button>
           {trackSummaries.map((track) => (
             <button
               className={activeTrackId === track.id ? 'active' : ''}
@@ -850,7 +860,9 @@ function App() {
       </aside>
 
       <section className="workspace">
-        {isProjectPage ? (
+        {isAiEngineerPage ? (
+          <AiEngineerGlossary />
+        ) : isProjectPage ? (
           <ExhibitFlowPage
             onResetMember={resetMember}
             onToggleTask={toggleTeamTask}
@@ -917,6 +929,22 @@ function Overview({ tracks, onOpenTrack }) {
           <div className="card-footer">
             <small>8-week project plan</small>
             <button onClick={() => onOpenTrack('exhibitflow')} type="button">Open project</button>
+          </div>
+        </article>
+        <article className="overview-card ai-engineer-overview-card">
+          <span>AI learning guide</span>
+          <h3>AI Engineer</h3>
+          <p>
+            Tra cứu thuật ngữ từ dữ liệu và machine learning đến LLM, RAG, đánh giá và triển khai.
+            Có tìm kiếm nhanh, lọc theo nhóm kiến thức và liên kết tài liệu học tiếp.
+          </p>
+          <div className="commitment-preview">
+            <small><b>90 thuật ngữ</b>Định nghĩa ngắn, có ví dụ và lưu ý khi áp dụng</small>
+            <small><b>Lộ trình</b>Dữ liệu → ML → deep learning → LLM → vận hành</small>
+          </div>
+          <div className="card-footer">
+            <small>Glossary · 5 nhóm</small>
+            <button onClick={() => onOpenTrack('ai-engineer')} type="button">Mở kiến thức</button>
           </div>
         </article>
         <article className="overview-card schedule-overview-card">

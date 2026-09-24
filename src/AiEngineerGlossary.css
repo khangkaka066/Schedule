@@ -1,0 +1,351 @@
+.ai-glossary-page {
+  display: grid;
+  gap: 18px;
+  padding-bottom: 36px;
+}
+
+.ai-glossary-hero,
+.ai-glossary-controls,
+.ai-glossary-section,
+.ai-glossary-sources,
+.ai-glossary-empty {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.16);
+}
+
+.ai-glossary-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  align-items: center;
+  gap: 24px;
+  padding: 30px;
+  border-top: 5px solid #0f766e;
+}
+
+.ai-glossary-eyebrow,
+.ai-glossary-section-title span {
+  color: #0f766e;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+}
+
+.ai-glossary-copy h2 {
+  margin: 10px 0 0;
+  color: #0f172a;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+}
+
+.ai-glossary-copy > p {
+  max-width: 760px;
+  margin: 13px 0 0;
+  color: #475569;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ai-learning-route {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ai-learning-route span {
+  padding: 7px 10px;
+  border: 1px solid #cce8e1;
+  border-radius: 999px;
+  background: #f0fdfa;
+}
+
+.ai-learning-route b {
+  color: #94a3b8;
+}
+
+.ai-glossary-count {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 20px 14px;
+  border: 1px solid #dcefe9;
+  border-radius: 9px;
+  background: #f0fdfa;
+  text-align: center;
+}
+
+.ai-glossary-count strong {
+  color: #0f766e;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.ai-glossary-count span {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.ai-glossary-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 18px;
+  align-items: center;
+  padding: 18px;
+}
+
+.ai-glossary-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #64748b;
+}
+
+.ai-glossary-search:focus-within {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.ai-glossary-search > span {
+  font-size: 25px;
+  line-height: 1;
+}
+
+.ai-glossary-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.ai-glossary-search input::placeholder {
+  color: #94a3b8;
+}
+
+.ai-glossary-result-count {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.ai-glossary-filters {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-glossary-filters button,
+.ai-glossary-empty button {
+  min-height: 34px;
+  padding: 6px 11px;
+  border: 1px solid #dbe4ed;
+  border-radius: 999px;
+  background: #fff;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.ai-glossary-filters button.selected {
+  border-color: #0f766e;
+  background: #0f766e;
+  color: #fff;
+}
+
+.ai-glossary-section,
+.ai-glossary-sources {
+  padding: 22px;
+}
+
+.ai-glossary-section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ai-glossary-section-title h3 {
+  margin: 5px 0 0;
+  color: #0f172a;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.ai-glossary-section-title > b {
+  flex: none;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+}
+
+.ai-glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ai-glossary-term {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ai-glossary-term-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 8px;
+  background: #f0fdfa;
+  color: #0f766e;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.ai-glossary-term h4 {
+  margin: 2px 0 0;
+  color: #0f172a;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.ai-glossary-term p {
+  margin: 7px 0 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.ai-glossary-empty {
+  padding: 32px;
+  text-align: center;
+}
+
+.ai-glossary-empty strong {
+  color: #0f172a;
+}
+
+.ai-glossary-empty p {
+  margin: 8px 0 16px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.ai-glossary-empty button {
+  border-color: #0f766e;
+  background: #0f766e;
+  color: #fff;
+}
+
+.ai-glossary-source-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ai-glossary-source-grid a {
+  display: grid;
+  gap: 7px;
+  padding: 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.ai-glossary-source-grid a:hover {
+  border-color: #0f766e;
+  background: #f0fdfa;
+}
+
+.ai-glossary-source-grid strong {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.ai-glossary-source-grid strong span {
+  color: #0f766e;
+}
+
+.ai-glossary-source-grid small {
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .ai-glossary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-glossary-source-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .ai-glossary-hero {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .ai-glossary-count {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    align-items: center;
+    text-align: left;
+  }
+
+  .ai-glossary-count strong {
+    font-size: 36px;
+  }
+
+  .ai-glossary-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-glossary-result-count {
+    justify-self: end;
+  }
+
+  .ai-glossary-section,
+  .ai-glossary-sources {
+    padding: 17px;
+  }
+
+  .ai-glossary-source-grid {
+    grid-template-columns: 1fr;
+  }
+}

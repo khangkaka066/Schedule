@@ -243,6 +243,10 @@ button {
   border-top: 4px solid #0f766e;
 }
 
+.ai-engineer-overview-card {
+  border-top: 4px solid #0f766e;
+}
+
 .commitment-preview {
   display: grid;
   gap: 8px;

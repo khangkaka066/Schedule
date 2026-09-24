@@ -18,10 +18,10 @@ const weeklySchedule = [
       ['06:00 - 07:30', 'English: học 1 cặp thì + viết/nói + dictation', 'English'],
       ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
       ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
-      ['18:30 - 19:30', 'Làm bài tập trường hoặc chốt 1 task đồ án nhỏ', 'School'],
+      ['18:30 - 19:30', 'Project AI: làm phần nhỏ nhất chạy được theo tuần hiện tại', 'Project'],
       ['20:00 - 22:10', 'Trade cố định, ngồi theo plan và ghi journal sau lệnh', 'Trading'],
-      ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: 1 bài theo chủ đề ngày', 'LeetCode'],
+      ['22:20 - 22:30', 'Reset sau trade; tối nay chỉ review nhẹ hoặc nghỉ', 'Review'],
+      ['22:30 - 23:30', 'Review nhẹ hoặc nghỉ sau trade; không mở thêm bài mới', 'Review'],
       ['23:30 - 00:20', 'Ghi pattern notebook, chuẩn bị bài English sáng mai', 'Review'],
     ],
   },
@@ -34,7 +34,7 @@ const weeklySchedule = [
       ['06:00 - 07:30', 'English: ôn từ vựng cách quãng + shadowing + speaking', 'English'],
       ['09:00 - 11:00', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['14:00 - 16:00', 'Đồ án: code/report/demo một phần rõ ràng', 'Project'],
-      ['18:00 - 19:30', 'AI Math hoặc đồ án: hoàn thành 1 phần rõ ràng', 'AI Math'],
+      ['18:00 - 19:30', 'AI Math hoặc project AI: theo checklist của tuần hiện tại', 'AI Math'],
       ['20:00 - 22:10', 'Trade cố định, ưu tiên kỷ luật entry/exit', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
       ['22:30 - 23:30', 'LeetCode cố định: Two Pointers / Prefix Sum', 'LeetCode'],
@@ -52,7 +52,7 @@ const weeklySchedule = [
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc tới điểm tiếp theo', 'Travel'],
       ['14:00 - 15:30', 'Đồ án: hoàn thành 1 việc có thể demo/commit', 'Project'],
-      ['16:00 - 17:00', 'AI Math hoặc học lại bài trên trường', 'AI Math'],
+      ['16:00 - 17:00', 'AI Math: học một ý và kiểm tra bằng ví dụ số', 'AI Math'],
       ['18:30 - 19:30', 'Làm bài tập trường hoặc review AI Math nhẹ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
@@ -72,7 +72,7 @@ const weeklySchedule = [
       ['18:30 - 19:30', 'Làm bài tập trường hoặc chốt 1 task đồ án nhỏ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: Stack / Monotonic Stack', 'LeetCode'],
+      ['22:30 - 23:30', 'AI Math/project: ghi lại một ý đã học hoặc nghỉ nếu mệt', 'AI Math'],
       ['23:30 - 00:20', 'Tổng kết bài LeetCode và trade journal', 'Review'],
     ],
   },
@@ -107,7 +107,7 @@ const weeklySchedule = [
       ['12:00 - 12:30', 'Di chuyển về hoặc nghỉ trưa', 'Travel'],
       ['14:00 - 15:30', 'Làm bài tập trên trường', 'School'],
       ['15:45 - 17:30', 'Đồ án: deep work không bị cắt bởi trade', 'Project'],
-      ['19:30 - 21:00', 'AI Math hoặc project notebook sâu hơn', 'AI Math'],
+      ['19:30 - 21:00', 'Project AI: buổi tập trung để hoàn thành đầu ra tuần', 'Project'],
       ['21:15 - 22:15', 'Chuẩn bị bài trường hoặc nghỉ sau ngày học dài', 'School'],
       ['22:30 - 23:30', 'LeetCode cố định: Tree / Graph', 'LeetCode'],
       ['23:30 - 00:00', 'Ghi pattern notebook và chuẩn bị bài English sáng Chủ nhật', 'Review'],
@@ -122,7 +122,7 @@ const weeklySchedule = [
       ['06:00 - 07:30', 'English: kiểm tra 12 thì + review từ/nghe + nói 3 phút', 'English'],
       ['09:00 - 10:00', 'Đồ án hoặc bài tập trường ưu tiên cao', 'School'],
       ['10:00 - 10:30', 'Cập nhật pattern notebook và chọn bài cho tuần mới', 'Review'],
-      ['10:45 - 12:00', 'AI Math recap: viết lại công thức và ví dụ số', 'AI Math'],
+      ['10:45 - 12:00', 'Review AI Math: tự giải thích công thức bằng ví dụ project', 'AI Math'],
       ['13:30 - 14:45', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['15:00 - 16:30', 'Đồ án hoặc bài tập trường: hoàn thành việc ưu tiên tuần mới', 'Project'],
       ['17:00 - 18:30', 'Đồ án: tổng hợp tiến độ, chuẩn bị phần tuần tới', 'Project'],
@@ -139,7 +139,7 @@ const fixedCommitments = [
   ['Làm việc', 'Thứ 2 và thứ 5 làm 08:00 - 17:00; thứ 6 làm 08:00 - 12:00.'],
   ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
   ['Tiếng Anh', 'Cố định 06:00 - 07:30 mỗi ngày. Nội dung và bài nghe cụ thể nằm trong trang English.'],
-  ['LeetCode', 'Cố định 22:30 - 23:30 mỗi ngày. Làm đúng pattern của ngày, có 1 bài redo vào Chủ nhật.'],
+  ['LeetCode', '4 buổi bài mới + 1 buổi làm lại mỗi tuần; giữ buổi ngắn 45–60 phút và dừng đúng giờ.'],
   ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
   ['Báo cáo GVHD', 'Mỗi thứ 6 lúc 17:30 báo cáo tiến độ với giáo viên hướng dẫn.'],
   ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
@@ -495,6 +495,96 @@ const leetcodeDailyPlan = [
 
 const tracks = [
   {
+    id: 'ai-engineer-2m',
+    label: 'AI Engineer · 2 tháng',
+    eyebrow: '8 tuần · 3 nhánh học tích hợp',
+    title: 'Lộ trình 2 tháng: LeetCode + AI Math + AI Engineer',
+    goal: 'Học thuật toán, toán ứng dụng cho ML và xây sản phẩm AI song song. Mục tiêu là có một dự án chạy được, biết đánh giá chất lượng và giải thích quyết định kỹ thuật; không đặt mục tiêu thành chuyên gia trong 8 tuần.',
+    accent: '#0f766e',
+    daily: [
+      ['45 phút · 5 ngày/tuần', 'LeetCode theo chủ đề tuần: tự làm trước, ghi Big-O và lên lịch làm lại bài sai sau 3–7 ngày.'],
+      ['40 phút · 4 ngày/tuần', 'AI Math: học một ý, tự tính ví dụ nhỏ, rồi kiểm tra bằng NumPy hoặc PyTorch.'],
+      ['75–90 phút · 5 ngày/tuần', 'Project: mỗi buổi hoàn thành một phần chạy được, có commit và cập nhật README.'],
+      ['Chủ nhật · 30 phút', 'Review tuần: demo đầu ra, làm lại bài sai và chọn việc quan trọng nhất cho tuần sau.'],
+    ],
+    metrics: [
+      ['LeetCode', '32+ bài chọn lọc; ưu tiên Easy/Medium và làm lại bài sai'],
+      ['AI Math', '8 notebook nhỏ có ví dụ số và giải thích bằng lời'],
+      ['Portfolio', '1 ứng dụng AI có API, eval, Docker và README'],
+    ],
+    resources: [
+      ['NeetCode Roadmap', 'https://neetcode.io/roadmap'],
+      ['Math for ML', 'https://www.math4ml.com/'],
+      ['Google ML Crash Course', 'https://developers.google.com/machine-learning/crash-course/'],
+      ['PyTorch Tutorials', 'https://pytorch.org/tutorials/'],
+      ['Hugging Face LLM Course', 'https://huggingface.co/learn/llm-course/chapter1/1'],
+    ],
+    months: [
+      {
+        name: 'Tháng 1 · Nền tảng và ML chạy được',
+        focus: 'Python, dữ liệu, toán cốt lõi, thuật toán nền và API đầu tiên',
+        outcome: 'Có baseline ML chạy được qua API; hiểu vector, xác suất cơ bản, loss và cách đánh giá trên dữ liệu chưa thấy.',
+        weeks: [
+          ['Tuần 1', 'Python, NumPy, Git + Array/HashMap', [
+            'Project: tạo repo, môi trường Python, cấu trúc src/tests/data và README; nạp một dataset công khai.',
+            'AI Math: vector, shape, axis, broadcasting, dot product; viết notebook NumPy với 5 ví dụ nhỏ.',
+            'LeetCode: Two Sum, Contains Duplicate, Valid Anagram, Best Time to Buy and Sell Stock, Valid Palindrome.',
+            'Đầu ra: script đọc và kiểm tra dữ liệu; ghi lại lời giải, edge case và Big-O cho từng bài.',
+          ]],
+          ['Tuần 2', 'Thống kê, xác suất + Prefix Sum/Two Pointers', [
+            'Project: làm sạch dữ liệu, phân tích missing value/outlier, chia train/validation/test không rò rỉ dữ liệu.',
+            'AI Math: mean, variance, standard deviation, xác suất có điều kiện, sampling và correlation; minh họa bằng NumPy.',
+            'LeetCode: Two Sum II, 3Sum, Product of Array Except Self, Subarray Sum Equals K, Majority Element.',
+            'Đầu ra: notebook phân tích dữ liệu và ghi lý do chọn cách chia tập, metric, baseline.',
+          ]],
+          ['Tuần 3', 'Linear Algebra + Sliding Window/Stack', [
+            'Project: huấn luyện baseline bằng scikit-learn; tạo pipeline preprocessing và lưu metric trên validation.',
+            'AI Math: matrix multiplication, norm, cosine similarity, linear regression, MSE/MAE; tự tính một ví dụ bằng tay.',
+            'LeetCode: Longest Substring Without Repeating Characters, Minimum Size Subarray Sum, Valid Parentheses, Min Stack.',
+            'Đầu ra: baseline tái lập được; giải thích được metric bằng ví dụ và có bảng kết quả ngắn.',
+          ]],
+          ['Tuần 4', 'Classification, gradient + Binary Search/Linked List', [
+            'Project: đóng gói dự đoán thành FastAPI endpoint có validation đầu vào, xử lý lỗi và ví dụ gọi API.',
+            'AI Math: sigmoid, cross-entropy, gradient descent, learning rate và regularization; vẽ loss curve.',
+            'LeetCode: Binary Search, Search Insert Position, Search in Rotated Sorted Array, Reverse Linked List, Linked List Cycle.',
+            'Đầu ra: API chạy local; so sánh baseline và phiên bản đã chỉnh bằng validation, không dùng test để chọn model.',
+          ]],
+        ],
+      },
+      {
+        name: 'Tháng 2 · Deep Learning, LLM và triển khai',
+        focus: 'PyTorch, embedding/RAG, đánh giá, vận hành và luyện phỏng vấn',
+        outcome: 'Có một ứng dụng hỏi đáp tài liệu chạy được, có bộ đánh giá nhỏ, được đóng gói và có giới hạn/chỉ số được ghi rõ.',
+        weeks: [
+          ['Tuần 5', 'PyTorch, neural network + Tree/Heap', [
+            'Project: viết một MLP nhỏ bằng PyTorch; tập train/validation, lưu model và so với baseline scikit-learn.',
+            'AI Math: tensor, activation, batch, backpropagation intuition, optimizer; kiểm tra gradient bằng ví dụ đơn giản.',
+            'LeetCode: Maximum Depth of Binary Tree, Invert Binary Tree, Level Order Traversal, Kth Largest Element.',
+            'Đầu ra: notebook huấn luyện có seed, loss curve, metric và nhận xét overfitting.',
+          ]],
+          ['Tuần 6', 'Embedding, retrieval + Graph/DFS/BFS', [
+            'Project: làm ingest tài liệu, chunking, embedding và retrieval top-k; giữ metadata nguồn cho từng đoạn.',
+            'AI Math: embedding vector, cosine/dot similarity, top-k và precision/recall@k; tạo 15 câu hỏi kiểm tra retrieval.',
+            'LeetCode: Number of Islands, Flood Fill, Clone Graph, Course Schedule.',
+            'Đầu ra: demo tìm đoạn liên quan; đo retrieval trên câu hỏi đã gắn tài liệu đúng.',
+          ]],
+          ['Tuần 7', 'LLM/RAG, evaluation + DP căn bản', [
+            'Project: kết nối LLM với retrieval, buộc câu trả lời nêu nguồn, xử lý câu không có bằng chứng và lỗi timeout.',
+            'AI Math: precision/recall/F1, threshold, hallucination/groundedness rubric, latency và token cost; chấm bộ 20 câu.',
+            'LeetCode: Climbing Stairs, House Robber, Coin Change; làm lại 2 bài yếu nhất từ các tuần trước.',
+            'Đầu ra: báo cáo eval có ví dụ đúng/sai, giới hạn đã biết và một thay đổi dựa trên kết quả đo.',
+          ]],
+          ['Tuần 8', 'Đóng gói, portfolio + mock interview', [
+            'Project: Docker hóa ứng dụng, thêm logging cơ bản, cấu hình qua environment variables và viết hướng dẫn chạy.',
+            'AI Math: tổng ôn vector, loss, metric, threshold, retrieval score; giải thích trade-off bằng ví dụ của chính project.',
+            'LeetCode: 3 buổi mixed Easy/Medium có timer; hoàn thiện pattern notebook và làm lại bài sai.',
+            'Đầu ra: demo 3–5 phút, README có kiến trúc/dữ liệu/eval/chi phí/giới hạn; 2 mock interview và kế hoạch học tiếp.',
+          ]],
+        ],
+      },
+    ],
+  },
+  {
     id: 'leetcode',
     label: 'LeetCode',
     eyebrow: 'Algorithm practice',
@@ -748,6 +838,7 @@ function App() {
   )
 
   const activeTrack = trackSummaries.find((track) => track.id === activeTrackId)
+  const visibleTrackSummaries = trackSummaries.filter((track) => ['ai-engineer-2m', 'english'].includes(track.id))
   const isSchedulePage = activeTrackId === 'schedule'
   const isProjectPage = activeTrackId === 'exhibitflow'
   const isAiEngineerPage = activeTrackId === 'ai-engineer'
@@ -809,7 +900,7 @@ function App() {
       <aside className="sidebar" aria-label="Study sections">
         <div className="brand-block">
           <span>{ownerName} Study OS</span>
-          <h1>Roadmap 3 tháng</h1>
+          <h1>Roadmap 2 tháng</h1>
         </div>
 
         <nav className="track-nav">
@@ -844,7 +935,7 @@ function App() {
           >
             AI Engineer
           </button>
-          {trackSummaries.map((track) => (
+          {visibleTrackSummaries.map((track) => (
             <button
               className={activeTrackId === track.id ? 'active' : ''}
               key={track.id}
@@ -884,7 +975,7 @@ function App() {
         ) : (
           <Overview
             onOpenTrack={navigate}
-            tracks={trackSummaries}
+            tracks={visibleTrackSummaries}
           />
         )}
       </section>
@@ -902,9 +993,9 @@ function Overview({ tracks, onOpenTrack }) {
       <section className="hero-panel">
         <div>
           <span>Personal learning system</span>
-          <h2>Khang học LeetCode, AI Math và English trong 3 tháng</h2>
+          <h2>Khang học AI Engineer trong 2 tháng</h2>
           <p>
-            Mỗi phần có lộ trình 12 tuần, checklist lưu local, tài nguyên riêng và nhịp học hằng ngày.
+            LeetCode, AI Math và project AI được gộp vào một kế hoạch 8 tuần có checklist và đầu ra từng tuần.
           </p>
         </div>
         <div className="hero-meter">
@@ -932,6 +1023,21 @@ function Overview({ tracks, onOpenTrack }) {
           </div>
         </article>
         <article className="overview-card ai-engineer-overview-card">
+          <span>8 tuần · 3 nhánh học tích hợp</span>
+          <h3>AI Engineer · 2 tháng</h3>
+          <p>
+            Học thuật toán, toán ứng dụng cho ML và xây một ứng dụng AI có API, đánh giá, Docker và README.
+          </p>
+          <div className="commitment-preview">
+            <small><b>Mỗi tuần</b>LeetCode + AI Math + đầu ra project</small>
+            <small><b>Mục tiêu</b>32+ bài, 8 notebook, 1 project portfolio</small>
+          </div>
+          <div className="card-footer">
+            <small>8 tuần · checklist lưu trên máy</small>
+            <button onClick={() => onOpenTrack('ai-engineer-2m')} type="button">Mở lộ trình</button>
+          </div>
+        </article>
+        <article className="overview-card ai-engineer-overview-card">
           <span>AI learning guide</span>
           <h3>AI Engineer</h3>
           <p>
@@ -940,10 +1046,10 @@ function Overview({ tracks, onOpenTrack }) {
           </p>
           <div className="commitment-preview">
             <small><b>190 thuật ngữ</b>Định nghĩa ngắn, có ví dụ và lưu ý khi áp dụng</small>
-            <small><b>Lộ trình</b>Dữ liệu → ML → deep learning → LLM → vận hành</small>
+            <small><b>Lộ trình tham khảo</b>Dữ liệu → ML → deep learning → LLM → vận hành</small>
           </div>
           <div className="card-footer">
-            <small>Glossary · 5 nhóm</small>
+            <small>Glossary · 190 thuật ngữ</small>
             <button onClick={() => onOpenTrack('ai-engineer')} type="button">Mở kiến thức</button>
           </div>
         </article>

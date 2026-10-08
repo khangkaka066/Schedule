@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import EnglishLab from './EnglishLab'
 import AiEngineerGlossary from './AiEngineerGlossary'
+import DailyPractice from './DailyPractice'
 
 const progressKey = 'study-roadmap-progress-v1'
 const scheduleProgressKey = 'daily-schedule-progress-v1'
@@ -15,13 +15,13 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: học 1 cặp thì + viết/nói + dictation', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
       ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
       ['18:30 - 19:30', 'Project AI: làm phần nhỏ nhất chạy được theo tuần hiện tại', 'Project'],
       ['20:00 - 22:10', 'Trade cố định, ngồi theo plan và ghi journal sau lệnh', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade; tối nay chỉ review nhẹ hoặc nghỉ', 'Review'],
-      ['22:30 - 23:30', 'Review nhẹ hoặc nghỉ sau trade; không mở thêm bài mới', 'Review'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:20', 'Ghi pattern notebook, chuẩn bị bài English sáng mai', 'Review'],
     ],
   },
@@ -31,13 +31,13 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: ôn từ vựng cách quãng + shadowing + speaking', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['09:00 - 11:00', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['14:00 - 16:00', 'Đồ án: code/report/demo một phần rõ ràng', 'Project'],
       ['18:00 - 19:30', 'AI Math hoặc project AI: theo checklist của tuần hiện tại', 'AI Math'],
       ['20:00 - 22:10', 'Trade cố định, ưu tiên kỷ luật entry/exit', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: Two Pointers / Prefix Sum', 'LeetCode'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:15', 'Ghi lỗi học tập và lỗi trading trong ngày', 'Review'],
     ],
   },
@@ -47,7 +47,7 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: phân biệt 2 thì dễ nhầm + nghe chép chính tả', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc tới điểm tiếp theo', 'Travel'],
@@ -56,7 +56,7 @@ const weeklySchedule = [
       ['18:30 - 19:30', 'Làm bài tập trường hoặc review AI Math nhẹ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: Sliding Window', 'LeetCode'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:15', 'Review ngắn, không học nặng sau trade', 'Review'],
     ],
   },
@@ -66,13 +66,13 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: từ vựng theo cụm + nghe 4 bước', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['08:00 - 17:00', 'Làm việc cố định', 'Work'],
       ['17:30 - 18:20', 'Ăn tối, nghỉ mắt, reset trước buổi học', 'Routine'],
       ['18:30 - 19:30', 'Làm bài tập trường hoặc chốt 1 task đồ án nhỏ', 'School'],
       ['20:00 - 22:10', 'Trade cố định', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'AI Math/project: ghi lại một ý đã học hoặc nghỉ nếu mệt', 'AI Math'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:20', 'Tổng kết bài LeetCode và trade journal', 'Review'],
     ],
   },
@@ -82,7 +82,7 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: ghi âm dùng thì trong câu chuyện cá nhân', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['08:00 - 12:00', 'Làm việc cố định', 'Work'],
       ['14:00 - 15:30', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['16:00 - 17:30', 'Đồ án: code/report phần quan trọng nhất tuần', 'Project'],
@@ -91,7 +91,7 @@ const weeklySchedule = [
       ['18:20 - 19:30', 'Làm bài tập trường hoặc xử lý việc đồ án còn dang dở', 'School'],
       ['20:00 - 22:10', 'Trade cố định, cuối phiên chốt weekly journal', 'Trading'],
       ['22:20 - 22:30', 'Reset sau trade, mở sẵn bài LeetCode', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: Binary Search / Linked List', 'LeetCode'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:15', 'Chọn 3 việc quan trọng cho cuối tuần', 'Review'],
     ],
   },
@@ -101,7 +101,7 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: viết đoạn ngắn dùng 2-4 thì + nghe tóm tắt', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['08:50 - 09:20', 'Di chuyển tới trường', 'Travel'],
       ['09:30 - 12:00', 'Học tại trường', 'School'],
       ['12:00 - 12:30', 'Di chuyển về hoặc nghỉ trưa', 'Travel'],
@@ -109,7 +109,7 @@ const weeklySchedule = [
       ['15:45 - 17:30', 'Đồ án: deep work không bị cắt bởi trade', 'Project'],
       ['19:30 - 21:00', 'Project AI: buổi tập trung để hoàn thành đầu ra tuần', 'Project'],
       ['21:15 - 22:15', 'Chuẩn bị bài trường hoặc nghỉ sau ngày học dài', 'School'],
-      ['22:30 - 23:30', 'LeetCode cố định: Tree / Graph', 'LeetCode'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
       ['23:30 - 00:00', 'Ghi pattern notebook và chuẩn bị bài English sáng Chủ nhật', 'Review'],
     ],
   },
@@ -119,17 +119,17 @@ const weeklySchedule = [
     blocks: [
       ['00:30 - 05:30', 'Ngủ cố định', 'Sleep'],
       ['05:30 - 06:00', 'Thức dậy, vệ sinh, uống nước, chuẩn bị ngày', 'Routine'],
-      ['06:00 - 07:30', 'English: kiểm tra 12 thì + review từ/nghe + nói 3 phút', 'English'],
+      ['06:00 - 07:30', 'IELTS: 1 Listening lẻ + 1 Reading lẻ + Shadowing + Speaking', 'English'],
       ['09:00 - 10:00', 'Đồ án hoặc bài tập trường ưu tiên cao', 'School'],
       ['10:00 - 10:30', 'Cập nhật pattern notebook và chọn bài cho tuần mới', 'Review'],
       ['10:45 - 12:00', 'Review AI Math: tự giải thích công thức bằng ví dụ project', 'AI Math'],
       ['13:30 - 14:45', 'Làm bài tập hoặc học bài trên trường', 'School'],
       ['15:00 - 16:30', 'Đồ án hoặc bài tập trường: hoàn thành việc ưu tiên tuần mới', 'Project'],
       ['17:00 - 18:30', 'Đồ án: tổng hợp tiến độ, chuẩn bị phần tuần tới', 'Project'],
-      ['20:00 - 21:00', 'Plan tuần mới theo 3 roadmap', 'Planning'],
+      ['20:00 - 21:00', 'Lên kế hoạch công việc tuần mới', 'Planning'],
       ['21:00 - 22:00', 'Chuẩn bị sổ tay, bài cần redo và checklist tuần tới', 'Review'],
       ['22:00 - 22:30', 'Chuẩn bị sổ tay và bài LeetCode redo', 'Review'],
-      ['22:30 - 23:30', 'LeetCode cố định: redo bài sai + pattern yếu nhất', 'LeetCode'],
+      ['22:30 - 23:30', 'LeetCode: làm 1 bài theo lộ trình 28 ngày', 'LeetCode'],
     ],
   },
 ]
@@ -138,8 +138,8 @@ const fixedCommitments = [
   ['Ngủ và dậy', 'Đi ngủ 00:30, dậy 05:30 mỗi ngày để giữ nhịp ổn định.'],
   ['Làm việc', 'Thứ 2 và thứ 5 làm 08:00 - 17:00; thứ 6 làm 08:00 - 12:00.'],
   ['Học tại trường', 'Thứ 4 và thứ 7, 09:30 - 12:00, cộng 30 phút di chuyển mỗi chiều.'],
-  ['Tiếng Anh', 'Cố định 06:00 - 07:30 mỗi ngày. Nội dung và bài nghe cụ thể nằm trong trang English.'],
-  ['LeetCode', '4 buổi bài mới + 1 buổi làm lại mỗi tuần; giữ buổi ngắn 45–60 phút và dừng đúng giờ.'],
+  ['Tiếng Anh', 'Mỗi ngày 06:00 - 07:30: Listening, Reading, Shadowing, Speaking và ghi lỗi.'],
+  ['LeetCode', 'Mỗi ngày 22:30 - 23:30 làm 1 bài trong lộ trình 28 ngày.'],
   ['Trade', 'Thứ 2 tới thứ 6, 20:00 - 22:10 là block cố định.'],
   ['Báo cáo GVHD', 'Mỗi thứ 6 lúc 17:30 báo cáo tiến độ với giáo viên hướng dẫn.'],
   ['Đồ án', 'Có slot đồ án riêng vào thứ 2, 3, 4, 5, 6, 7 và Chủ nhật để không bị trôi tiến độ.'],
@@ -395,126 +395,22 @@ const exhibitFlowTeam = [
   },
 ]
 
-const englishSkillMethods = [
-  {
-    skill: 'Grammar trong từng exercise',
-    goal: 'Không tách grammar thành một lộ trình riêng: học đúng điểm ngữ pháp xuất hiện trong chart và exercise của chapter đang làm.',
-    steps: [
-      'Đọc chart ngay trước nhóm exercise, ghi lại form/cách dùng bằng một ví dụ trong sách.',
-      'Làm từng exercise theo thứ tự, không xem Answer Key khi chưa hoàn thành.',
-      'Đối chiếu từng câu sai, ghi lý do sai vào error log rồi làm lại sau 1–3 ngày.',
-      'Chỉ chuyển sang nhóm exercise tiếp theo khi nhóm hiện tại đã được sửa lỗi.',
-    ],
-  },
-  {
-    skill: 'Từ vựng nhớ dai',
-    goal: 'Học ít nhưng gọi lại được và dùng được; ưu tiên cụm từ thay vì danh sách từ đơn.',
-    steps: [
-      'Mỗi ngày chọn 8–10 cụm theo 1 chủ đề; ghi collocation, câu mẫu và tình huống dùng.',
-      'Ôn cách quãng vào ngày 0–1–3–7–14–30 bằng active recall, không nhìn nghĩa trước.',
-      'Mỗi cụm phải xuất hiện 2 lần: 1 câu viết và 1 câu nói về chính mình.',
-      'Mỗi Chủ nhật bỏ cụm chưa dùng được, giữ lại cụm nhớ và dùng được.',
-    ],
-  },
-  {
-    skill: 'Listening 4 bước',
-    goal: 'Tăng khả năng nghe bằng một đoạn ngắn nghe sâu, rồi mới tăng độ dài và tốc độ.',
-    steps: [
-      'Lần 1 nghe không transcript: ghi chủ đề, ai, ở đâu, 3 ý chính.',
-      'Lần 2 chép chính tả 30–60 giây; khoanh từ bị nuốt âm, nối âm hoặc không nhận ra.',
-      'Mở transcript để sửa, ghi 3 cụm nghe sai và shadow 5 câu.',
-      'Ngày hôm sau nghe lại không transcript và tóm tắt miệng 60 giây.',
-    ],
-  },
-  {
-    skill: 'Writing',
-    goal: 'Dùng được thì để kể, mô tả hiện tại và nói về kế hoạch; ưu tiên câu đúng trước câu hay.',
-    steps: [
-      'Viết theo khung 4 câu: bối cảnh → sự việc → kết quả → kế hoạch/nhận xét.',
-      'Mỗi bài phải gạch chân các thì đã dùng và kiểm tra lý do dùng từng thì.',
-      'Sau 24 giờ, tự sửa 5 câu; so sánh với checklist S-V, tense, article, plural.',
-      'Mỗi tuần lưu 1 đoạn trước/sau khi sửa để thấy lỗi lặp đã giảm chưa.',
-    ],
-  },
-  {
-    skill: 'Speaking',
-    goal: 'Biến kiến thức ngữ pháp thành phản xạ nói trong tình huống quen thuộc.',
-    steps: [
-      'Thứ 6 ghi âm 2 phút, bắt buộc dùng cặp thì đang học và 5 cụm từ trong tuần.',
-      'Nghe lại, chép ra 3 câu sai và nói lại ngay phiên bản đúng 3 lần.',
-      'Chủ nhật nói 3 phút kể một câu chuyện có quá khứ, hiện tại và tương lai.',
-      'Đánh giá 3 điểm: đúng thì, rõ ý, nghe tự nhiên; không chấm theo độ khó của từ.',
-    ],
-  },
-]
-
-const leetcodeComplexityGuide = [
-  {
-    topic: 'Đếm vòng lặp',
-    notes: [
-      'Một vòng chạy n lần là O(n).',
-      'Hai vòng lồng nhau thường là O(n^2).',
-      'Hai vòng tách rời O(n) + O(n) vẫn là O(n).',
-    ],
-  },
-  {
-    topic: 'Nhìn kích thước input',
-    notes: [
-      'n khoảng 10^5 thường cần O(n) hoặc O(n log n).',
-      'n khoảng 10^3 có thể chịu O(n^2).',
-      'n nhỏ dưới 20 thường có thể backtracking/bitmask O(2^n).',
-    ],
-  },
-  {
-    topic: 'Nhận diện log n',
-    notes: [
-      'Mỗi bước bỏ đi một nửa search space là O(log n).',
-      'Binary search trên mảng sort hoặc answer space thường là O(log n) nhân chi phí check.',
-      'Heap push/pop là O(log n), làm n lần là O(n log n).',
-    ],
-  },
-  {
-    topic: 'Tính space complexity',
-    notes: [
-      'HashMap/HashSet lưu tối đa n phần tử là O(n).',
-      'Recursion depth h dùng O(h) call stack; tree skewed có thể là O(n).',
-      'Nếu sửa in-place và chỉ dùng vài biến phụ thì thường là O(1).',
-    ],
-  },
-]
-
-const leetcodeDailyPlan = [
-  ['Thứ 2', 'Array / HashMap', 'Chọn 1 bài trong roadmap (ví dụ Two Sum hoặc Valid Anagram).'],
-  ['Thứ 3', 'Two Pointers / Prefix Sum', 'Chọn 1 bài mới, ưu tiên viết brute force trước rồi tối ưu.'],
-  ['Thứ 4', 'Sliding Window', 'Chọn 1 bài Easy/Medium và vẽ cửa sổ di chuyển bằng ví dụ nhỏ.'],
-  ['Thứ 5', 'Stack / Monotonic Stack', 'Chọn 1 bài theo tuần roadmap; ghi rõ điều gì được push/pop.'],
-  ['Thứ 6', 'Binary Search / Linked List', 'Làm 1 bài có timer 35 phút; test kỹ điều kiện biên.'],
-  ['Thứ 7', 'Tree / Graph', 'Chọn 1 DFS/BFS; vẽ tree/graph, thêm visited hoặc base case trước khi code.'],
-  ['Chủ nhật', 'Redo + pattern yếu nhất', 'Không xem đáp án: làm lại 1 bài sai sau 3–7 ngày và cập nhật pattern notebook.'],
-]
-
 const tracks = [
   {
     id: 'ai-engineer-2m',
     label: 'AI Engineer · 2 tháng',
-    eyebrow: '8 tuần · 3 nhánh học tích hợp',
-    title: 'Lộ trình 2 tháng: LeetCode + AI Math + AI Engineer',
-    goal: 'Học thuật toán, toán ứng dụng cho ML và xây sản phẩm AI song song. Mục tiêu là có một dự án chạy được, biết đánh giá chất lượng và giải thích quyết định kỹ thuật; không đặt mục tiêu thành chuyên gia trong 8 tuần.',
+    eyebrow: '8 tuần · AI Engineer project',
+    title: 'Lộ trình AI Engineer trong 2 tháng',
+    goal: 'Xây một sản phẩm AI chạy được, đánh giá chất lượng và giải thích các quyết định kỹ thuật qua từng tuần.',
     accent: '#0f766e',
     daily: [
-      ['45 phút · 5 ngày/tuần', 'LeetCode theo chủ đề tuần: tự làm trước, ghi Big-O và lên lịch làm lại bài sai sau 3–7 ngày.'],
-      ['40 phút · 4 ngày/tuần', 'AI Math: học một ý, tự tính ví dụ nhỏ, rồi kiểm tra bằng NumPy hoặc PyTorch.'],
       ['75–90 phút · 5 ngày/tuần', 'Project: mỗi buổi hoàn thành một phần chạy được, có commit và cập nhật README.'],
-      ['Chủ nhật · 30 phút', 'Review tuần: demo đầu ra, làm lại bài sai và chọn việc quan trọng nhất cho tuần sau.'],
+      ['Chủ nhật · 30 phút', 'Review tuần: demo đầu ra và chọn việc quan trọng nhất cho tuần sau.'],
     ],
     metrics: [
-      ['LeetCode', '32+ bài chọn lọc; ưu tiên Easy/Medium và làm lại bài sai'],
-      ['AI Math', '8 notebook nhỏ có ví dụ số và giải thích bằng lời'],
       ['Portfolio', '1 ứng dụng AI có API, eval, Docker và README'],
     ],
     resources: [
-      ['NeetCode Roadmap', 'https://neetcode.io/roadmap'],
-      ['Math for ML', 'https://www.math4ml.com/'],
       ['Google ML Crash Course', 'https://developers.google.com/machine-learning/crash-course/'],
       ['PyTorch Tutorials', 'https://pytorch.org/tutorials/'],
       ['Hugging Face LLM Course', 'https://huggingface.co/learn/llm-course/chapter1/1'],
@@ -522,210 +418,53 @@ const tracks = [
     months: [
       {
         name: 'Tháng 1 · Nền tảng và ML chạy được',
-        focus: 'Python, dữ liệu, toán cốt lõi, thuật toán nền và API đầu tiên',
-        outcome: 'Có baseline ML chạy được qua API; hiểu vector, xác suất cơ bản, loss và cách đánh giá trên dữ liệu chưa thấy.',
+        focus: 'Python, dữ liệu, mô hình nền và API đầu tiên',
+        outcome: 'Có baseline ML chạy được qua API và cách đánh giá trên dữ liệu chưa thấy.',
         weeks: [
-          ['Tuần 1', 'Python, NumPy, Git + Array/HashMap', [
+          ['Tuần 1', 'Python, NumPy và Git', [
             'Project: tạo repo, môi trường Python, cấu trúc src/tests/data và README; nạp một dataset công khai.',
-            'AI Math: vector, shape, axis, broadcasting, dot product; viết notebook NumPy với 5 ví dụ nhỏ.',
-            'LeetCode: Two Sum, Contains Duplicate, Valid Anagram, Best Time to Buy and Sell Stock, Valid Palindrome.',
-            'Đầu ra: script đọc và kiểm tra dữ liệu; ghi lại lời giải, edge case và Big-O cho từng bài.',
+            'Đầu ra: script đọc và kiểm tra dữ liệu, có README hướng dẫn chạy.',
           ]],
-          ['Tuần 2', 'Thống kê, xác suất + Prefix Sum/Two Pointers', [
+          ['Tuần 2', 'Làm sạch và phân tích dữ liệu', [
             'Project: làm sạch dữ liệu, phân tích missing value/outlier, chia train/validation/test không rò rỉ dữ liệu.',
-            'AI Math: mean, variance, standard deviation, xác suất có điều kiện, sampling và correlation; minh họa bằng NumPy.',
-            'LeetCode: Two Sum II, 3Sum, Product of Array Except Self, Subarray Sum Equals K, Majority Element.',
             'Đầu ra: notebook phân tích dữ liệu và ghi lý do chọn cách chia tập, metric, baseline.',
           ]],
-          ['Tuần 3', 'Linear Algebra + Sliding Window/Stack', [
+          ['Tuần 3', 'Mô hình baseline', [
             'Project: huấn luyện baseline bằng scikit-learn; tạo pipeline preprocessing và lưu metric trên validation.',
-            'AI Math: matrix multiplication, norm, cosine similarity, linear regression, MSE/MAE; tự tính một ví dụ bằng tay.',
-            'LeetCode: Longest Substring Without Repeating Characters, Minimum Size Subarray Sum, Valid Parentheses, Min Stack.',
             'Đầu ra: baseline tái lập được; giải thích được metric bằng ví dụ và có bảng kết quả ngắn.',
           ]],
-          ['Tuần 4', 'Classification, gradient + Binary Search/Linked List', [
+          ['Tuần 4', 'API dự đoán', [
             'Project: đóng gói dự đoán thành FastAPI endpoint có validation đầu vào, xử lý lỗi và ví dụ gọi API.',
-            'AI Math: sigmoid, cross-entropy, gradient descent, learning rate và regularization; vẽ loss curve.',
-            'LeetCode: Binary Search, Search Insert Position, Search in Rotated Sorted Array, Reverse Linked List, Linked List Cycle.',
             'Đầu ra: API chạy local; so sánh baseline và phiên bản đã chỉnh bằng validation, không dùng test để chọn model.',
           ]],
         ],
       },
       {
         name: 'Tháng 2 · Deep Learning, LLM và triển khai',
-        focus: 'PyTorch, embedding/RAG, đánh giá, vận hành và luyện phỏng vấn',
+        focus: 'PyTorch, embedding/RAG, đánh giá và vận hành',
         outcome: 'Có một ứng dụng hỏi đáp tài liệu chạy được, có bộ đánh giá nhỏ, được đóng gói và có giới hạn/chỉ số được ghi rõ.',
         weeks: [
-          ['Tuần 5', 'PyTorch, neural network + Tree/Heap', [
+          ['Tuần 5', 'PyTorch và neural network', [
             'Project: viết một MLP nhỏ bằng PyTorch; tập train/validation, lưu model và so với baseline scikit-learn.',
-            'AI Math: tensor, activation, batch, backpropagation intuition, optimizer; kiểm tra gradient bằng ví dụ đơn giản.',
-            'LeetCode: Maximum Depth of Binary Tree, Invert Binary Tree, Level Order Traversal, Kth Largest Element.',
             'Đầu ra: notebook huấn luyện có seed, loss curve, metric và nhận xét overfitting.',
           ]],
-          ['Tuần 6', 'Embedding, retrieval + Graph/DFS/BFS', [
+          ['Tuần 6', 'Embedding và retrieval', [
             'Project: làm ingest tài liệu, chunking, embedding và retrieval top-k; giữ metadata nguồn cho từng đoạn.',
-            'AI Math: embedding vector, cosine/dot similarity, top-k và precision/recall@k; tạo 15 câu hỏi kiểm tra retrieval.',
-            'LeetCode: Number of Islands, Flood Fill, Clone Graph, Course Schedule.',
             'Đầu ra: demo tìm đoạn liên quan; đo retrieval trên câu hỏi đã gắn tài liệu đúng.',
           ]],
-          ['Tuần 7', 'LLM/RAG, evaluation + DP căn bản', [
+          ['Tuần 7', 'LLM/RAG và đánh giá', [
             'Project: kết nối LLM với retrieval, buộc câu trả lời nêu nguồn, xử lý câu không có bằng chứng và lỗi timeout.',
-            'AI Math: precision/recall/F1, threshold, hallucination/groundedness rubric, latency và token cost; chấm bộ 20 câu.',
-            'LeetCode: Climbing Stairs, House Robber, Coin Change; làm lại 2 bài yếu nhất từ các tuần trước.',
             'Đầu ra: báo cáo eval có ví dụ đúng/sai, giới hạn đã biết và một thay đổi dựa trên kết quả đo.',
           ]],
-          ['Tuần 8', 'Đóng gói, portfolio + mock interview', [
+          ['Tuần 8', 'Đóng gói và portfolio', [
             'Project: Docker hóa ứng dụng, thêm logging cơ bản, cấu hình qua environment variables và viết hướng dẫn chạy.',
-            'AI Math: tổng ôn vector, loss, metric, threshold, retrieval score; giải thích trade-off bằng ví dụ của chính project.',
-            'LeetCode: 3 buổi mixed Easy/Medium có timer; hoàn thiện pattern notebook và làm lại bài sai.',
-            'Đầu ra: demo 3–5 phút, README có kiến trúc/dữ liệu/eval/chi phí/giới hạn; 2 mock interview và kế hoạch học tiếp.',
+            'Đầu ra: demo 3–5 phút và README có kiến trúc, dữ liệu, eval, chi phí và giới hạn.',
           ]],
         ],
       },
     ],
   },
-  {
-    id: 'leetcode',
-    label: 'LeetCode',
-    eyebrow: 'Algorithm practice',
-    title: '3 tháng luyện giải thuật để tự nghĩ hướng giải',
-    goal: 'Từ nền tảng array/string đến mock interview, ưu tiên nhận diện pattern, tự giải lại và giải thích độ phức tạp.',
-    accent: '#2563eb',
-    daily: [
-      ['05 phút', 'Đọc đề, tự nói input/output/constraints và chạy tay 1 ví dụ.'],
-      ['35 phút', 'Tự giải: brute force → nhận diện pattern → code. Không mở lời giải trước khi hết giờ.'],
-      ['10 phút', 'Test edge case, submit và ghi time/space complexity.'],
-      ['10 phút', 'Xem lời giải nếu cần; note 1 pattern và ngày redo sau 3–7 ngày.'],
-    ],
-    metrics: [
-      ['Mục tiêu bài', '120+'],
-      ['Tỉ lệ', '40% Easy, 50% Medium, 10% Hard'],
-      ['Checkpoint', 'Giải lại được sau 3-7 ngày'],
-    ],
-    resources: [
-      ['LeetCode', 'https://leetcode.com'],
-      ['NeetCode roadmap', 'https://neetcode.io/roadmap'],
-      ['VisuAlgo', 'https://visualgo.net/en'],
-    ],
-    months: [
-      {
-        name: 'Tháng 1',
-        focus: 'Nền tảng array, string, hash, pointer',
-        outcome: 'Nhìn đề biết brute force, biết dùng dict/set/prefix/two pointers để giảm độ phức tạp.',
-        weeks: [
-          ['Tuần 1', 'Array, String, HashMap', ['Two Sum', 'Contains Duplicate', 'Valid Anagram', 'Group Anagrams', 'Top K Frequent Elements']],
-          ['Tuần 2', 'Prefix Sum, Two Pointers', ['Range Sum Query', 'Subarray Sum Equals K', 'Valid Palindrome', 'Two Sum II', '3Sum']],
-          ['Tuần 3', 'Sliding Window', ['Best Time to Buy/Sell Stock', 'Longest Substring Without Repeating Characters', 'Minimum Size Subarray Sum', 'Permutation in String']],
-          ['Tuần 4', 'Stack, Monotonic Stack', ['Valid Parentheses', 'Min Stack', 'Daily Temperatures', 'Next Greater Element', 'Largest Rectangle in Histogram']],
-        ],
-      },
-      {
-        name: 'Tháng 2',
-        focus: 'Binary search, linked list, tree, graph',
-        outcome: 'Viết traversal chắc, kiểm soát edge case null/visited, không kẹt loop binary search.',
-        weeks: [
-          ['Tuần 5', 'Binary Search', ['Binary Search', 'Search Insert Position', 'Search in Rotated Sorted Array', 'Find Minimum in Rotated Sorted Array', 'Koko Eating Bananas']],
-          ['Tuần 6', 'Linked List', ['Reverse Linked List', 'Merge Two Sorted Lists', 'Linked List Cycle', 'Remove Nth Node From End', 'Reorder List']],
-          ['Tuần 7', 'Tree DFS/BFS', ['Maximum Depth', 'Invert Binary Tree', 'Same Tree', 'Diameter of Binary Tree', 'Level Order Traversal']],
-          ['Tuần 8', 'Graph/Grid', ['Number of Islands', 'Max Area of Island', 'Flood Fill', 'Clone Graph', 'Course Schedule']],
-        ],
-      },
-      {
-        name: 'Tháng 3',
-        focus: 'Backtracking, heap, greedy, DP, mock',
-        outcome: 'Giải thích được state/transition, chọn đúng data structure và chịu được áp lực timer.',
-        weeks: [
-          ['Tuần 9', 'Backtracking, Heap', ['Subsets', 'Permutations', 'Combination Sum', 'Kth Largest Element', 'Merge K Sorted Lists']],
-          ['Tuần 10', 'Greedy', ['Jump Game', 'Gas Station', 'Merge Intervals', 'Non-overlapping Intervals', 'Partition Labels']],
-          ['Tuần 11', 'Dynamic Programming', ['Climbing Stairs', 'House Robber', 'Coin Change', 'Longest Increasing Subsequence', 'Longest Common Subsequence']],
-          ['Tuần 12', 'Mock Interview', ['4 mock 45 phút', 'Redo toàn bộ bài sai', 'Tổng kết pattern notebook', 'Ôn edge cases', 'Giải thích solution thành tiếng']],
-        ],
-      },
-    ],
-  },
-  {
-    id: 'ai-math',
-    label: 'AI Math',
-    eyebrow: 'Math for ML',
-    title: '3 tháng xây nền toán AI qua bài tập thực chiến',
-    goal: 'Học công thức vừa đủ để đọc model, hiểu metric, debug pipeline và giải thích AI feature bằng ví dụ số.',
-    accent: '#059669',
-    daily: [
-      ['20 phút', 'Đọc công thức và tự viết lại bằng ví dụ nhỏ.'],
-      ['45 phút', 'Giải 3-5 bài tính tay hoặc notebook NumPy.'],
-      ['35 phút', 'Code mini demo bằng Python/sklearn.'],
-      ['10 phút', 'Ghi ý nghĩa thực tế: metric, loss, threshold, cost.'],
-    ],
-    metrics: [
-      ['Notebook', '12 mini notebooks'],
-      ['Drill', '180 bài tính nhỏ'],
-      ['Checkpoint', 'Giải thích được bằng ví dụ số'],
-    ],
-    resources: [
-      ['Math4ML', 'https://www.math4ml.com/'],
-      ['Google MLCC', 'https://developers.google.com/machine-learning/crash-course/'],
-      ['StatQuest', 'https://www.youtube.com/@statquest'],
-    ],
-    months: [
-      {
-        name: 'Tháng 1',
-        focus: 'Python data, linear algebra, probability nền',
-        outcome: 'Hiểu vector/matrix, dot product, norm, cosine similarity, probability và distribution ở mức ứng dụng.',
-        weeks: [
-          ['Tuần 1', 'NumPy/Pandas foundation', ['shape/axis/broadcasting', 'read_csv/head/info', 'missing values', 'plot trend/outlier']],
-          ['Tuần 2', 'Linear Algebra', ['vector/matrix', 'dot product', 'norm', 'cosine similarity', 'matrix multiplication']],
-          ['Tuần 3', 'Probability', ['probability', 'conditional probability', 'Bayes intuition', 'sampling bias', 'distribution']],
-          ['Tuần 4', 'Statistics', ['mean/median', 'variance/std', 'correlation', 'confidence intuition', 'z-score']],
-        ],
-      },
-      {
-        name: 'Tháng 2',
-        focus: 'Machine learning math and evaluation',
-        outcome: 'Biết model học bằng loss/gradient, đọc confusion matrix và chọn metric theo mục tiêu sản phẩm.',
-        weeks: [
-          ['Tuần 5', 'Regression', ['linear regression', 'MSE/MAE/RMSE', 'residual', 'feature scaling', 'regularization intuition']],
-          ['Tuần 6', 'Classification', ['sigmoid', 'logistic regression', 'threshold', 'cross entropy', 'decision boundary']],
-          ['Tuần 7', 'Evaluation', ['TP/FP/FN/TN', 'precision/recall/F1', 'ROC-AUC intuition', 'overfitting', 'cross-validation']],
-          ['Tuần 8', 'Optimization', ['gradient descent', 'learning rate', 'SGD/Adam intuition', 'loss curve', 'early stopping']],
-        ],
-      },
-      {
-        name: 'Tháng 3',
-        focus: 'Deep learning, embedding, RAG math',
-        outcome: 'Nắm tensor, activation, embedding search, ranking metric, token cost và latency tradeoff.',
-        weeks: [
-          ['Tuần 9', 'Neural Network', ['layer/weight/bias', 'ReLU/sigmoid/softmax', 'backprop intuition', 'batch size', 'dropout']],
-          ['Tuần 10', 'Computer Vision basics', ['convolution', 'pooling', 'augmentation', 'train/val curve', 'confusion analysis']],
-          ['Tuần 11', 'Embedding and RAG', ['embedding vector', 'cosine search', 'top-k retrieval', 'chunking', 'retrieval hit rate']],
-          ['Tuần 12', 'AI Engineer metrics', ['latency', 'token cost', 'hallucination eval', 'faithfulness', 'product KPI report']],
-        ],
-      },
-    ],
-  },
-  {
-    id: 'english',
-    label: 'English',
-    eyebrow: 'Azar 5th · 20 chapter · 2–3 exercise/ngày',
-    title: 'Lộ trình English theo đúng Chapter và Exercise trong sách',
-    goal: 'Mỗi ngày làm 2–3 exercise liên tiếp của cùng một chapter, nghe đúng audio nếu có, rồi đối chiếu Answer Key. Không chia bài theo các thì; các điểm ngữ pháp chỉ được học theo nội dung của từng exercise.',
-    accent: '#dc2626',
-    daily: [
-      ['Bước 1', 'Mở đúng Chapter và làm 2–3 Exercise liên tiếp theo ngày đang chọn.'],
-      ['Bước 2', 'Nếu exercise có audio, nghe CD1/CD2 theo 4 lượt: ý chính → chép → transcript → shadow.'],
-      ['Bước 3', 'Mở Answer Key sau khi làm xong, ghi câu sai và đánh dấu bài cần làm lại.'],
-    ],
-    metrics: [
-      ['Sách', '20 chapter · Chapter 1 → 20'],
-      ['Nhịp học', '2–3 exercise liên tiếp/ngày'],
-      ['Kiểm tra', 'Checkpoint sau từng nhóm chapter'],
-    ],
-    resources: [
-      ['Daily Dictation', 'https://dailydictation.com'],
-      ['YouGlish', 'https://youglish.com'],
-      ['Oxford Learner’s Dictionaries', 'https://www.oxfordlearnersdictionaries.com'],
-    ],
-    months: [],
-  },
+
 ]
 
 function makeTaskId(trackId, monthName, weekName, task) {
@@ -742,7 +481,24 @@ function getTrackTaskIds(track) {
 
 function loadProgress() {
   try {
-    return JSON.parse(window.localStorage.getItem(progressKey)) ?? {}
+    const saved = JSON.parse(window.localStorage.getItem(progressKey)) ?? {}
+    const oldTaskText = {
+      'Đầu ra: script đọc và kiểm tra dữ liệu, có README hướng dẫn chạy.': 'Đầu ra: script đọc và kiểm tra dữ liệu; ghi lại lời giải, edge case và Big-O cho từng bài.',
+      'Đầu ra: demo 3–5 phút và README có kiến trúc, dữ liệu, eval, chi phí và giới hạn.': 'Đầu ra: demo 3–5 phút, README có kiến trúc/dữ liệu/eval/chi phí/giới hạn; 2 mock interview và kế hoạch học tiếp.',
+    }
+    const kept = {}
+
+    for (const month of tracks[0].months) {
+      for (const [weekName, , tasks] of month.weeks) {
+        for (const task of tasks) {
+          const id = makeTaskId(tracks[0].id, month.name, weekName, task)
+          const oldId = makeTaskId(tracks[0].id, month.name, weekName, oldTaskText[task] ?? task)
+          if (saved[id] || saved[oldId]) kept[id] = true
+        }
+      }
+    }
+
+    return kept
   } catch {
     return {}
   }
@@ -778,7 +534,7 @@ function App() {
   const [activeTrackId, setActiveTrackId] = useState(() => {
     const route = window.location.hash.replace('#', '')
 
-    if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer') return route
+    if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer' || route === 'daily-practice') return route
 
     return tracks.some((track) => track.id === route) ? route : 'overview'
   })
@@ -795,7 +551,7 @@ function App() {
   useEffect(() => {
     function syncRoute() {
       const route = window.location.hash.replace('#', '')
-      if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer') {
+      if (route === 'schedule' || route === 'exhibitflow' || route === 'ai-engineer' || route === 'daily-practice') {
         setActiveTrackId(route)
 
         return
@@ -838,10 +594,11 @@ function App() {
   )
 
   const activeTrack = trackSummaries.find((track) => track.id === activeTrackId)
-  const visibleTrackSummaries = trackSummaries.filter((track) => ['ai-engineer-2m', 'english'].includes(track.id))
+  const visibleTrackSummaries = trackSummaries
   const isSchedulePage = activeTrackId === 'schedule'
   const isProjectPage = activeTrackId === 'exhibitflow'
   const isAiEngineerPage = activeTrackId === 'ai-engineer'
+  const isDailyPracticePage = activeTrackId === 'daily-practice'
 
   function toggleTask(id) {
     setProgress((current) => ({
@@ -935,6 +692,14 @@ function App() {
           >
             AI Engineer
           </button>
+          <button
+            className={isDailyPracticePage ? 'active' : ''}
+            onClick={() => navigate('daily-practice')}
+            style={{ '--accent': '#2563eb' }}
+            type="button"
+          >
+            LeetCode + IELTS mỗi ngày
+          </button>
           {visibleTrackSummaries.map((track) => (
             <button
               className={activeTrackId === track.id ? 'active' : ''}
@@ -951,7 +716,9 @@ function App() {
       </aside>
 
       <section className="workspace">
-        {isAiEngineerPage ? (
+        {isDailyPracticePage ? (
+          <DailyPractice />
+        ) : isAiEngineerPage ? (
           <AiEngineerGlossary />
         ) : isProjectPage ? (
           <ExhibitFlowPage
@@ -995,7 +762,7 @@ function Overview({ tracks, onOpenTrack }) {
           <span>Personal learning system</span>
           <h2>Khang học AI Engineer trong 2 tháng</h2>
           <p>
-            LeetCode, AI Math và project AI được gộp vào một kế hoạch 8 tuần có checklist và đầu ra từng tuần.
+            Dự án AI được chia thành 8 tuần với checklist và đầu ra cụ thể.
           </p>
         </div>
         <div className="hero-meter">
@@ -1023,14 +790,14 @@ function Overview({ tracks, onOpenTrack }) {
           </div>
         </article>
         <article className="overview-card ai-engineer-overview-card">
-          <span>8 tuần · 3 nhánh học tích hợp</span>
+          <span>8 tuần · AI Engineer project</span>
           <h3>AI Engineer · 2 tháng</h3>
           <p>
-            Học thuật toán, toán ứng dụng cho ML và xây một ứng dụng AI có API, đánh giá, Docker và README.
+            Xây một ứng dụng AI có API, đánh giá, Docker và README.
           </p>
           <div className="commitment-preview">
-            <small><b>Mỗi tuần</b>LeetCode + AI Math + đầu ra project</small>
-            <small><b>Mục tiêu</b>32+ bài, 8 notebook, 1 project portfolio</small>
+            <small><b>Mỗi tuần</b>Đầu ra project có thể kiểm tra</small>
+            <small><b>Mục tiêu</b>1 project portfolio hoàn chỉnh</small>
           </div>
           <div className="card-footer">
             <small>8 tuần · checklist lưu trên máy</small>
@@ -1051,6 +818,15 @@ function Overview({ tracks, onOpenTrack }) {
           <div className="card-footer">
             <small>Glossary · 190 thuật ngữ</small>
             <button onClick={() => onOpenTrack('ai-engineer')} type="button">Mở kiến thức</button>
+          </div>
+        </article>
+        <article className="overview-card practice-overview-card">
+          <span>28 ngày · 1 bài LeetCode/ngày</span>
+          <h3>LeetCode + IELTS mỗi ngày</h3>
+          <p>06:00–07:30 học Listening, Reading, Shadowing, Speaking theo từng bài lẻ; 22:30–23:30 giải một bài LeetCode.</p>
+          <div className="card-footer">
+            <small>Checklist 28 ngày lưu trên máy</small>
+            <button onClick={() => onOpenTrack('daily-practice')} type="button">Mở lộ trình</button>
           </div>
         </article>
         <article className="overview-card schedule-overview-card">
@@ -1343,7 +1119,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
 
       <section className="track-support">
         <article>
-          <span>{track.id === 'leetcode' ? 'Quy trình suy nghĩ' : 'Nhịp học mỗi ngày'}</span>
+          <span>Nhịp học mỗi ngày</span>
           {track.daily.map(([time, task]) => (
             <p key={`${time}-${task}`}><b>{time}</b><em>{task}</em></p>
           ))}
@@ -1364,64 +1140,7 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
         </article>
       </section>
 
-      {track.id === 'leetcode' && (
-        <DailyStudyPlan
-          duration="60 phút/ngày"
-          intro="Giữ đúng 1 bài/ngày. Nếu chưa ra sau 35 phút, đọc lời giải để học pattern, rồi đánh dấu làm lại sau 3–7 ngày."
-          plan={leetcodeDailyPlan}
-          title="LeetCode hằng ngày: chủ đề và bài cần làm"
-          type="leetcode"
-        />
-      )}
-
-      {track.id === 'leetcode' && (
-        <section className="skill-method-panel leetcode-guide-panel">
-          <div className="method-heading">
-            <span>Cách tính độ phức tạp</span>
-            <h3>Ước lượng Big-O bằng số lần chạy và bộ nhớ phụ</h3>
-          </div>
-
-          <div className="skill-method-grid">
-            {leetcodeComplexityGuide.map((guide) => (
-              <article className="skill-method-card leetcode-method-card" key={guide.topic}>
-                <span>{guide.topic}</span>
-                <ol>
-                  {guide.notes.map((note) => (
-                    <li key={note}>{note}</li>
-                  ))}
-                </ol>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {track.id === 'english' && (
-        <section className="skill-method-panel">
-          <div className="method-heading">
-            <span>Cách học từng kỹ năng</span>
-            <h3>Học English theo quy trình để biết mình đang sửa lỗi gì</h3>
-          </div>
-
-          <div className="skill-method-grid">
-            {englishSkillMethods.map((method) => (
-              <article className="skill-method-card" key={method.skill}>
-                <span>{method.skill}</span>
-                <p>{method.goal}</p>
-                <ol>
-                  {method.steps.map((step) => (
-                    <li key={step}>{step}</li>
-                  ))}
-                </ol>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {track.id === 'english' && <EnglishLab />}
-
-      {track.id !== 'english' && <section className="month-stack">
+      <section className="month-stack">
         {track.months.map((month) => (
           <article className="month-panel" key={month.name}>
             <div className="month-title">
@@ -1459,30 +1178,8 @@ function TrackPage({ track, progress, onToggleTask, onReset }) {
             </div>
           </article>
         ))}
-      </section>}
+      </section>
     </>
-  )
-}
-
-function DailyStudyPlan({ duration, intro, plan, title, type }) {
-  return (
-    <section className={`daily-study-panel ${type}`}>
-      <div className="method-heading">
-        <span>Bắt buộc · {duration}</span>
-        <h3>{title}</h3>
-        <p>{intro}</p>
-      </div>
-      <div className="daily-study-grid">
-        {plan.map(([day, focus, listenOrProblem, output]) => (
-          <article className="daily-study-card" key={day}>
-            <span>{day}</span>
-            <h4>{focus}</h4>
-            <p><b>{type === 'english' ? 'Nghe:' : 'Bài:'}</b> {listenOrProblem}</p>
-            {type === 'english' ? <p><b>Đầu ra:</b> {output}</p> : null}
-          </article>
-        ))}
-      </div>
-    </section>
   )
 }
 

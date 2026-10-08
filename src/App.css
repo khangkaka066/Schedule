@@ -38,15 +38,8 @@ button {
 .brand-block span,
 .hero-panel span,
 .track-header span,
-.track-support span,
 .fixed-grid span,
 .schedule-day-title span,
-.method-heading span,
-.member-summary-card span,
-.member-board-title span,
-.member-week-title span,
-.month-title span,
-.week-panel > span,
 .overview-card > span {
   color: #64748b;
   font-size: 12px;
@@ -134,7 +127,6 @@ button {
 .track-header p,
 .overview-card p,
 .fixed-grid p,
-.month-title p,
 .schedule-block p {
   margin: 14px 0 0;
   color: #475569;
@@ -143,7 +135,6 @@ button {
   overflow-wrap: anywhere;
 }
 
-.hero-meter,
 .track-progress {
   display: grid;
   gap: 10px;
@@ -153,14 +144,12 @@ button {
   background: #f8fafc;
 }
 
-.hero-meter strong,
 .track-progress strong {
   color: #0f172a;
   font-size: 38px;
   line-height: 1;
 }
 
-.hero-meter span,
 .track-progress span,
 .card-footer small {
   color: #64748b;
@@ -194,8 +183,7 @@ button {
 }
 
 .overview-grid,
-.fixed-grid,
-.track-support {
+.fixed-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
@@ -204,11 +192,7 @@ button {
 
 .overview-card,
 .fixed-grid article,
-.track-support article,
-.schedule-day,
-.project-plan-panel,
-.project-week-card,
-.month-panel {
+.schedule-day {
   min-width: 0;
   border: 1px solid #dfe6ef;
   border-radius: 8px;
@@ -234,20 +218,20 @@ button {
   font-size: 14px;
 }
 
+.hero-panel {
+  grid-template-columns: 1fr;
+}
+
+.overview-grid-simple {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .schedule-overview-card {
   border-top: 4px solid #7c3aed;
 }
 
 .practice-overview-card {
   border-top: 4px solid #2563eb;
-}
-
-.exhibitflow-overview-card {
-  border-top: 4px solid #0f766e;
-}
-
-.ai-engineer-overview-card {
-  border-top: 4px solid #0f766e;
 }
 
 .commitment-preview {
@@ -298,215 +282,6 @@ button {
   color: #475569;
   font-size: 14px;
   line-height: 1.45;
-}
-
-.track-support article {
-  display: grid;
-  align-content: start;
-  gap: 10px;
-  min-height: 170px;
-  padding: 18px;
-}
-
-.track-support p {
-  display: flex;
-  gap: 10px;
-  margin: 0;
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.track-support b {
-  flex: 0 0 72px;
-  color: #0f172a;
-}
-
-.track-support em {
-  min-width: 0;
-  color: inherit;
-  font-style: normal;
-  overflow-wrap: anywhere;
-}
-
-.resource-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.resource-list a {
-  min-height: 32px;
-  padding: 7px 10px;
-  border: 1px solid #dbe4ef;
-  border-radius: 8px;
-  background: #f8fafc;
-  color: #0f172a;
-  font-size: 13px;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.exhibitflow-header {
-  margin-bottom: 18px;
-}
-
-.member-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.member-summary-card,
-.member-board,
-.member-week {
-  min-width: 0;
-  border: 1px solid #dfe6ef;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.13);
-}
-
-.member-summary-card {
-  display: grid;
-  gap: 12px;
-  padding: 18px;
-  border-top: 4px solid var(--accent);
-}
-
-.member-summary-card h3 {
-  margin: 0;
-  color: #0f172a;
-  font-size: 25px;
-}
-
-.member-summary-card p {
-  min-height: 112px;
-  margin: 0;
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
-.team-board {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.member-board {
-  display: grid;
-  align-content: start;
-  gap: 14px;
-  padding: 18px;
-  border-top: 5px solid var(--accent);
-}
-
-.member-board-title {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: start;
-}
-
-.member-board-title h3 {
-  margin: 6px 0 0;
-  color: #0f172a;
-  font-size: 26px;
-  overflow-wrap: anywhere;
-}
-
-.member-board-title strong {
-  color: var(--accent);
-  font-size: 24px;
-}
-
-.member-week-stack {
-  display: grid;
-  gap: 12px;
-}
-
-.member-week {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  background: #f8fafc;
-  box-shadow: none;
-}
-
-.member-week-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.member-week-title b {
-  color: var(--accent);
-  font-size: 16px;
-}
-
-.project-plan-panel {
-  margin-bottom: 18px;
-  padding: 22px;
-}
-
-.project-week-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.project-week-card {
-  display: grid;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(248, 250, 252, 0.96);
-}
-
-.project-week-title {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  align-items: start;
-}
-
-.project-week-title h4 {
-  margin: 6px 0 0;
-  color: #0f172a;
-  font-size: 18px;
-  line-height: 1.25;
-}
-
-.project-week-title b {
-  color: #7c3aed;
-  font-size: 20px;
-}
-
-.project-week-card > p {
-  margin: 0;
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.project-week-card > p strong {
-  color: #0f172a;
-}
-
-.method-heading {
-  display: grid;
-  gap: 7px;
-}
-
-.method-heading h3 {
-  margin: 0;
-  color: #0f172a;
-  font-size: 26px;
-  line-height: 1.15;
 }
 
 .schedule-grid {
@@ -650,131 +425,8 @@ button {
   border-left-color: #2563eb;
 }
 
-.schedule-block[data-category="AI Math"] {
-  border-left-color: #059669;
-}
-
 .schedule-block[data-category="English"] {
   border-left-color: #dc2626;
-}
-
-.month-stack {
-  display: grid;
-  gap: 18px;
-  margin-top: 18px;
-}
-
-.month-panel {
-  padding: 22px;
-}
-
-.month-title {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.month-title h3 {
-  margin: 7px 0 0;
-  color: #0f172a;
-  font-size: 25px;
-  line-height: 1.18;
-}
-
-.month-title p {
-  margin: 0;
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.week-panel {
-  display: grid;
-  align-content: start;
-  gap: 10px;
-  min-width: 0;
-  min-height: 360px;
-  padding: 15px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #f8fafc;
-}
-
-.week-panel h4 {
-  margin: 0;
-  color: #111827;
-  font-size: 17px;
-  line-height: 1.25;
-}
-
-.task-stack {
-  display: grid;
-  gap: 8px;
-}
-
-.task-check {
-  position: relative;
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
-  gap: 9px;
-  align-items: start;
-  min-height: 44px;
-  padding: 10px;
-  border: 1px solid #dde5f0;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #334155;
-  font-size: 13px;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-  cursor: pointer;
-}
-
-.task-check input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.task-check > span {
-  display: block;
-  width: 22px;
-  height: 22px;
-  border: 2px solid #cbd5e1;
-  border-radius: 6px;
-  background: #ffffff;
-}
-
-.task-check.done {
-  border-color: #bbf7d0;
-  background: #f0fdf4;
-  color: #64748b;
-  text-decoration: line-through;
-}
-
-.task-check.done > span {
-  border-color: #22c55e;
-  background:
-    linear-gradient(135deg, transparent 44%, #ffffff 45% 55%, transparent 56%),
-    #22c55e;
-}
-
-.task-check em {
-  display: grid;
-  gap: 3px;
-  min-width: 0;
-  color: inherit;
-  font-style: normal;
-}
-
-.task-check em b {
-  color: #0f172a;
-  font-size: 12px;
 }
 
 @media (max-width: 1100px) {
@@ -788,29 +440,19 @@ button {
   }
 
   .track-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .track-nav {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .hero-panel,
-  .track-header,
-  .month-title {
-    grid-template-columns: 1fr;
-  }
-
-  .week-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .member-summary-grid,
-  .team-board {
+  .track-header {
     grid-template-columns: 1fr;
   }
 
   .schedule-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .project-week-grid {
     grid-template-columns: 1fr;
   }
 
@@ -833,20 +475,13 @@ button {
 
   .track-nav,
   .overview-grid,
-  .fixed-grid,
-  .track-support,
-  .week-grid {
+  .fixed-grid {
     grid-template-columns: 1fr;
   }
 
   .overview-grid,
   .fixed-grid,
-  .member-summary-grid,
-  .team-board,
-  .track-support,
-  .project-plan-panel,
-  .schedule-grid,
-  .month-stack {
+  .schedule-grid {
     width: 100%;
     max-width: 100%;
     margin-right: auto;
@@ -854,9 +489,7 @@ button {
   }
 
   .hero-panel,
-  .track-header,
-  .project-plan-panel,
-  .month-panel {
+  .track-header {
     width: 100%;
     max-width: 100%;
     margin-right: auto;
@@ -869,15 +502,7 @@ button {
     font-size: 24px;
   }
 
-  .member-summary-card p {
-    min-height: 0;
-  }
-
   .overview-card p {
-    min-height: 0;
-  }
-
-  .week-panel {
     min-height: 0;
   }
 
@@ -907,16 +532,6 @@ button {
 
   .schedule-tag {
     justify-self: start;
-  }
-
-  .track-support p {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3px;
-  }
-
-  .track-support b {
-    flex-basis: auto;
   }
 
 }
